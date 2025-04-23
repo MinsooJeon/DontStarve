@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\DontStarveCopyCat.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\DontStarveCopyCat.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\DontStarveCopyCatEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\DontStarveCopyCat">
+      <UniqueIdentifier>{CF7EE802-826E-3C82-8B2A-B488296BE0F9}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\DontStarveCopyCat\DontStarveCopyCat.Build.cs">
+      <Filter>Source\DontStarveCopyCat</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\DontStarveCopyCat.cpp">
+      <Filter>Source\DontStarveCopyCat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\DontStarveCopyCat.h">
+      <Filter>Source\DontStarveCopyCat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\DontStarveCopyCatCharacter.cpp">
+      <Filter>Source\DontStarveCopyCat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\DontStarveCopyCatCharacter.h">
+      <Filter>Source\DontStarveCopyCat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\DontStarveCopyCatGameMode.cpp">
+      <Filter>Source\DontStarveCopyCat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\DontStarveCopyCatGameMode.h">
+      <Filter>Source\DontStarveCopyCat</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
