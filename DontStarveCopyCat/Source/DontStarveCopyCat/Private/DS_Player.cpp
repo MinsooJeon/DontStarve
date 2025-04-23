@@ -5,6 +5,11 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputMappingContext.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -25,12 +30,16 @@ ADS_Player::ADS_Player()
 	SpringArmComp->bDoCollisionTest = false;
 	//카메라 Lag 활성화(지연을 통한 자연스러운 이동) 속도 3
 	SpringArmComp->bEnableCameraLag = true;
-	SpringArmComp->CameraLagSpeed = 3.f;
+	SpringArmComp->CameraLagSpeed = 7.f;
 	
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(SpringArmComp);
 	//카메라 FOV 55 설정
 	CameraComp->SetFieldOfView(55.f);
+
+	//플레이어 최대속도
+	GetCharacterMovement()->MaxWalkSpeed =  100.f;
+	
 }
 
 // Called when the game starts or when spawned
@@ -40,10 +49,35 @@ void ADS_Player::BeginPlay()
 	
 }
 
+void ADS_Player::NotifyControllerChanged()
+{
+	Super::NotifyControllerChanged();
+
+	//현재 컨트롤러가 플레이어컨트롤러가 맞다면
+	if (auto* pc = Cast<APlayerController>(Controller))
+	{
+		//UEnhancedInputLocalPlayerSubSystem를 가져와서
+		auto* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(pc->GetLocalPlayer());
+
+		//AddMappingContext를 하고싶다.
+		subsystem->RemoveMappingContext(IMC_DontStarve);
+		subsystem->AddMappingContext(IMC_DontStarve, 0);
+	}
+}
+
 // Called every frame
 void ADS_Player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	//ControlRotation값으로 Transform을 만들고 그것을 기준으로 방향을 변경하고
+	//AddMovementInput 하고싶다.
+	FTransform tf = FTransform(GetControlRotation());
+	Direction = tf.TransformVector(Direction);
+	AddMovementInput(Direction);
+
+	//입력받았을때 한번 움직이고 안움직이게처리.
+	Direction = FVector::ZeroVector;
 
 }
 
@@ -52,5 +86,21 @@ void ADS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	//Action Bind
+	if (auto* input = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		input->BindAction(IA_DS_Move, ETriggerEvent::Triggered, this, &ADS_Player::OnActionMove);
+	}
+
+}
+
+void ADS_Player::OnActionMove(const FInputActionValue& value)
+{
+	//플레이어 상하좌우 이동
+	FVector2D v2D = value.Get<FVector2D>();
+	Direction.X = v2D.X;
+	Direction.Y = v2D.Y;
+	Direction.Normalize();
+	
 }
 

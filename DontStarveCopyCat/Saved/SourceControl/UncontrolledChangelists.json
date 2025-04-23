@@ -8,7 +8,10 @@
 				"C:/Users/user/Documents/GitHub/DontStarve/DontStarveCopyCat/Content/StarterContent/Architecture/Floor_400x400.uasset",
 				"C:/Users/user/Documents/GitHub/DontStarve/DontStarveCopyCat/Content/DontStarveCopyCat/Maps/MyGameMap.umap",
 				"C:/Users/user/Documents/GitHub/DontStarve/DontStarveCopyCat/Content/DontStarveCopyCat/Blueprints/BP_MyGameMode.uasset",
-				"C:/Users/user/Documents/GitHub/DontStarve/DontStarveCopyCat/Content/DontStarveCopyCat/Blueprints/BP_DS_Player.uasset"
+				"C:/Users/user/Documents/GitHub/DontStarve/DontStarveCopyCat/Content/DontStarveCopyCat/Blueprints/BP_DS_Player.uasset",
+				"C:/Users/user/Documents/GitHub/DontStarve/DontStarveCopyCat/Content/DontStarveCopyCat/Input/IA_Move.uasset",
+				"C:/Users/user/Documents/GitHub/DontStarve/DontStarveCopyCat/Content/DontStarveCopyCat/Input/IA_DS_Move.uasset",
+				"C:/Users/user/Documents/GitHub/DontStarve/DontStarveCopyCat/Content/DontStarveCopyCat/Input/IMC_DontStarve.uasset"
 			]
 		}
 	]

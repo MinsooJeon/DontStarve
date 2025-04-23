@@ -10,11 +10,14 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeDS_Player() {}
 
 // Begin Cross Module References
+COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 DONTSTARVECOPYCAT_API UClass* Z_Construct_UClass_ADS_Player();
 DONTSTARVECOPYCAT_API UClass* Z_Construct_UClass_ADS_Player_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_ACharacter();
 ENGINE_API UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
+ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputAction_NoRegister();
+ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputMappingContext_NoRegister();
 UPackage* Z_Construct_UPackage__Script_DontStarveCopyCat();
 // End Cross Module References
 
@@ -51,9 +54,36 @@ struct Z_Construct_UClass_ADS_Player_Statics
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/DS_Player.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Direction_MetaData[] = {
+		{ "Category", "DS_Player" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "//\xed\x94\x8c\xeb\xa0\x88\xec\x9d\xb4\xec\x96\xb4 \xec\x9d\xb4\xeb\x8f\x99\xeb\xb0\xa9\xed\x96\xa5\n" },
+#endif
+		{ "ModuleRelativePath", "Public/DS_Player.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "\xed\x94\x8c\xeb\xa0\x88\xec\x9d\xb4\xec\x96\xb4 \xec\x9d\xb4\xeb\x8f\x99\xeb\xb0\xa9\xed\x96\xa5" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_IMC_DontStarve_MetaData[] = {
+		{ "Category", "DS_PlayerInput" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "//Action\n" },
+#endif
+		{ "ModuleRelativePath", "Public/DS_Player.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Action" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_IA_DS_Move_MetaData[] = {
+		{ "Category", "DS_PlayerInput" },
+		{ "ModuleRelativePath", "Public/DS_Player.h" },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_SpringArmComp;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CameraComp;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_Direction;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_IMC_DontStarve;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_IA_DS_Move;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -61,11 +91,17 @@ struct Z_Construct_UClass_ADS_Player_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_SpringArmComp = { "SpringArmComp", nullptr, (EPropertyFlags)0x0114000000080009, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, SpringArmComp), Z_Construct_UClass_USpringArmComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SpringArmComp_MetaData), NewProp_SpringArmComp_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_CameraComp = { "CameraComp", nullptr, (EPropertyFlags)0x0114000000080009, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, CameraComp), Z_Construct_UClass_UCameraComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraComp_MetaData), NewProp_CameraComp_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_SpringArmComp = { "SpringArmComp", nullptr, (EPropertyFlags)0x011400000008000d, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, SpringArmComp), Z_Construct_UClass_USpringArmComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SpringArmComp_MetaData), NewProp_SpringArmComp_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_CameraComp = { "CameraComp", nullptr, (EPropertyFlags)0x011400000008000d, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, CameraComp), Z_Construct_UClass_UCameraComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraComp_MetaData), NewProp_CameraComp_MetaData) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_Direction = { "Direction", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, Direction), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Direction_MetaData), NewProp_Direction_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_IMC_DontStarve = { "IMC_DontStarve", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, IMC_DontStarve), Z_Construct_UClass_UInputMappingContext_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IMC_DontStarve_MetaData), NewProp_IMC_DontStarve_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_IA_DS_Move = { "IA_DS_Move", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, IA_DS_Move), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IA_DS_Move_MetaData), NewProp_IA_DS_Move_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ADS_Player_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_SpringArmComp,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_CameraComp,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_Direction,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_IMC_DontStarve,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_IA_DS_Move,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_ADS_Player_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_ADS_Player_Statics::DependentSingletons[])() = {
@@ -108,10 +144,10 @@ ADS_Player::~ADS_Player() {}
 struct Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADS_Player, ADS_Player::StaticClass, TEXT("ADS_Player"), &Z_Registration_Info_UClass_ADS_Player, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADS_Player), 2198480915U) },
+		{ Z_Construct_UClass_ADS_Player, ADS_Player::StaticClass, TEXT("ADS_Player"), &Z_Registration_Info_UClass_ADS_Player, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADS_Player), 983031986U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_1852058391(TEXT("/Script/DontStarveCopyCat"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_3882290155(TEXT("/Script/DontStarveCopyCat"),
 	Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
