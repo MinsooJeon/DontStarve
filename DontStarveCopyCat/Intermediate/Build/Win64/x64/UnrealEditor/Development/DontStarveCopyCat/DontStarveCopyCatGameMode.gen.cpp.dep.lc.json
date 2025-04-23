@@ -1,0 +1,19 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\user\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\unrealeditor\\inc\\dontstarvecopycat\\uht\\dontstarvecopycatgamemode.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\user\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\x64\\dontstarvecopycateditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\user\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dontstarvecopycat\\definitions.dontstarvecopycat.h",
+            "c:\\users\\user\\documents\\github\\dontstarve\\dontstarvecopycat\\source\\dontstarvecopycat\\dontstarvecopycatgamemode.h",
+            "c:\\unrealengine\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\unrealengine\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\unrealengine\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
+            "c:\\unrealengine\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
+            "c:\\users\\user\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\unrealeditor\\inc\\dontstarvecopycat\\uht\\dontstarvecopycatgamemode.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
