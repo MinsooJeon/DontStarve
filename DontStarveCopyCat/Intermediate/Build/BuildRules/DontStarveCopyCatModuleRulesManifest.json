@@ -1,8 +1,8 @@
 {
 	"SourceFiles": [
-		"C:\\Users\\user\\Documents\\GitHub\\DontStarve\\DontStarveCopyCat\\Source\\DontStarveCopyCat\\DontStarveCopyCat.Build.cs",
-		"C:\\Users\\user\\Documents\\GitHub\\DontStarve\\DontStarveCopyCat\\Source\\DontStarveCopyCat.Target.cs",
-		"C:\\Users\\user\\Documents\\GitHub\\DontStarve\\DontStarveCopyCat\\Source\\DontStarveCopyCatEditor.Target.cs"
+		"C:\\Users\\Minsoo\\Documents\\GitHub\\DontStarve\\DontStarveCopyCat\\Source\\DontStarveCopyCat\\DontStarveCopyCat.Build.cs",
+		"C:\\Users\\Minsoo\\Documents\\GitHub\\DontStarve\\DontStarveCopyCat\\Source\\DontStarveCopyCat.Target.cs",
+		"C:\\Users\\Minsoo\\Documents\\GitHub\\DontStarve\\DontStarveCopyCat\\Source\\DontStarveCopyCatEditor.Target.cs"
 	],
 	"EngineVersion": "5.5.4"
 }

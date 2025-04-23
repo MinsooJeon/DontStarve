@@ -38,7 +38,7 @@ ADS_Player::ADS_Player()
 	CameraComp->SetFieldOfView(55.f);
 
 	//플레이어 최대속도
-	GetCharacterMovement()->MaxWalkSpeed =  100.f;
+	GetCharacterMovement()->MaxWalkSpeed =  300.f;
 	
 }
 
