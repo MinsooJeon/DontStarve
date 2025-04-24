@@ -57,12 +57,18 @@
     <Filter Include="Source\DontStarveCopyCat\Private">
       <UniqueIdentifier>{33BD589B-0190-3642-B766-AB194B6673BF}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\Private\DayNightCycle.cpp">
+      <Filter>Source\DontStarveCopyCat\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DontStarveCopyCat\Private\DS_Player.cpp">
       <Filter>Source\DontStarveCopyCat\Private</Filter>
     </ClCompile>
     <Filter Include="Source\DontStarveCopyCat\Public">
       <UniqueIdentifier>{1B2FF776-1E4D-3FA5-B6DB-6E72205BA02F}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\Public\DayNightCycle.h">
+      <Filter>Source\DontStarveCopyCat\Public</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DontStarveCopyCat\Public\DS_Player.h">
       <Filter>Source\DontStarveCopyCat\Public</Filter>
     </ClCompile>
