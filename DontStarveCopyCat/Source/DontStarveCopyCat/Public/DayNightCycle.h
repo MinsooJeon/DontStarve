@@ -23,28 +23,53 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	//게임시간
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameDirectionalLight")
-	float DayLength;
-	//현재시간
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameDirectionalLight")
-	float CurrentTime;
-	//Directional Light
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameDirectionalLight")
-	class ADirectionalLight* SunLight;
-	//Directional Light 초기 회전값
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameDirectionalLight")
-	FRotator SunInitialRotation;
-	//밤 여부
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameDirectionalLight")
-	bool IsNight;
-	//ExponentialHeightFog 안개
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameDirectionalLight")
-	class AExponentialHeightFog* Fog;
+	//조명 변화 함수
+	UFUNCTION()
+	void UpdateLighting(float CurrentTime); 
 	
-	//조명, 안개 밝기 농도
+	//Directional Light
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameLight")
+	class ADirectionalLight* SunLight;
+	
+	//Directional Light 초기 회전값
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameLight")
+	FRotator SunInitialRotation;
+	
+	//ExponentialHeightFog 안개
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameLight")
+	class AExponentialHeightFog* Fog;
+
+	//SkyLight
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameLight")
+	class ASkyLight* SkyLight;
+
+	//PostProcess
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameLight")
+	class APostProcessVolume* PostProcessVolume;
+	
+	//게임시간
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameLight")
+	float DayLength;
+	
+	//현재시간
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameLight")
+	float CurrentTime;
+	
+	//밤 여부
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameLight")
+	bool IsNight;
+	
+	//Curve 조명, 안개 밝기 농도
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Curve")
 	UCurveFloat* LightIntensityCurve;
+	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Curve")
 	UCurveFloat* FogDensityCurve;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Curve")
+	UCurveFloat* SkyLightIntensityCurve;
+
+	//PostProcess Color
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Curve")
+	UCurveFloat* ColorGradingCurve;
 };

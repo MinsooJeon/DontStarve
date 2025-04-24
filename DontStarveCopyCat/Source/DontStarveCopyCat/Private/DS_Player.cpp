@@ -10,6 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "Components/BoxComponent.h"
+#include "Components/DecalComponent.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -39,7 +40,22 @@ ADS_Player::ADS_Player()
 
 	//플레이어 최대속도
 	GetCharacterMovement()->MaxWalkSpeed =  300.f;
+
+	//플레이어 그림자 제거
+	GetMesh()->CastShadow = false;
 	
+	//Shadow Decal
+	ShadowDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("ShadowDecal"));
+	ShadowDecal->SetupAttachment(RootComponent);
+	ShadowDecal->DecalSize = FVector(64.f, 64.f, 64.f);
+	ShadowDecal->SetRelativeLocation(FVector(0.f, 0.f, -90.f));
+	ShadowDecal->SetRelativeRotation(FRotator(90.f, 0.f, 0.f));
+
+	ConstructorHelpers::FObjectFinder<UMaterialInstance> ShadowMat(TEXT("/Game/DontStarveCopyCat/Materials/M_ShadowDecal.M_ShadowDecal"));
+	if (ShadowMat.Succeeded())
+	{
+		ShadowDecal->SetDecalMaterial(ShadowMat.Object);
+	}
 }
 
 // Called when the game starts or when spawned

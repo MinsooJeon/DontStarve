@@ -7,6 +7,7 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\DontStarveCopyCatEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\DayNightCycle.gen.cpp.obj"
 "C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\DontStarveCopyCat.init.gen.cpp.obj"
 "C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\DontStarveCopyCatCharacter.gen.cpp.obj"
 "C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\DontStarveCopyCatGameMode.gen.cpp.obj"
@@ -16,5 +17,6 @@
 "C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\DontStarveCopyCatGameMode.cpp.obj"
 "C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\DS_Player.cpp.obj"
 "C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\PerModuleInline.gen.cpp.obj"
+"C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\DayNightCycle.cpp.obj"
 "C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\Default.rc2.res"
 /OUT:"C:\Users\user\Documents\GitHub\DontStarve\DontStarveCopyCat\Intermediate\Build\Win64\x64\UnrealEditor\Development\DontStarveCopyCat\UnrealEditor-DontStarveCopyCat.lib"

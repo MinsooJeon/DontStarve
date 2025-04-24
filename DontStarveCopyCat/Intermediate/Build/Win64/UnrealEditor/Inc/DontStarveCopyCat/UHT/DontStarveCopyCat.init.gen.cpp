@@ -17,7 +17,7 @@ void EmptyLinkFunctionForGeneratedCodeDontStarveCopyCat_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x1308BCC5,
+				0xDFB3F37B,
 				0x36EC468B,
 				METADATA_PARAMS(0, nullptr)
 			};
@@ -25,5 +25,5 @@ void EmptyLinkFunctionForGeneratedCodeDontStarveCopyCat_init() {}
 		}
 		return Z_Registration_Info_UPackage__Script_DontStarveCopyCat.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_DontStarveCopyCat(Z_Construct_UPackage__Script_DontStarveCopyCat, TEXT("/Script/DontStarveCopyCat"), Z_Registration_Info_UPackage__Script_DontStarveCopyCat, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x1308BCC5, 0x36EC468B));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_DontStarveCopyCat(Z_Construct_UPackage__Script_DontStarveCopyCat, TEXT("/Script/DontStarveCopyCat"), Z_Registration_Info_UPackage__Script_DontStarveCopyCat, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xDFB3F37B, 0x36EC468B));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

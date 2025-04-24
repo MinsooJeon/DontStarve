@@ -51,4 +51,8 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
 	class UInputAction* IA_DS_Move;
+
+	//Shadow Decal
+	UPROPERTY(EditAnywhere, Category = "Shadow")
+	class UDecalComponent* ShadowDecal;
 };
