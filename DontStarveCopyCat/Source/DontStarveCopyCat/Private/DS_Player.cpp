@@ -8,9 +8,11 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "GatherableItem.h"
 #include "InputMappingContext.h"
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -32,7 +34,7 @@ ADS_Player::ADS_Player()
 	//카메라 Lag 활성화(지연을 통한 자연스러운 이동) 속도 3
 	SpringArmComp->bEnableCameraLag = true;
 	SpringArmComp->CameraLagSpeed = 7.f;
-	
+
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(SpringArmComp);
 	//카메라 FOV 55 설정
@@ -47,15 +49,18 @@ ADS_Player::ADS_Player()
 	//Shadow Decal
 	ShadowDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("ShadowDecal"));
 	ShadowDecal->SetupAttachment(RootComponent);
-	ShadowDecal->DecalSize = FVector(64.f, 64.f, 64.f);
-	ShadowDecal->SetRelativeLocation(FVector(0.f, 0.f, -90.f));
-	ShadowDecal->SetRelativeRotation(FRotator(90.f, 0.f, 0.f));
 
 	ConstructorHelpers::FObjectFinder<UMaterialInstance> ShadowMat(TEXT("/Game/DontStarveCopyCat/Materials/M_ShadowDecal.M_ShadowDecal"));
 	if (ShadowMat.Succeeded())
 	{
 		ShadowDecal->SetDecalMaterial(ShadowMat.Object);
 	}
+	
+	ShadowDecal->DecalSize = FVector(64.f, 150.f, 64.f);
+	ShadowDecal->SetRelativeLocation(FVector(0.f, 0.f, -90.f));
+	ShadowDecal->SetRelativeRotation(FRotator(90.f, 0.f, 90.f));
+
+
 }
 
 // Called when the game starts or when spawned
@@ -106,6 +111,7 @@ void ADS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	if (auto* input = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		input->BindAction(IA_DS_Move, ETriggerEvent::Triggered, this, &ADS_Player::OnActionMove);
+		input->BindAction(IA_DS_Gather, ETriggerEvent::Started, this, &ADS_Player::TryGather);
 	}
 
 }
@@ -120,3 +126,32 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 	
 }
 
+inline void ADS_Player::TryGather()
+{
+	//플레이어 위치 시작 -> 플레이어 앞방향 거리 끝
+	FVector Start = this->GetActorLocation();
+	FVector End = Start + this->GetActorForwardVector() * GatherRange;
+
+	//LineTrace Hit, 본인 제외
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	//LineTrace해서 True면 Item 습득 및 파괴 
+	if (bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
+	{
+		//채집 충돌완료 디버그메세지
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
+		
+		AGatherableItem* Item = Cast<AGatherableItem>(Hit.GetActor());
+		if (Item)
+		{
+			Item->OnGather();
+		}
+	}
+	else
+	{
+		//거리안에 아이템 없을시 LineTrace 그려주기
+		DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
+	}
+}

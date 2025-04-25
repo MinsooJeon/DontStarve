@@ -36,14 +36,18 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	TObjectPtr<class UCameraComponent> CameraComp;
-
 	
 	//플레이어 이동방향
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector Direction;
+	
+	//Shadow Decal
+	UPROPERTY(EditAnywhere, Category = "Shadow")
+	class UDecalComponent* ShadowDecal;
 
-	//플레이어 움직임 함수
-	void OnActionMove(const FInputActionValue& value);
+	//채집 가능 거리
+	UPROPERTY(EditAnywhere, Category = "Interaction")
+	float GatherRange = 50.f;
 
 	//Action
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
@@ -52,7 +56,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
 	class UInputAction* IA_DS_Move;
 
-	//Shadow Decal
-	UPROPERTY(EditAnywhere, Category = "Shadow")
-	class UDecalComponent* ShadowDecal;
+	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
+	class UInputAction* IA_DS_Gather;
+	
+	//플레이어 움직임 함수
+	void OnActionMove(const FInputActionValue& value);
+	
+	//채집 시도 함수
+	UFUNCTION()
+	void TryGather();
 };
+
+
