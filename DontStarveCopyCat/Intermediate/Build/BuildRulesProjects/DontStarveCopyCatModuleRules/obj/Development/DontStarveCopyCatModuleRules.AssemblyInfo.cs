@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DontStarveCopyCatModuleRules")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Development")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65680fa4e64547a79413fdeb7bd41853666fae2d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d87c2793e7e9611e79e4555efee2cfe2e453b971")]
 [assembly: System.Reflection.AssemblyProductAttribute("DontStarveCopyCatModuleRules")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DontStarveCopyCatModuleRules")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
