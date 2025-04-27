@@ -19,9 +19,10 @@ AGatherableItem::AGatherableItem()
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
 	MeshComp->SetupAttachment(BoxComp);
 	MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	MeshComp->SetRelativeLocation(FVector(0, 0, -50.f));
+	MeshComp->SetRelativeLocation(FVector(40.f, -10, -60.f));
 	
-	ConstructorHelpers::FObjectFinder<UStaticMesh> tempMesh(TEXT("/Game/StarterContent/Props/SM_Bush.SM_Bush"));
+	
+	ConstructorHelpers::FObjectFinder<UStaticMesh> tempMesh(TEXT("/Game/DontStarveCopyCat/Models/SM_MyBush.SM_MyBush"));
 	if (tempMesh.Succeeded())
 	{
 		MeshComp->SetStaticMesh(tempMesh.Object);
