@@ -34,7 +34,7 @@ struct Z_Construct_UFunction_AGatherableItem_OnGather_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AGatherableItem_OnGather_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AGatherableItem, nullptr, "OnGather", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AGatherableItem_OnGather_Statics::Function_MetaDataParams), Z_Construct_UFunction_AGatherableItem_OnGather_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AGatherableItem_OnGather_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AGatherableItem, nullptr, "OnGather", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020400, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AGatherableItem_OnGather_Statics::Function_MetaDataParams), Z_Construct_UFunction_AGatherableItem_OnGather_Statics::Function_MetaDataParams) };
 UFunction* Z_Construct_UFunction_AGatherableItem_OnGather()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -119,7 +119,7 @@ struct Z_Construct_UClass_AGatherableItem_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_AGatherableItem_OnGather, "OnGather" }, // 775047426
+		{ &Z_Construct_UFunction_AGatherableItem_OnGather, "OnGather" }, // 1097128567
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -182,10 +182,10 @@ AGatherableItem::~AGatherableItem() {}
 struct Z_CompiledInDeferFile_FID_Users_Minsoo_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_GatherableItem_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AGatherableItem, AGatherableItem::StaticClass, TEXT("AGatherableItem"), &Z_Registration_Info_UClass_AGatherableItem, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AGatherableItem), 2702543044U) },
+		{ Z_Construct_UClass_AGatherableItem, AGatherableItem::StaticClass, TEXT("AGatherableItem"), &Z_Registration_Info_UClass_AGatherableItem, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AGatherableItem), 360892433U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Minsoo_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_GatherableItem_h_39493398(TEXT("/Script/DontStarveCopyCat"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_Minsoo_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_GatherableItem_h_422725109(TEXT("/Script/DontStarveCopyCat"),
 	Z_CompiledInDeferFile_FID_Users_Minsoo_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_GatherableItem_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_Minsoo_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_GatherableItem_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

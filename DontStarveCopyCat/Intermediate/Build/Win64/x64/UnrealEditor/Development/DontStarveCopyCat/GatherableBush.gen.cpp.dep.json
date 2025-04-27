@@ -1,0 +1,17 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\unrealeditor\\inc\\dontstarvecopycat\\uht\\gatherablebush.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\x64\\dontstarvecopycateditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dontstarvecopycat\\definitions.dontstarvecopycat.h",
+            "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\source\\dontstarvecopycat\\public\\gatherablebush.h",
+            "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\source\\dontstarvecopycat\\public\\gatherableitem.h",
+            "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\unrealeditor\\inc\\dontstarvecopycat\\uht\\gatherableitem.generated.h",
+            "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\unrealeditor\\inc\\dontstarvecopycat\\uht\\gatherablebush.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

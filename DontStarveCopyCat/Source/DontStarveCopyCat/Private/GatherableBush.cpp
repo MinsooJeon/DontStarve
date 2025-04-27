@@ -1,0 +1,44 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "GatherableBush.h"
+
+// Sets default values
+AGatherableBush::AGatherableBush()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	MeshComp->SetRelativeLocation(FVector(40.f, -10, -60.f));
+
+	ConstructorHelpers::FObjectFinder<UStaticMesh> tempMesh(TEXT("/Game/DontStarveCopyCat/Models/SM_MyBush.SM_MyBush"));
+	if (tempMesh.Succeeded())
+	{
+		MeshComp->SetStaticMesh(tempMesh.Object);
+	}
+
+	ItemName = TEXT("GatherableBush");
+}
+
+// Called when the game starts or when spawned
+void AGatherableBush::BeginPlay()
+{
+	Super::BeginPlay();
+	
+}
+
+// Called every frame
+void AGatherableBush::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+void AGatherableBush::OnGather()
+{
+	Super::OnGather();
+
+	//채집 충돌완료 디버그메세지
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "GatherableBush");
+}
+

@@ -14,19 +14,19 @@ AGatherableItem::AGatherableItem()
 	BoxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComp"));
 	SetRootComponent(BoxComp);
 	BoxComp->SetBoxExtent(FVector(50.f));
-	BoxComp->SetCollisionProfileName(TEXT("Bush"));
+	BoxComp->SetCollisionProfileName(TEXT("Gatherable"));
 	
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
 	MeshComp->SetupAttachment(BoxComp);
 	MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	MeshComp->SetRelativeLocation(FVector(40.f, -10, -60.f));
+	//MeshComp->SetRelativeLocation(FVector(40.f, -10, -60.f));
 	
 	
-	ConstructorHelpers::FObjectFinder<UStaticMesh> tempMesh(TEXT("/Game/DontStarveCopyCat/Models/SM_MyBush.SM_MyBush"));
-	if (tempMesh.Succeeded())
-	{
-		MeshComp->SetStaticMesh(tempMesh.Object);
-	}
+	// ConstructorHelpers::FObjectFinder<UStaticMesh> tempMesh(TEXT("/Game/DontStarveCopyCat/Models/SM_MyBush.SM_MyBush"));
+	// if (tempMesh.Succeeded())
+	// {
+	// 	MeshComp->SetStaticMesh(tempMesh.Object);
+	// }
 	
 }
 

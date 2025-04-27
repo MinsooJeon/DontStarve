@@ -39,7 +39,7 @@ public:
 
 	//채집함수
 	UFUNCTION()
-	void OnGather();
+	virtual void OnGather();
 	
 };
 
