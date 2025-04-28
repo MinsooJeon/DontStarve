@@ -73,4 +73,4 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
-DontStarveCopyCat/Content/Stylized_PBR_Nature/**
+Content/Stylized_PBR_Nature/**
