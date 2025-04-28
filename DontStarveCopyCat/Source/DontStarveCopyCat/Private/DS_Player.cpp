@@ -69,6 +69,11 @@ ADS_Player::ADS_Player()
 void ADS_Player::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//초기 시작을 화면을 바라보는 방향에서 시작
+	FRotator newRotation = GetActorRotation();
+	newRotation.Yaw += 180.f;
+	SetActorRotation(newRotation);
 	
 }
 
