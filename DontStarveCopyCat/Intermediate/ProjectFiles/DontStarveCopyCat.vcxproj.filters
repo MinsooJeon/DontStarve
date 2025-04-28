@@ -66,6 +66,9 @@
     <ClCompile Include="..\..\Source\DontStarveCopyCat\Private\DS_PlayerAnim.cpp">
       <Filter>Source\DontStarveCopyCat\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\Private\DS_PlayerAnimNotify.cpp">
+      <Filter>Source\DontStarveCopyCat\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DontStarveCopyCat\Private\GatherableBush.cpp">
       <Filter>Source\DontStarveCopyCat\Private</Filter>
     </ClCompile>
@@ -82,6 +85,9 @@
       <Filter>Source\DontStarveCopyCat\Public</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DontStarveCopyCat\Public\DS_PlayerAnim.h">
+      <Filter>Source\DontStarveCopyCat\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DontStarveCopyCat\Public\DS_PlayerAnimNotify.h">
       <Filter>Source\DontStarveCopyCat\Public</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DontStarveCopyCat\Public\GatherableBush.h">
