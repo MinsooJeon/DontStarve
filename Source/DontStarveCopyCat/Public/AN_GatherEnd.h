@@ -4,14 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotify.h"
-#include "DS_PlayerAnimNotify.generated.h"
+#include "AN_GatherEnd.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DONTSTARVECOPYCAT_API UDS_PlayerAnimNotify : public UAnimNotify
+class DONTSTARVECOPYCAT_API UAN_GatherEnd : public UAnimNotify
 {
 	GENERATED_BODY()
+
+public:
+	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
 	
 };

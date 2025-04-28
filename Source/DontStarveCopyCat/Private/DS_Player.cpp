@@ -13,6 +13,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "DS_PlayerAnim.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -175,7 +176,7 @@ inline void ADS_Player::TryGather()
 		AGatherableBush* Bush = Cast<AGatherableBush>(Hit.GetActor());
 		if (Bush)
 		{
-			//채집 애니메이션 시작 - bGatherBush = false는 애니메이션 끝날때 AnimNotify 추가하기
+			//채집 애니메이션 시작 - bGatherBush = false는 애니 mnb                                                                                                                                                                                                                                                                                                                                                                                         메이션 끝날때 AnimNotify 추가하기
 			bGatherBush = true;
 			Bush->OnGather();
 		}
@@ -185,4 +186,10 @@ inline void ADS_Player::TryGather()
 		//거리안에 아이템 없을시 LineTrace 그려주기
 		DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
 	}
+}
+
+void ADS_Player::GatehrEndNotify()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "GatherEnd");
+	bGatherBush = false;
 }

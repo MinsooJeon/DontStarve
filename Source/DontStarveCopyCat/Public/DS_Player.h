@@ -79,6 +79,10 @@ public:
 	//채집 시도 함수
 	UFUNCTION()
 	void TryGather();
+	
+	//채집 끝 AnimNotify
+	UFUNCTION()
+	void GatehrEndNotify();
 };
 
 
