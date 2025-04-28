@@ -10,11 +10,12 @@ AGatherableBush::AGatherableBush()
 	PrimaryActorTick.bCanEverTick = true;
 
 	MeshComp->SetRelativeLocation(FVector(40.f, -10, -60.f));
-
+	
 	ConstructorHelpers::FObjectFinder<UStaticMesh> tempMesh(TEXT("/Game/DontStarveCopyCat/Models/SM_MyBush.SM_MyBush"));
 	if (tempMesh.Succeeded())
 	{
 		MeshComp->SetStaticMesh(tempMesh.Object);
+		OutlineMesh->SetStaticMesh(tempMesh.Object);
 	}
 
 	ItemName = TEXT("GatherableBush");

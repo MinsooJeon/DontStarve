@@ -27,7 +27,19 @@ AGatherableItem::AGatherableItem()
 	// {
 	// 	MeshComp->SetStaticMesh(tempMesh.Object);
 	// }
-	
+
+	//외곽선 전용
+	OutlineMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OutlineMesh"));
+	OutlineMesh->SetupAttachment(MeshComp);
+	//MeshComp보다 살짝 크게 키움
+	OutlineMesh->SetRelativeScale3D(FVector(1.05f));
+	//검은색 머터리얼 사용
+	OutlineMesh->SetMaterial(0, BlackMaterial);
+	//항상 MeshComp보다 뒤에 그려지게 설정
+	OutlineMesh->SetRenderCustomDepth(true);
+	OutlineMesh->CustomDepthStencilValue = 1;
+	OutlineMesh->SetCastShadow(false);
+	OutlineMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 // Called when the game starts or when spawned

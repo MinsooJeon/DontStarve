@@ -36,6 +36,12 @@ public:
 	class UBoxComponent* BoxComp;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	class UStaticMeshComponent* MeshComp;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	class UStaticMeshComponent* OutlineMesh;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Outline")
+	TObjectPtr<UMaterialInterface> BlackMaterial;
+
 
 	//채집함수
 	UFUNCTION()
