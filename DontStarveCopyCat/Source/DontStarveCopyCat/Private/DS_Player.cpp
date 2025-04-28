@@ -42,6 +42,8 @@ ADS_Player::ADS_Player()
 
 	//플레이어 최대속도
 	GetCharacterMovement()->MaxWalkSpeed =  300.f;
+	//자동회전속도 0으로 회전 해제시키기
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 0.f, 0.f);
 
 	//플레이어 그림자 제거
 	GetMesh()->CastShadow = false;
@@ -123,7 +125,16 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 	Direction.X = v2D.X;
 	Direction.Y = v2D.Y;
 	Direction.Normalize();
-	
+
+	//입력이 있을 때만 회전
+	if (!Direction.IsNearlyZero())
+	{
+		FRotator TargetRotation = Direction.Rotation();
+		FRotator MoveRotation(0.f, TargetRotation.Yaw, 0.f);
+
+		FRotator SmoothRotation = FMath::RInterpTo(GetActorRotation(), MoveRotation, GetWorld()->GetDeltaSeconds(), 10.f);
+		SetActorRotation(SmoothRotation);
+	}
 }
 
 inline void ADS_Player::TryGather()

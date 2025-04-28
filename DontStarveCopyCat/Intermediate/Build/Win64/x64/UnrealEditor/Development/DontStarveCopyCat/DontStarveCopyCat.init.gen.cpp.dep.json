@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\unrealeditor\\inc\\dontstarvecopycat\\uht\\dontstarvecopycat.init.gen.cpp",
+        "Source": "c:\\users\\user\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\unrealeditor\\inc\\dontstarvecopycat\\uht\\dontstarvecopycat.init.gen.cpp",
         "ProvidedModule": "",
-        "PCH": "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\x64\\dontstarvecopycateditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "PCH": "c:\\users\\user\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\x64\\dontstarvecopycateditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
         "Includes": [
-            "c:\\users\\minsoo\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dontstarvecopycat\\definitions.dontstarvecopycat.h"
+            "c:\\users\\user\\documents\\github\\dontstarve\\dontstarvecopycat\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\dontstarvecopycat\\definitions.dontstarvecopycat.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

@@ -48,7 +48,7 @@ public:
 	//채집 가능 거리
 	UPROPERTY(EditAnywhere, Category = "Interaction")
 	float GatherRange = 50.f;
-
+	
 	//Action
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
 	class UInputMappingContext* IMC_DontStarve;
