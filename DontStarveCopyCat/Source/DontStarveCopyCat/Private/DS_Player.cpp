@@ -8,7 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "GatherableItem.h"
+#include "GatherableBush.h"
 #include "InputMappingContext.h"
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
@@ -118,6 +118,7 @@ void ADS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	if (auto* input = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		input->BindAction(IA_DS_Move, ETriggerEvent::Triggered, this, &ADS_Player::OnActionMove);
+		//input->BindAction(IA_DS_CameraRotation, ETriggerEvent::Triggered, this, &ADS_Player::OnActionCameraRotation);
 		input->BindAction(IA_DS_Gather, ETriggerEvent::Started, this, &ADS_Player::TryGather);
 	}
 
@@ -142,6 +143,17 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 	}
 }
 
+//현재 카메라가 월드로 되어있어서, 카메라 회전이 이상함
+// void ADS_Player::OnActionCameraRotation(const FInputActionValue& value)
+// {
+// 	FRotator CurrentRotation = GetControlRotation();
+// 	FRotator TargetRotation = CurrentRotation;
+// 	TargetRotation.Yaw += CameraRotateAmount;
+//
+// 	FRotator newRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 5.f);
+// 	GetController()->SetControlRotation(newRotation);
+// }
+
 inline void ADS_Player::TryGather()
 {
 	//플레이어 위치 시작 -> 플레이어 앞방향 거리 끝
@@ -158,11 +170,14 @@ inline void ADS_Player::TryGather()
 	{
 		//채집 충돌완료 디버그메세지
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
-		
-		AGatherableItem* Item = Cast<AGatherableItem>(Hit.GetActor());
-		if (Item)
+
+		//Bush 채집
+		AGatherableBush* Bush = Cast<AGatherableBush>(Hit.GetActor());
+		if (Bush)
 		{
-			Item->OnGather();
+			//채집 애니메이션 시작 - bGatherBush = false는 애니메이션 끝날때 AnimNotify 추가하기
+			bGatherBush = true;
+			Bush->OnGather();
 		}
 	}
 	else

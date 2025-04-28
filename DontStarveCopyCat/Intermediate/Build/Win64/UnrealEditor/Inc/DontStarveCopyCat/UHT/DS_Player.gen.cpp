@@ -126,6 +126,16 @@ struct Z_Construct_UClass_ADS_Player_Statics
 		{ "ToolTip", "\xec\xb1\x84\xec\xa7\x91 \xea\xb0\x80\xeb\x8a\xa5 \xea\xb1\xb0\xeb\xa6\xac" },
 #endif
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bGatherBush_MetaData[] = {
+		{ "Category", "Interaction" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "//Bush \xec\xb1\x84\xec\xa7\x91 \xec\x97\xac\xeb\xb6\x80\n" },
+#endif
+		{ "ModuleRelativePath", "Public/DS_Player.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Bush \xec\xb1\x84\xec\xa7\x91 \xec\x97\xac\xeb\xb6\x80" },
+#endif
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_IMC_DontStarve_MetaData[] = {
 		{ "Category", "DS_PlayerInput" },
 #if !UE_BUILD_SHIPPING
@@ -142,7 +152,13 @@ struct Z_Construct_UClass_ADS_Player_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_IA_DS_Gather_MetaData[] = {
 		{ "Category", "DS_PlayerInput" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// UPROPERTY(EditAnywhere, Category = \"DS_PlayerInput\")\n// class UInputAction* IA_DS_CameraRotation;\n" },
+#endif
 		{ "ModuleRelativePath", "Public/DS_Player.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "UPROPERTY(EditAnywhere, Category = \"DS_PlayerInput\")\nclass UInputAction* IA_DS_CameraRotation;" },
+#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_SpringArmComp;
@@ -150,6 +166,8 @@ struct Z_Construct_UClass_ADS_Player_Statics
 	static const UECodeGen_Private::FStructPropertyParams NewProp_Direction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_ShadowDecal;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_GatherRange;
+	static void NewProp_bGatherBush_SetBit(void* Obj);
+	static const UECodeGen_Private::FBoolPropertyParams NewProp_bGatherBush;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_IMC_DontStarve;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_IA_DS_Move;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_IA_DS_Gather;
@@ -169,6 +187,11 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Sta
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_Direction = { "Direction", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, Direction), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Direction_MetaData), NewProp_Direction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_ShadowDecal = { "ShadowDecal", nullptr, (EPropertyFlags)0x0010000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, ShadowDecal), Z_Construct_UClass_UDecalComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ShadowDecal_MetaData), NewProp_ShadowDecal_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_GatherRange = { "GatherRange", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, GatherRange), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_GatherRange_MetaData), NewProp_GatherRange_MetaData) };
+void Z_Construct_UClass_ADS_Player_Statics::NewProp_bGatherBush_SetBit(void* Obj)
+{
+	((ADS_Player*)Obj)->bGatherBush = 1;
+}
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_bGatherBush = { "bGatherBush", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(ADS_Player), &Z_Construct_UClass_ADS_Player_Statics::NewProp_bGatherBush_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_bGatherBush_MetaData), NewProp_bGatherBush_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_IMC_DontStarve = { "IMC_DontStarve", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, IMC_DontStarve), Z_Construct_UClass_UInputMappingContext_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IMC_DontStarve_MetaData), NewProp_IMC_DontStarve_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_IA_DS_Move = { "IA_DS_Move", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, IA_DS_Move), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IA_DS_Move_MetaData), NewProp_IA_DS_Move_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ADS_Player_Statics::NewProp_IA_DS_Gather = { "IA_DS_Gather", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ADS_Player, IA_DS_Gather), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IA_DS_Gather_MetaData), NewProp_IA_DS_Gather_MetaData) };
@@ -178,6 +201,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ADS_Playe
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_Direction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_ShadowDecal,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_GatherRange,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_bGatherBush,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_IMC_DontStarve,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_IA_DS_Move,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ADS_Player_Statics::NewProp_IA_DS_Gather,
@@ -223,10 +247,10 @@ ADS_Player::~ADS_Player() {}
 struct Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ADS_Player, ADS_Player::StaticClass, TEXT("ADS_Player"), &Z_Registration_Info_UClass_ADS_Player, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADS_Player), 1062594069U) },
+		{ Z_Construct_UClass_ADS_Player, ADS_Player::StaticClass, TEXT("ADS_Player"), &Z_Registration_Info_UClass_ADS_Player, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ADS_Player), 1424089457U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_952054227(TEXT("/Script/DontStarveCopyCat"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_2916282736(TEXT("/Script/DontStarveCopyCat"),
 	Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_user_Documents_GitHub_DontStarve_DontStarveCopyCat_Source_DontStarveCopyCat_Public_DS_Player_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

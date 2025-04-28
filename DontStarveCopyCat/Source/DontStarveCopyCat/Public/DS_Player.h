@@ -45,9 +45,17 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Shadow")
 	class UDecalComponent* ShadowDecal;
 
+	// //camera 회전 각도
+	// UPROPERTY(EditAnywhere, Category = "Camera")
+	// float CameraRotateAmount = 45.0f;
+	
 	//채집 가능 거리
 	UPROPERTY(EditAnywhere, Category = "Interaction")
 	float GatherRange = 50.f;
+
+	//Bush 채집 여부
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
+	bool bGatherBush;
 	
 	//Action
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
@@ -56,11 +64,17 @@ public:
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
 	class UInputAction* IA_DS_Move;
 
+	// UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
+	// class UInputAction* IA_DS_CameraRotation;
+	
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
 	class UInputAction* IA_DS_Gather;
 	
 	//플레이어 움직임 함수
 	void OnActionMove(const FInputActionValue& value);
+
+	// //카메라 좌우 회전
+	// void OnActionCameraRotation(const FInputActionValue& value);
 	
 	//채집 시도 함수
 	UFUNCTION()
