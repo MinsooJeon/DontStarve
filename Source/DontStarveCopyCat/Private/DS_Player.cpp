@@ -14,6 +14,7 @@
 #include "Components/DecalComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "DS_PlayerAnim.h"
+#include "Blueprint/UserWidget.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -63,6 +64,25 @@ ADS_Player::ADS_Player()
 	ShadowDecal->SetRelativeLocation(FVector(0.f, 0.f, -90.f));
 	ShadowDecal->SetRelativeRotation(FRotator(90.f, 0.f, 90.f));
 
+	//player Widgets
+	static ConstructorHelpers::FClassFinder<UUserWidget> Menutemp(TEXT("/Game/DontStarveCopyCat/UI/WBP_DS_MenuWidget.WBP_DS_MenuWidget"));
+	if (Menutemp.Succeeded())
+	{
+		MenuWidgetClass = Menutemp.Class;
+	}
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> Inventorytemp(TEXT("/Game/DontStarveCopyCat/UI/WBP_DS_InventoryWidget.WBP_DS_InventoryWidget"));
+	if (Inventorytemp.Succeeded())
+	{
+		InventoryWidgetClass = Inventorytemp.Class;
+	}
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> Stattemp(TEXT("/Game/DontStarveCopyCat/UI/WBP_DS_StatWidget.WBP_DS_StatWidget"));
+	if (Stattemp.Succeeded())
+	{
+		StatWidgetClass = Stattemp.Class;
+	}
+	
 
 }
 
@@ -75,6 +95,14 @@ void ADS_Player::BeginPlay()
 	FRotator newRotation = GetActorRotation();
 	newRotation.Yaw += 180.f;
 	SetActorRotation(newRotation);
+
+	//Widgets 화면에 보이기
+	MenuWidget = CreateWidget(GetWorld()->GetFirstPlayerController(), MenuWidgetClass);
+	MenuWidget->AddToViewport();
+	InventoryWidget = CreateWidget(GetWorld()->GetFirstPlayerController(), InventoryWidgetClass);
+	InventoryWidget->AddToViewport();
+	StatWidget = CreateWidget(GetWorld()->GetFirstPlayerController(), StatWidgetClass);
+	StatWidget->AddToViewport();
 	
 }
 

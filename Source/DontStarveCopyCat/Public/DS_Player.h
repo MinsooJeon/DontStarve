@@ -83,6 +83,23 @@ public:
 	//채집 끝 AnimNotify
 	UFUNCTION()
 	void GatehrEndNotify();
+
+
+	//인게임 UI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
+	TSubclassOf<class UUserWidget> MenuWidgetClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
+	TSubclassOf<class UUserWidget> InventoryWidgetClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
+	TSubclassOf<class UUserWidget> StatWidgetClass;
+	
+	UPROPERTY()
+	UUserWidget* MenuWidget;
+	UPROPERTY()
+	UUserWidget* InventoryWidget;
+	UPROPERTY()
+	UUserWidget* StatWidget;
+	
 };
 
 
