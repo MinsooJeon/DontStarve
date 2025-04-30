@@ -49,9 +49,9 @@ public:
 	// UPROPERTY(EditAnywhere, Category = "Camera")
 	// float CameraRotateAmount = 45.0f;
 	
-	//채집 가능 거리
+	//상호작용 가능 거리
 	UPROPERTY(EditAnywhere, Category = "Interaction")
-	float GatherRange = 50.f;
+	float InteractionRange = 50.f;
 
 	//Bush 채집 여부
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
@@ -69,6 +69,9 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
 	class UInputAction* IA_DS_Gather;
+
+	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
+	class UInputAction* IA_DS_Chop;
 	
 	//플레이어 움직임 함수
 	void OnActionMove(const FInputActionValue& value);
@@ -83,6 +86,10 @@ public:
 	//채집 끝 AnimNotify
 	UFUNCTION()
 	void GatehrEndNotify();
+
+	//도끼질 시도 함수
+	UFUNCTION()
+	void TryChopping();
 
 
 	//인게임 UI

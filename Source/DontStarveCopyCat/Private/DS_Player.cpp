@@ -9,11 +9,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GatherableBush.h"
+#include "GatherableTree.h"
 #include "InputMappingContext.h"
-#include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "DS_PlayerAnim.h"
 #include "Blueprint/UserWidget.h"
 
 // Sets default values
@@ -28,7 +26,7 @@ ADS_Player::ADS_Player()
 	//카메라 암 절대회전 
 	SpringArmComp->SetUsingAbsoluteRotation(true);
 	//위에서 아래로 바라보기
-	SpringArmComp->SetWorldRotation(FRotator(-50.f, 0, 0));
+	SpringArmComp->SetWorldRotation(FRotator(-35.f, 0, 0));
 	//카메라 암 길이
 	SpringArmComp->TargetArmLength = 1400.f;
 	//카메라 클리핑 해제
@@ -149,6 +147,7 @@ void ADS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 		input->BindAction(IA_DS_Move, ETriggerEvent::Triggered, this, &ADS_Player::OnActionMove);
 		//input->BindAction(IA_DS_CameraRotation, ETriggerEvent::Triggered, this, &ADS_Player::OnActionCameraRotation);
 		input->BindAction(IA_DS_Gather, ETriggerEvent::Started, this, &ADS_Player::TryGather);
+		input->BindAction(IA_DS_Chop, ETriggerEvent::Started, this, &ADS_Player::TryChopping);
 	}
 
 }
@@ -187,7 +186,7 @@ inline void ADS_Player::TryGather()
 {
 	//플레이어 위치 시작 -> 플레이어 앞방향 거리 끝
 	FVector Start = this->GetActorLocation();
-	FVector End = Start + this->GetActorForwardVector() * GatherRange;
+	FVector End = Start + this->GetActorForwardVector() * InteractionRange;
 
 	//LineTrace Hit, 본인 제외
 	FHitResult Hit;
@@ -197,16 +196,16 @@ inline void ADS_Player::TryGather()
 	//LineTrace해서 True면 Item 습득 및 파괴 
 	if (bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
 	{
-		//채집 충돌완료 디버그메세지
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
-
 		//Bush 채집
 		AGatherableBush* Bush = Cast<AGatherableBush>(Hit.GetActor());
 		if (Bush)
 		{
-			//채집 애니메이션 시작 - bGatherBush = false는 애니 mnb                                                                                                                                                                                                                                                                                                                                                                                         메이션 끝날때 AnimNotify 추가하기
+			//채집 애니메이션 시작 - bGatherBush = false는 AnimNotify                                                                                                                                                                                                                                                                                                                                                                                         메이션 끝날때 AnimNotify 추가하기
 			bGatherBush = true;
 			Bush->OnGather();
+
+			//채집 충돌완료 디버그메세지
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
 		}
 	}
 	else
@@ -220,4 +219,32 @@ void ADS_Player::GatehrEndNotify()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "GatherEnd");
 	bGatherBush = false;
+}
+
+void ADS_Player::TryChopping()
+{
+	//플레이어 위치 시작 -> 플레이어 앞방향 거리 끝
+	FVector Start = this->GetActorLocation();
+	FVector End = Start + this->GetActorForwardVector() * InteractionRange;
+
+	//LineTrace Hit, 본인 제외
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	//LineTrace해서 True면 도끼질 시작
+	if (bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
+	{
+		AGatherableTree* Tree = Cast<AGatherableTree>(Hit.GetActor());
+		if (Tree)
+		{
+			//도끼질 충돌완료 디버그메세지
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Chopping...");
+		}
+	}
+	else
+	{
+		//거리안에 아이템 없을시 LineTrace 그려주기
+		DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
+	}
 }

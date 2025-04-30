@@ -2,6 +2,7 @@
 
 
 #include "GatherableBush.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 AGatherableBush::AGatherableBush()
@@ -9,15 +10,18 @@ AGatherableBush::AGatherableBush()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//콜라이더 박스크기
+	BoxComp->SetBoxExtent(FVector(50.f));
+	//메시 위치
 	MeshComp->SetRelativeLocation(FVector(40.f, -10, -60.f));
-	
+	//수풀 메시 가져오기
 	ConstructorHelpers::FObjectFinder<UStaticMesh> tempMesh(TEXT("/Game/DontStarveCopyCat/Models/SM_MyBush.SM_MyBush"));
 	if (tempMesh.Succeeded())
 	{
 		MeshComp->SetStaticMesh(tempMesh.Object);
-		OutlineMesh->SetStaticMesh(tempMesh.Object);
+		//OutlineMesh->SetStaticMesh(tempMesh.Object);
 	}
-
+	//수풀 메시 이름
 	ItemName = TEXT("GatherableBush");
 }
 
