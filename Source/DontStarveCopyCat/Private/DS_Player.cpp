@@ -80,7 +80,17 @@ ADS_Player::ADS_Player()
 	{
 		StatWidgetClass = Stattemp.Class;
 	}
-	
+
+	//도끼 생성(왼쪽 손)
+	AxeMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AxeMeshComp"));
+	AxeMeshComp->SetupAttachment(GetMesh(), TEXT("hand_l"));
+	AxeMeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	ConstructorHelpers::FObjectFinder<UStaticMesh> AxeTemp(TEXT("/Game/DontStarveCopyCat/Models/SM_MyAxe.SM_MyAxe"));
+	if (AxeTemp.Succeeded())
+	{
+		AxeMeshComp->SetStaticMesh(AxeTemp.Object);
+	}
 
 }
 

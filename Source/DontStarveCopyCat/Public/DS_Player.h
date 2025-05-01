@@ -56,6 +56,10 @@ public:
 	//Bush 채집 여부
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
 	bool bGatherBush;
+
+	//도끼 메시 장착
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UStaticMeshComponent* AxeMeshComp;
 	
 	//Action
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
