@@ -76,6 +76,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
 	class UInputAction* IA_DS_Chop;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UAnimMontage* GatherMontage;
 	
 	//플레이어 움직임 함수
 	void OnActionMove(const FInputActionValue& value);

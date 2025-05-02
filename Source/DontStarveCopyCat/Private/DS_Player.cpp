@@ -3,6 +3,7 @@
 
 #include "DontStarveCopyCat/Public/DS_Player.h"
 
+#include "DS_PlayerAnim.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -91,6 +92,8 @@ ADS_Player::ADS_Player()
 	{
 		AxeMeshComp->SetStaticMesh(AxeTemp.Object);
 	}
+	//도끼 그림자 제거
+	AxeMeshComp->CastShadow = false;
 
 }
 
@@ -212,6 +215,13 @@ inline void ADS_Player::TryGather()
 		{
 			//채집 애니메이션 시작 - bGatherBush = false는 AnimNotify                                                                                                                                                                                                                                                                                                                                                                                         메이션 끝날때 AnimNotify 추가하기
 			bGatherBush = true;
+
+			//Gather 애니메이션 몽타주 실행
+			if (auto* anim = Cast<UDS_PlayerAnim>(GetMesh()->GetAnimInstance()))
+			{
+				anim->Montage_Play(GatherMontage);
+			}
+			
 			Bush->OnGather();
 
 			//채집 충돌완료 디버그메세지
