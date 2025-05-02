@@ -57,6 +57,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
 	bool bGatherBush;
 
+	//채집 중인 Bush 액터 변수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class AGatherableBush* Bush;
+	
 	//도끼 메시 장착
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UStaticMeshComponent* AxeMeshComp;

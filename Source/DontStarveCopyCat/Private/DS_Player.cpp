@@ -182,6 +182,16 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 		FRotator SmoothRotation = FMath::RInterpTo(GetActorRotation(), MoveRotation, GetWorld()->GetDeltaSeconds(), 10.f);
 		SetActorRotation(SmoothRotation);
 	}
+
+	//움직임이 시작되면 Gather 몽타주를 실행하고 있으면 몽타주를 멈추고싶다.
+	if (auto* anim = Cast<UDS_PlayerAnim>(GetMesh()->GetAnimInstance()))
+	{
+		if (bGatherBush)
+		{
+			anim->Montage_Stop(0.1f);
+			bGatherBush = false;
+		}
+	}
 }
 
 //현재 카메라가 월드로 되어있어서, 카메라 회전이 이상함
@@ -206,24 +216,25 @@ inline void ADS_Player::TryGather()
 	FCollisionQueryParams Params;
 	Params.AddIgnoredActor(this);
 
-	//LineTrace해서 True면 Item 습득 및 파괴 
+	//LineTrace해서 True면 채집 시작, 몽타주 실행
 	if (bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
 	{
 		//Bush 채집
-		AGatherableBush* Bush = Cast<AGatherableBush>(Hit.GetActor());
+		Bush = Cast<AGatherableBush>(Hit.GetActor());
 		if (Bush)
 		{
-			//채집 애니메이션 시작 - bGatherBush = false는 AnimNotify                                                                                                                                                                                                                                                                                                                                                                                         메이션 끝날때 AnimNotify 추가하기
-			bGatherBush = true;
-
 			//Gather 애니메이션 몽타주 실행
 			if (auto* anim = Cast<UDS_PlayerAnim>(GetMesh()->GetAnimInstance()))
 			{
-				anim->Montage_Play(GatherMontage);
+				//몽타주를 실행하고 있지 않으면 몽타주 실행하고싶다.
+				if (false == bGatherBush)
+				{
+					anim->Montage_Play(GatherMontage);
+					//채집 애니메이션 시작 - bGatherBush = false는 AnimNotify                                                                                                                                                                                                                                                                                                                                                                                         메이션 끝날때 AnimNotify 추가하기
+					bGatherBush = true;
+				}
 			}
 			
-			Bush->OnGather();
-
 			//채집 충돌완료 디버그메세지
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
 		}
@@ -237,6 +248,9 @@ inline void ADS_Player::TryGather()
 
 void ADS_Player::GatehrEndNotify()
 {
+	//수풀 채집 완료일 때, 수풀을 없애고 싶다.(Destroy)
+	Bush->OnGather();
+	
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "GatherEnd");
 	bGatherBush = false;
 }
