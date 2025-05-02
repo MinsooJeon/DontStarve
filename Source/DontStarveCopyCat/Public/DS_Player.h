@@ -57,9 +57,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
 	bool bGatherBush;
 
+	//Tree 도끼질 여부
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
+	bool bChopTree;
+	
 	//채집 중인 Bush 액터 변수
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
 	class AGatherableBush* Bush;
+
+	//도끼질 중인 Tree 액터 변수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
+	class AGatherableTree* Tree;
 	
 	//도끼 메시 장착
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -81,8 +89,17 @@ public:
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
 	class UInputAction* IA_DS_Chop;
 
+	//플레이어 애니메이션
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UDS_PlayerAnim* PlayerAnim;
+
+	//채집 몽타주
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerMontage")
 	class UAnimMontage* GatherMontage;
+
+	//도끼질 몽타주
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerMontage")
+	class UAnimMontage* ChopMontage;
 	
 	//플레이어 움직임 함수
 	void OnActionMove(const FInputActionValue& value);
@@ -96,11 +113,15 @@ public:
 	
 	//채집 끝 AnimNotify
 	UFUNCTION()
-	void GatehrEndNotify();
+	void GatherEndNotify();
 
 	//도끼질 시도 함수
 	UFUNCTION()
 	void TryChopping();
+
+	//도끼질 끝 AnimNotify
+	UFUNCTION()
+	void ChopEndNotify();
 
 
 	//인게임 UI

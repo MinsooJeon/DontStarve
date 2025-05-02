@@ -114,6 +114,8 @@ void ADS_Player::BeginPlay()
 	InventoryWidget->AddToViewport();
 	StatWidget = CreateWidget(GetWorld()->GetFirstPlayerController(), StatWidgetClass);
 	StatWidget->AddToViewport();
+	//플레이어 애니메이션 캐스팅
+	PlayerAnim = Cast<UDS_PlayerAnim>(GetMesh()->GetAnimInstance());
 	
 }
 
@@ -183,13 +185,20 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 		SetActorRotation(SmoothRotation);
 	}
 
-	//움직임이 시작되면 Gather 몽타주를 실행하고 있으면 몽타주를 멈추고싶다.
-	if (auto* anim = Cast<UDS_PlayerAnim>(GetMesh()->GetAnimInstance()))
+	//움직임이 시작되면 몽타주를 실행하고 있으면 몽타주를 멈추고싶다.
+	if (PlayerAnim)
 	{
+		//채집 몽타주 멈추기
 		if (bGatherBush)
 		{
-			anim->Montage_Stop(0.1f);
+			PlayerAnim->Montage_Stop(0.1f);
 			bGatherBush = false;
+		}
+		//도끼질 몽타주 멈추기
+		if (bChopTree)
+		{
+			PlayerAnim->Montage_Stop(0.1f);
+			bChopTree = false;
 		}
 	}
 }
@@ -224,19 +233,20 @@ inline void ADS_Player::TryGather()
 		if (Bush)
 		{
 			//Gather 애니메이션 몽타주 실행
-			if (auto* anim = Cast<UDS_PlayerAnim>(GetMesh()->GetAnimInstance()))
+			if (PlayerAnim)
 			{
 				//몽타주를 실행하고 있지 않으면 몽타주 실행하고싶다.
 				if (false == bGatherBush)
 				{
-					anim->Montage_Play(GatherMontage);
-					//채집 애니메이션 시작 - bGatherBush = false는 AnimNotify                                                                                                                                                                                                                                                                                                                                                                                         메이션 끝날때 AnimNotify 추가하기
+					PlayerAnim->Montage_Play(GatherMontage);
+					//채집 애니메이션 시작 - bGatherBush = false는 애니메이션 끝날때 AnimNotify에 추가
 					bGatherBush = true;
+
+					//채집 충돌완료 디버그메세지
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
 				}
 			}
 			
-			//채집 충돌완료 디버그메세지
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
 		}
 	}
 	else
@@ -246,7 +256,7 @@ inline void ADS_Player::TryGather()
 	}
 }
 
-void ADS_Player::GatehrEndNotify()
+void ADS_Player::GatherEndNotify()
 {
 	//수풀 채집 완료일 때, 수풀을 없애고 싶다.(Destroy)
 	Bush->OnGather();
@@ -269,11 +279,24 @@ void ADS_Player::TryChopping()
 	//LineTrace해서 True면 도끼질 시작
 	if (bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
 	{
-		AGatherableTree* Tree = Cast<AGatherableTree>(Hit.GetActor());
+		//Tree 도끼질
+		Tree = Cast<AGatherableTree>(Hit.GetActor());
 		if (Tree)
 		{
-			//도끼질 충돌완료 디버그메세지
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Chopping...");
+			//AxeChop 애니메이션 몽타주 실행
+			if (PlayerAnim)
+			{
+				if (false == bChopTree)
+				{
+					PlayerAnim->Montage_Play(ChopMontage);
+					//도끼질 애니메이션 시작, bChopTree = false는 몽타주 마지막에 AnimNotify로 추가
+					bChopTree = true;
+
+					//도끼질 충돌완료 디버그메세지
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Chopping...");
+				}
+			}
+			
 		}
 	}
 	else
@@ -281,4 +304,12 @@ void ADS_Player::TryChopping()
 		//거리안에 아이템 없을시 LineTrace 그려주기
 		DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
 	}
+}
+
+void ADS_Player::ChopEndNotify()
+{
+	//나무 도끼질 몽타주 완료일 때
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "ChopEnd");
+	bChopTree = false;
 }
