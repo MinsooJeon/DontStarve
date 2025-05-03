@@ -77,3 +77,14 @@ void AGatherableItem::OnChopping()
 	}
 }
 
+void AGatherableItem::OnPickUp()
+{
+	bOnPickUp = true;
+
+	//줍기 완료 여부
+	if (bOnPickUp)
+	{
+		this->Destroy();
+	}
+}
+

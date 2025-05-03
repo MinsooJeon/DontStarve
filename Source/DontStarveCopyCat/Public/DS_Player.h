@@ -123,6 +123,10 @@ public:
 	UFUNCTION()
 	void ChopEndNotify();
 
+	//줍기 시도 함수
+	UFUNCTION()
+	void TryPickUp();
+
 
 	//인게임 UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")

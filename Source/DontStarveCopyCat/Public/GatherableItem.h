@@ -45,6 +45,9 @@ public:
 	//도끼질여부
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	bool bOnChopping;
+	//줍기여부
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	bool bOnPickUp;
 	
 	//채집함수
 	UFUNCTION()
@@ -52,5 +55,8 @@ public:
 	//도끼질함수
 	UFUNCTION()
 	virtual void OnChopping();
+	//줍기함수
+	UFUNCTION()
+	virtual void OnPickUp();
 };
 

@@ -24,5 +24,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	//상속받은 줍기함수
+	virtual void OnPickUp() override;
 	
 };

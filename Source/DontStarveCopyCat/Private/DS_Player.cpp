@@ -327,3 +327,8 @@ void ADS_Player::ChopEndNotify()
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "ChopEnd");
 	bChopTree = false;
 }
+
+void ADS_Player::TryPickUp()
+{
+	
+}
