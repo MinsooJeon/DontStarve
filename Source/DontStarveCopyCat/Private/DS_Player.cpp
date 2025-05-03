@@ -116,6 +116,20 @@ void ADS_Player::BeginPlay()
 	StatWidget->AddToViewport();
 	//플레이어 애니메이션 캐스팅
 	PlayerAnim = Cast<UDS_PlayerAnim>(GetMesh()->GetAnimInstance());
+
+	//마우스 커서 표시
+	if (APlayerController* pc = Cast<APlayerController>(GetController()))
+	{
+		pc->bShowMouseCursor = true;
+
+		//UI와 게임 모두 입력 받을 수 있도록 설정
+		FInputModeGameAndUI InputMode;
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		InputMode.SetHideCursorDuringCapture(false);
+
+		//적용
+		pc->SetInputMode(InputMode);
+	}
 	
 }
 
