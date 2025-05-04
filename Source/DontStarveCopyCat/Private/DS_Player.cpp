@@ -10,7 +10,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GatherableBush.h"
+#include "GatherableFlint.h"
 #include "GatherableTree.h"
+#include "GatherableTwigs.h"
 #include "InputMappingContext.h"
 #include "Components/DecalComponent.h"
 #include "Blueprint/UserWidget.h"
@@ -177,6 +179,7 @@ void ADS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 		//input->BindAction(IA_DS_CameraRotation, ETriggerEvent::Triggered, this, &ADS_Player::OnActionCameraRotation);
 		input->BindAction(IA_DS_Gather, ETriggerEvent::Started, this, &ADS_Player::TryGather);
 		input->BindAction(IA_DS_Chop, ETriggerEvent::Started, this, &ADS_Player::TryChopping);
+		input->BindAction(IA_DS_PickUp, ETriggerEvent::Started, this, &ADS_Player::TryPickUp);
 	}
 
 }
@@ -213,6 +216,12 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 		{
 			PlayerAnim->Montage_Stop(0.1f);
 			bChopTree = false;
+		}
+		//줍기 몽타주 멈추기
+		if (bPickUp)
+		{
+			PlayerAnim->Montage_Stop(0.1f);
+			bPickUp = false;
 		}
 	}
 }
@@ -323,6 +332,7 @@ void ADS_Player::TryChopping()
 void ADS_Player::ChopEndNotify()
 {
 	//나무 도끼질 몽타주 완료일 때
+	Tree->OnChopping();
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "ChopEnd");
 	bChopTree = false;
@@ -330,5 +340,73 @@ void ADS_Player::ChopEndNotify()
 
 void ADS_Player::TryPickUp()
 {
+	//플레이어 위치 시작 -> 플레이어 앞방향 거리 끝
+	FVector Start = this->GetActorLocation();
+	FVector End = Start + this->GetActorForwardVector() * InteractionRange;
+
+	//LineTrace Hit, 본인 제외
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	//LineTrace해서 True면 줍기 시작
+	if (bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
+	{
+		//부싯돌 Flint 줍기
+		Flint = Cast<AGatherableFlint>(Hit.GetActor());
+		if (Flint)
+		{
+			//줍기 애니메이션 몽타주 실행
+			if (PlayerAnim)
+			{
+				if (false == bPickUp)
+				{
+					PlayerAnim->Montage_Play(PickUpMontage);
+					bPickUp = true;
+				
+					//부싯돌 충돌완료 디버그메세지
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Flint Picking Up...");
+				}
+			}
+		}
+
+		//나뭇가지 Twigs 줍기
+		Twigs = Cast<AGatherableTwigs>(Hit.GetActor());
+		if (Twigs)
+		{
+			//줍기 애니메이션 몽타주 실행
+			if (PlayerAnim)
+			{
+				if (false == bPickUp)
+				{
+					PlayerAnim->Montage_Play(PickUpMontage);
+					bPickUp = true;
+				
+					//나뭇가지 충돌완료 디버그메세지
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Twigs Picking Up...");
+				}
+			}
+		}
+	}
+	else
+	{
+		//거리안에 아이템 없을시 LineTrace 그려주기
+		DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
+	}
+}
+
+void ADS_Player::PickUpEndNotify()
+{
+	//줍기 몽타주 완료할 때
+	if (Flint)
+	{
+		Flint->OnPickUp();
+	}
+	if (Twigs)
+	{
+		Twigs->OnPickUp();
+	}
 	
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "PickUpEnd");
+	bPickUp = false;
 }
