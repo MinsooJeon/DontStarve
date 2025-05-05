@@ -147,8 +147,7 @@ public:
 	class UTextBlock* BottomText14;
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* BottomText15;
-	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* BottomText16;
+
 	
 
 	//배열로 활용
@@ -164,8 +163,60 @@ public:
 	UPROPERTY()
 	TArray<UTextBlock*> InventoryTextPercents;
 
+	//장비 인벤토리 슬롯
+	UPROPERTY(meta = (BindWidget))
+	class UImage* EquipImage1;
+
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* EquipText1;
+
+	//플레이어 포인터 저장
+	class ADS_Player* PlayerRef;
+
+	//인벤토리 데이터 참조
+	TArray<FInventoryItem>* InventoryData;
+
 	//슬롯 전체 업데이트
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void UpdateAllSlots(const TArray<FInventoryItem>& InventoryItems);
+
+	//바인딩 함수
+	UFUNCTION()
+	void OnInventory0SlotClicked();
+	UFUNCTION()
+	void OnInventory1SlotClicked();
+	UFUNCTION()
+	void OnInventory2SlotClicked();
+	UFUNCTION()
+	void OnInventory3SlotClicked();
+	UFUNCTION()
+	void OnInventory4SlotClicked();
+	UFUNCTION()
+	void OnInventory5SlotClicked();
+	UFUNCTION()
+	void OnInventory6SlotClicked();
+	UFUNCTION()
+	void OnInventory7SlotClicked();
+	UFUNCTION()
+	void OnInventory8SlotClicked();
+	UFUNCTION()
+	void OnInventory9SlotClicked();
+	UFUNCTION()
+	void OnInventory10SlotClicked();
+	UFUNCTION()
+	void OnInventory11SlotClicked();
+	UFUNCTION()
+	void OnInventory12SlotClicked();
+	UFUNCTION()
+	void OnInventory13SlotClicked();
+	UFUNCTION()
+	void OnInventory14SlotClicked();
+	
+	UFUNCTION()
+	void OnInventorySlotClicked(int32 SlotIndex);
 	
 };
+
+
+
+

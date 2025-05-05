@@ -29,6 +29,8 @@ AGatherableTwigs::AGatherableTwigs()
 	{
 		ItemIcon = IconTemp.Object;
 	}
+
+	IsEquip = false;
 }
 
 void AGatherableTwigs::BeginPlay()

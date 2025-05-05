@@ -30,6 +30,8 @@ AGatherableBush::AGatherableBush()
 	{
 		ItemIcon = IconTemp.Object;
 	}
+
+	IsEquip = false;
 }
 
 // Called when the game starts or when spawned

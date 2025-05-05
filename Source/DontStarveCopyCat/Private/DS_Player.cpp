@@ -101,6 +101,8 @@ ADS_Player::ADS_Player()
 	}
 	//도끼 그림자 제거
 	AxeMeshComp->CastShadow = false;
+	//처음은 안보이게 세팅
+	AxeMeshComp->SetVisibility(false);
 	
 }
 

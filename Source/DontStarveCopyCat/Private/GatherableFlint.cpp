@@ -29,6 +29,8 @@ AGatherableFlint::AGatherableFlint()
 	{
 		ItemIcon = IconTemp.Object;
 	}
+
+	IsEquip = false;
 }
 
 void AGatherableFlint::BeginPlay()

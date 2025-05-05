@@ -36,6 +36,8 @@ AGatherableTree::AGatherableTree()
 
 	ItemID = TEXT("GatherableTree");
 
+	IsEquip = false;
+
 }
 
 // Called when the game starts or when spawned

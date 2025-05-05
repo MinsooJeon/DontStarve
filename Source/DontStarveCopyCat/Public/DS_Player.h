@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DS_InventoryWidget.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "DS_Player.generated.h"
@@ -168,7 +167,7 @@ public:
 	UUserWidget* StatWidget;
 
 	UPROPERTY()
-	UDS_InventoryWidget* InventorySlotWidget;
+	class UDS_InventoryWidget* InventorySlotWidget;
 	
 	//인벤토리 컴포넌트 붙이기
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
