@@ -303,7 +303,7 @@ void ADS_Player::GatherEndNotify()
 		return;
 
 	//인벤토리에 아이템 추가
-	InventoryComp->AddItem(Bush->ItemID, Bush->ItemIcon, Bush->Quantity);
+	InventoryComp->AddItem(Bush->ItemID, Bush->ItemIcon, Bush->IsEquip, Bush->Quantity);
 
 	//UI 갱신
 	if (InventorySlotWidget)
@@ -365,7 +365,7 @@ void ADS_Player::ChopEndNotify()
 		return;
 	
 	//인벤토리에 아이템 추가
-	InventoryComp->AddItem(Tree->ItemID, Tree->ItemIcon, Tree->Quantity);
+	InventoryComp->AddItem(Tree->ItemID, Tree->ItemIcon, Tree->IsEquip, Tree->Quantity);
 	
 	//나무 도끼질 몽타주 완료일 때
 	Tree->OnChopping();
@@ -440,7 +440,7 @@ void ADS_Player::PickUpEndNotify()
 	if (Flint)
 	{
 		//인벤토리에 아이템 추가
-		InventoryComp->AddItem(Flint->ItemID, Flint->ItemIcon, Flint->Quantity);
+		InventoryComp->AddItem(Flint->ItemID, Flint->ItemIcon, Flint->IsEquip, Flint->Quantity);
 
 		//UI 갱신
 		if (InventorySlotWidget)
@@ -453,7 +453,7 @@ void ADS_Player::PickUpEndNotify()
 	if (Twigs)
 	{
 		//인벤토리에 아이템 추가
-		InventoryComp->AddItem(Twigs->ItemID, Twigs->ItemIcon, Twigs->Quantity);
+		InventoryComp->AddItem(Twigs->ItemID, Twigs->ItemIcon, Twigs->IsEquip, Twigs->Quantity);
 
 		//UI 갱신
 		if (InventorySlotWidget)

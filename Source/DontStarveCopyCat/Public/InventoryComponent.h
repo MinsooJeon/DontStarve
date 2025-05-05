@@ -32,7 +32,7 @@ public:
 
 	//아이템 추가 함수
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void AddItem(FName ItemID, UTexture2D* ItemIcon, int32 Quantity = 1);
+	void AddItem(FName ItemID, UTexture2D* ItemIcon, bool IsEquip, int32 Quantity = 1);
 
 	//아이템 찾기 함수
 	UFUNCTION(BlueprintCallable, Category = "Inventory")

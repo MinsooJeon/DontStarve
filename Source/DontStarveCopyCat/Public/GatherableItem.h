@@ -46,6 +46,10 @@ public:
 	//아이템 갯수
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
 	int32 Quantity = 1;
+
+	//장비 여부
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
+	bool IsEquip = false;
 	
 	//채집여부
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)

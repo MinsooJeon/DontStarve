@@ -33,6 +33,12 @@ void UDS_InventoryWidget::CacheSlotWidgets()
 		TopText6,TopText7,TopText8,TopText9,TopText10,
 		TopText11,TopText12,TopText13,TopText14,TopText15
 	};
+
+	InventoryTextPercents = {
+		BottomText1,BottomText2,BottomText3,BottomText4,BottomText5,
+		BottomText6,BottomText7,BottomText8,BottomText9,BottomText10,
+		BottomText11,BottomText12,BottomText13,BottomText14,BottomText15, BottomText16
+	};
 }
 
 void UDS_InventoryWidget::UpdateAllSlots(const TArray<FInventoryItem>& InventoryItems)
@@ -48,10 +54,23 @@ void UDS_InventoryWidget::UpdateAllSlots(const TArray<FInventoryItem>& Inventory
 				InventoryImages[i]->SetBrushFromTexture(Item.ItemIcon);
 				InventoryImages[i]->SetVisibility(ESlateVisibility::Visible);
 			}
-			if (InventoryTextCounts[i])
+			//채집 아이템 일때
+			if (false == Item.IsEquip)
 			{
-				InventoryTextCounts[i]->SetText(FText::AsNumber(Item.Quantity));
-				InventoryTextCounts[i]->SetVisibility(ESlateVisibility::Visible);
+				if (InventoryTextCounts[i])
+				{
+					InventoryTextCounts[i]->SetText(FText::AsNumber(Item.Quantity));
+					InventoryTextCounts[i]->SetVisibility(ESlateVisibility::Visible);
+				}
+			}
+			//도구 아이템 일때
+			else
+			{
+				if (InventoryTextPercents[i])
+				{
+					InventoryTextPercents[i]->SetText(FText::AsPercent(1.f)); // 100%
+					InventoryTextPercents[i]->SetVisibility(ESlateVisibility::Visible);
+				}
 			}
 		}
 		else
@@ -66,6 +85,11 @@ void UDS_InventoryWidget::UpdateAllSlots(const TArray<FInventoryItem>& Inventory
 			{
 				InventoryTextCounts[i]->SetText(FText::GetEmpty());
 				InventoryTextCounts[i]->SetVisibility(ESlateVisibility::Hidden);
+			}
+			if (InventoryTextPercents[i])
+			{
+				InventoryTextPercents[i]->SetText(FText::GetEmpty());
+				InventoryTextPercents[i]->SetVisibility(ESlateVisibility::Hidden);
 			}
 		}
 	}

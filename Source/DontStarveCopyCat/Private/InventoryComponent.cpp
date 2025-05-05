@@ -32,7 +32,7 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// ...
 }
 
-void UInventoryComponent::AddItem(FName ItemID, UTexture2D* ItemIcon, int32 Quantity)
+void UInventoryComponent::AddItem(FName ItemID, UTexture2D* ItemIcon, bool IsEquip, int32 Quantity)
 {
 	//아이템 인덱스 찾기
 	int32 Index = FindItemIndex(ItemID);
@@ -49,6 +49,7 @@ void UInventoryComponent::AddItem(FName ItemID, UTexture2D* ItemIcon, int32 Quan
 		NewItem.ItemID = ItemID;
 		NewItem.Quantity = Quantity;
 		NewItem.ItemIcon = ItemIcon;
+		NewItem.IsEquip = IsEquip;
 
 		Items.Add(NewItem);
 	}
@@ -74,14 +75,16 @@ void UInventoryComponent::InitializeDefaultItems()
 	Axe.ItemID = FName(TEXT("Axe"));
 	Axe.Quantity = 1;
 	Axe.ItemIcon = LoadObject<UTexture2D>(nullptr, TEXT("/Game/DontStarveCopyCat/UI/Images/Axe"));
-
-	AddItem(Axe.ItemID, Axe.ItemIcon, Axe.Quantity);
+	Axe.IsEquip = true;
+	
+	AddItem(Axe.ItemID, Axe.ItemIcon, Axe.IsEquip, Axe.Quantity);
 
 	FInventoryItem Torch;
 	Torch.ItemID = FName(TEXT("Torch"));
 	Torch.Quantity = 1;
 	Torch.ItemIcon = LoadObject<UTexture2D>(nullptr, TEXT("/Game/DontStarveCopyCat/UI/Images/Torch"));
-
-	AddItem(Torch.ItemID, Torch.ItemIcon, Torch.Quantity);
+	Torch.IsEquip = true;
+	
+	AddItem(Torch.ItemID, Torch.ItemIcon, Torch.IsEquip, Torch.Quantity);
 }
 

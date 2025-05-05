@@ -24,8 +24,12 @@ struct FInventoryItem
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UTexture2D* ItemIcon;
 
+	//장비인지 여부
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsEquip;
+
 	//생성자 함수
-	FInventoryItem() : ItemID(NAME_None), Quantity(0), ItemIcon(nullptr) {}
+	FInventoryItem() : ItemID(NAME_None), Quantity(0), ItemIcon(nullptr), IsEquip(false) {}
 		
 };
 

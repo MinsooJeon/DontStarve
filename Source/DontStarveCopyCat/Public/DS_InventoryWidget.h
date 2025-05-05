@@ -117,6 +117,38 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* TopText15;
 	
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText1;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText2;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText3;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText4;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText5;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText6;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText7;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText8;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText9;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText10;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText11;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText12;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText13;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText14;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText15;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BottomText16;
 	
 
 	//배열로 활용
@@ -128,6 +160,9 @@ public:
 
 	UPROPERTY()
 	TArray<UTextBlock*> InventoryTextCounts;
+
+	UPROPERTY()
+	TArray<UTextBlock*> InventoryTextPercents;
 
 	//슬롯 전체 업데이트
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
