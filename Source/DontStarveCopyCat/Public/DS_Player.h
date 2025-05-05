@@ -84,6 +84,10 @@ public:
 	//도끼 메시 장착
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UStaticMeshComponent* AxeMeshComp;
+
+	//횃불 메시 장착
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UStaticMeshComponent* TorchMeshComp;
 	
 	//Action
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")

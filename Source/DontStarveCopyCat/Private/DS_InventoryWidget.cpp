@@ -268,9 +268,24 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 		(*InventoryData)[SlotIndex] = FInventoryItem();
 
 		//손에 장비 보여주기
+		//도끼
 		if (ClickedItem.ItemID == "Axe")
 		{
+			if (PlayerRef->TorchMeshComp->IsVisible())
+			{
+				PlayerRef->TorchMeshComp->SetVisibility(false);
+			}
 			PlayerRef->AxeMeshComp->SetVisibility(true);
+			
+		}
+		//횃불
+		if (ClickedItem.ItemID == "Torch")
+		{
+			if (PlayerRef->AxeMeshComp->IsVisible())
+			{
+				PlayerRef->AxeMeshComp->SetVisibility(false);
+			}
+			PlayerRef->TorchMeshComp->SetVisibility(true);
 		}
 	}
 }

@@ -94,7 +94,7 @@ ADS_Player::ADS_Player()
 	AxeMeshComp->SetupAttachment(GetMesh(), TEXT("hand_l"));
 	AxeMeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	ConstructorHelpers::FObjectFinder<UStaticMesh> AxeTemp(TEXT("/Game/DontStarveCopyCat/Models/SM_MyAxe.SM_MyAxe"));
+	ConstructorHelpers::FObjectFinder<UStaticMesh> AxeTemp(TEXT("/Game/DontStarveCopyCat/Models/SM_MyAxe"));
 	if (AxeTemp.Succeeded())
 	{
 		AxeMeshComp->SetStaticMesh(AxeTemp.Object);
@@ -103,7 +103,21 @@ ADS_Player::ADS_Player()
 	AxeMeshComp->CastShadow = false;
 	//처음은 안보이게 세팅
 	AxeMeshComp->SetVisibility(false);
-	
+
+	//횃불 생성(왼쪽 손)
+	TorchMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TorchMeshComp"));
+	TorchMeshComp->SetupAttachment(GetMesh(), TEXT("TorchSocket"));
+	TorchMeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	ConstructorHelpers::FObjectFinder<UStaticMesh> TorchTemp(TEXT("/Game/DontStarveCopyCat/Models/Torch"));
+	if (TorchTemp.Succeeded())
+	{
+		TorchMeshComp->SetStaticMesh(TorchTemp.Object);
+	}
+	//횃불 그림자 제거
+	TorchMeshComp->CastShadow = false;
+	//처음은 안보이게 세팅
+	TorchMeshComp->SetVisibility(false);
 }
 
 // Called when the game starts or when spawned
