@@ -14,6 +14,7 @@
 #include "GatherableTree.h"
 #include "GatherableTwigs.h"
 #include "InputMappingContext.h"
+#include "InventoryComponent.h"
 #include "Components/DecalComponent.h"
 #include "Blueprint/UserWidget.h"
 
@@ -84,6 +85,9 @@ ADS_Player::ADS_Player()
 		StatWidgetClass = Stattemp.Class;
 	}
 
+	//인벤토리
+	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
+
 	//도끼 생성(왼쪽 손)
 	AxeMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AxeMeshComp"));
 	AxeMeshComp->SetupAttachment(GetMesh(), TEXT("hand_l"));
@@ -96,7 +100,7 @@ ADS_Player::ADS_Player()
 	}
 	//도끼 그림자 제거
 	AxeMeshComp->CastShadow = false;
-
+	
 }
 
 // Called when the game starts or when spawned
@@ -281,6 +285,12 @@ inline void ADS_Player::TryGather()
 
 void ADS_Player::GatherEndNotify()
 {
+	if (!InventoryComp || !Bush)
+		return;
+
+	//인벤토리에 아이템 추가
+	InventoryComp->AddItem(Bush->ItemID, Bush->ItemIcon, Bush->Quantity);
+	
 	//수풀 채집 완료일 때, 수풀을 없애고 싶다.(Destroy)
 	Bush->OnGather();
 	
@@ -331,6 +341,12 @@ void ADS_Player::TryChopping()
 
 void ADS_Player::ChopEndNotify()
 {
+	if (!InventoryComp || !Tree)
+		return;
+	
+	//인벤토리에 아이템 추가
+	InventoryComp->AddItem(Tree->ItemID, Tree->ItemIcon, Tree->Quantity);
+	
 	//나무 도끼질 몽타주 완료일 때
 	Tree->OnChopping();
 
@@ -397,13 +413,22 @@ void ADS_Player::TryPickUp()
 
 void ADS_Player::PickUpEndNotify()
 {
+	if (!InventoryComp)
+		return;
+	
 	//줍기 몽타주 완료할 때
 	if (Flint)
 	{
+		//인벤토리에 아이템 추가
+		InventoryComp->AddItem(Flint->ItemID, Flint->ItemIcon, Flint->Quantity);
+		
 		Flint->OnPickUp();
 	}
 	if (Twigs)
 	{
+		//인벤토리에 아이템 추가
+		InventoryComp->AddItem(Twigs->ItemID, Twigs->ItemIcon, Twigs->Quantity);
+		
 		Twigs->OnPickUp();
 	}
 	

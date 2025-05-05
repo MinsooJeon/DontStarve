@@ -35,9 +35,17 @@ public:
 	// UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Outline")
 	// TObjectPtr<UMaterialInterface> BlackMaterial;
 	
-	//아이템이름
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	FString ItemName;
+	//아이템 이름
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
+	FName ItemID;
+
+	//아이템 아이콘
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
+	UTexture2D* ItemIcon;
+
+	//아이템 갯수
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
+	int32 Quantity = 1;
 	
 	//채집여부
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)

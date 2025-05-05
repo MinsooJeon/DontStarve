@@ -21,7 +21,7 @@ AGatherableFlint::AGatherableFlint()
 		MeshComp->SetStaticMesh(FlintTemp.Object);
 	}
 	//Flint 이름
-	ItemName = TEXT("GatherableFlint");
+	ItemID = TEXT("GatherableFlint");
 }
 
 void AGatherableFlint::BeginPlay()

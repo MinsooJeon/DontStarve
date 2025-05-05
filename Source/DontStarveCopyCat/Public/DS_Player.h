@@ -165,6 +165,10 @@ public:
 	UUserWidget* InventoryWidget;
 	UPROPERTY()
 	UUserWidget* StatWidget;
+
+	//인벤토리 컴포넌트 붙이기
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	TObjectPtr<class UInventoryComponent> InventoryComp;
 	
 };
 

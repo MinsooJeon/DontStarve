@@ -22,7 +22,7 @@ AGatherableBush::AGatherableBush()
 		//OutlineMesh->SetStaticMesh(tempMesh.Object);
 	}
 	//수풀 메시 이름
-	ItemName = TEXT("GatherableBush");
+	ItemID = TEXT("GatherableBush");
 }
 
 // Called when the game starts or when spawned

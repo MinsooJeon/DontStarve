@@ -21,7 +21,7 @@ AGatherableTwigs::AGatherableTwigs()
 		MeshComp->SetStaticMesh(TwigsTemp.Object);
 	}
 	//Flint 이름
-	ItemName = TEXT("GatherableTwigs");
+	ItemID = TEXT("GatherableTwigs");
 }
 
 void AGatherableTwigs::BeginPlay()

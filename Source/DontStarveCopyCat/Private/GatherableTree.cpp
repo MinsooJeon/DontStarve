@@ -34,7 +34,7 @@ AGatherableTree::AGatherableTree()
 		MeshCompBottom->SetStaticMesh(trunkTemp.Object);
 	}
 
-	ItemName = TEXT("GatherableTree");
+	ItemID = TEXT("GatherableTree");
 
 }
 
