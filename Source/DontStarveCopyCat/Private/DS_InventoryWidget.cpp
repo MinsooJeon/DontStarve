@@ -274,6 +274,8 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 			if (PlayerRef->TorchMeshComp->IsVisible())
 			{
 				PlayerRef->TorchMeshComp->SetVisibility(false);
+				PlayerRef->TorchFlameVFX->Deactivate();
+				PlayerRef->TorchLight->SetVisibility(false);
 			}
 			PlayerRef->AxeMeshComp->SetVisibility(true);
 			
@@ -286,6 +288,8 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 				PlayerRef->AxeMeshComp->SetVisibility(false);
 			}
 			PlayerRef->TorchMeshComp->SetVisibility(true);
+			PlayerRef->TorchFlameVFX->Activate();
+			PlayerRef->TorchLight->SetVisibility(true);
 		}
 	}
 }

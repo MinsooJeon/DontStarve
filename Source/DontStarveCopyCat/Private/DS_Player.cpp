@@ -118,6 +118,29 @@ ADS_Player::ADS_Player()
 	TorchMeshComp->CastShadow = false;
 	//처음은 안보이게 세팅
 	TorchMeshComp->SetVisibility(false);
+
+	//횃불 VFX 생성
+	TorchFlameVFX = CreateDefaultSubobject<UNiagaraComponent>(TEXT("TorchFlameVFX"));
+	TorchFlameVFX->SetupAttachment(GetMesh(), TEXT("TorchSocket"));
+	TorchFlameVFX->SetRelativeLocationAndRotation(FVector(-2.f,-2.5f,-50.f), FRotator(180.f,0.f,0.f));
+	
+	TorchFlameVFX->bAutoActivate = false; //처음엔 비활성화
+
+	ConstructorHelpers::FObjectFinder<UNiagaraSystem> TorchVFXTemp(TEXT("/Game/DontStarveCopyCat/VFX/NS_Torch"));
+	if (TorchVFXTemp.Succeeded())
+	{
+		TorchFlameVFX->SetAsset(TorchVFXTemp.Object);
+	}
+
+	//Point Light 생성
+	TorchLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("TorchLight"));
+	TorchLight->SetupAttachment(TorchFlameVFX);
+	TorchLight->SetVisibility(false); //처음엔 비활성화
+
+	//빛 세부 조정
+	TorchLight->SetIntensity(5000.0f);
+	TorchLight->SetAttenuationRadius(700.0f);
+	TorchLight->SetLightColor(FColor::Orange);
 }
 
 // Called when the game starts or when spawned

@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "NiagaraComponent.h"
+#include "NiagaraSystem.h"
+#include "Components/PointLightComponent.h"
 #include "DS_Player.generated.h"
 
 UCLASS()
@@ -88,6 +91,14 @@ public:
 	//횃불 메시 장착
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UStaticMeshComponent* TorchMeshComp;
+
+	//횃불 VFX Niagara
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UNiagaraComponent* TorchFlameVFX;
+
+	//횃불 Point Light
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPointLightComponent* TorchLight;
 	
 	//Action
 	UPROPERTY(EditAnywhere, Category = "DS_PlayerInput")
