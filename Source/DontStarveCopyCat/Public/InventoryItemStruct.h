@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "Engine/DataTable.h"
 #include "InventoryItemStruct.generated.h"
 
 //아이템 구조체

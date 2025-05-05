@@ -22,6 +22,13 @@ AGatherableFlint::AGatherableFlint()
 	}
 	//Flint 이름
 	ItemID = TEXT("GatherableFlint");
+
+	//부싯돌 아이콘
+	ConstructorHelpers::FObjectFinder<UTexture2D> IconTemp(TEXT("/Game/DontStarveCopyCat/UI/Images/Flint"));
+	if (IconTemp.Succeeded())
+	{
+		ItemIcon = IconTemp.Object;
+	}
 }
 
 void AGatherableFlint::BeginPlay()

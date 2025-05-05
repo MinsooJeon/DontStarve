@@ -17,6 +17,7 @@
 #include "InventoryComponent.h"
 #include "Components/DecalComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "DS_InventoryWidget.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -120,6 +121,9 @@ void ADS_Player::BeginPlay()
 	InventoryWidget->AddToViewport();
 	StatWidget = CreateWidget(GetWorld()->GetFirstPlayerController(), StatWidgetClass);
 	StatWidget->AddToViewport();
+	//인벤토리 슬롯 C++로 캐스팅
+	InventorySlotWidget = Cast<UDS_InventoryWidget>(InventoryWidget);
+
 	//플레이어 애니메이션 캐스팅
 	PlayerAnim = Cast<UDS_PlayerAnim>(GetMesh()->GetAnimInstance());
 
@@ -290,6 +294,12 @@ void ADS_Player::GatherEndNotify()
 
 	//인벤토리에 아이템 추가
 	InventoryComp->AddItem(Bush->ItemID, Bush->ItemIcon, Bush->Quantity);
+
+	//UI 갱신
+	if (InventorySlotWidget)
+	{
+		InventorySlotWidget->UpdateAllSlots(InventoryComp->Items);
+	}
 	
 	//수풀 채집 완료일 때, 수풀을 없애고 싶다.(Destroy)
 	Bush->OnGather();
@@ -421,6 +431,12 @@ void ADS_Player::PickUpEndNotify()
 	{
 		//인벤토리에 아이템 추가
 		InventoryComp->AddItem(Flint->ItemID, Flint->ItemIcon, Flint->Quantity);
+
+		//UI 갱신
+		if (InventorySlotWidget)
+		{
+			InventorySlotWidget->UpdateAllSlots(InventoryComp->Items);
+		}
 		
 		Flint->OnPickUp();
 	}
@@ -428,6 +444,12 @@ void ADS_Player::PickUpEndNotify()
 	{
 		//인벤토리에 아이템 추가
 		InventoryComp->AddItem(Twigs->ItemID, Twigs->ItemIcon, Twigs->Quantity);
+
+		//UI 갱신
+		if (InventorySlotWidget)
+		{
+			InventorySlotWidget->UpdateAllSlots(InventoryComp->Items);
+		}
 		
 		Twigs->OnPickUp();
 	}

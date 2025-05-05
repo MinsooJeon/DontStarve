@@ -23,6 +23,13 @@ AGatherableBush::AGatherableBush()
 	}
 	//수풀 메시 이름
 	ItemID = TEXT("GatherableBush");
+
+	//수풀 아이콘
+	ConstructorHelpers::FObjectFinder<UTexture2D> IconTemp(TEXT("/Game/DontStarveCopyCat/UI/Images/Cut_Grass"));
+	if (IconTemp.Succeeded())
+	{
+		ItemIcon = IconTemp.Object;
+	}
 }
 
 // Called when the game starts or when spawned

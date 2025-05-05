@@ -22,6 +22,13 @@ AGatherableTwigs::AGatherableTwigs()
 	}
 	//Flint 이름
 	ItemID = TEXT("GatherableTwigs");
+
+	//나뭇가지 아이콘
+	ConstructorHelpers::FObjectFinder<UTexture2D> IconTemp(TEXT("/Game/DontStarveCopyCat/UI/Images/Twigs"));
+	if (IconTemp.Succeeded())
+	{
+		ItemIcon = IconTemp.Object;
+	}
 }
 
 void AGatherableTwigs::BeginPlay()
