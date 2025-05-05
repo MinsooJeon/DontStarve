@@ -37,4 +37,8 @@ public:
 	//아이템 찾기 함수
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	int32 FindItemIndex(FName ItemID) const;
+
+
+	//초기 아이템 설정
+	void InitializeDefaultItems();
 };

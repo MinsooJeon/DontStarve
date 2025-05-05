@@ -67,3 +67,21 @@ int32 UInventoryComponent::FindItemIndex(FName ItemID) const
 	return INDEX_NONE;
 }
 
+void UInventoryComponent::InitializeDefaultItems()
+{
+	//도끼와 횃불 아이템 세팅
+	FInventoryItem Axe;
+	Axe.ItemID = FName(TEXT("Axe"));
+	Axe.Quantity = 1;
+	Axe.ItemIcon = LoadObject<UTexture2D>(nullptr, TEXT("/Game/DontStarveCopyCat/UI/Images/Axe"));
+
+	AddItem(Axe.ItemID, Axe.ItemIcon, Axe.Quantity);
+
+	FInventoryItem Torch;
+	Torch.ItemID = FName(TEXT("Torch"));
+	Torch.Quantity = 1;
+	Torch.ItemIcon = LoadObject<UTexture2D>(nullptr, TEXT("/Game/DontStarveCopyCat/UI/Images/Torch"));
+
+	AddItem(Torch.ItemID, Torch.ItemIcon, Torch.Quantity);
+}
+

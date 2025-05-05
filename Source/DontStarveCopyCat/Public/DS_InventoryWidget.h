@@ -23,9 +23,6 @@ protected:
 	
 public:
 	
-	//슬롯 전체 업데이트
-	void UpdateAllSlots(const TArray<FInventoryItem>& InventoryItems);
-
 	//슬롯 바인드
 	UPROPERTY(meta = (BindWidget))
 	class UButton* InventoryButton1;
@@ -119,6 +116,8 @@ public:
 	class UTextBlock* TopText14;
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* TopText15;
+	
+	
 
 	//배열로 활용
 	UPROPERTY()
@@ -129,5 +128,9 @@ public:
 
 	UPROPERTY()
 	TArray<UTextBlock*> InventoryTextCounts;
+
+	//슬롯 전체 업데이트
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void UpdateAllSlots(const TArray<FInventoryItem>& InventoryItems);
 	
 };

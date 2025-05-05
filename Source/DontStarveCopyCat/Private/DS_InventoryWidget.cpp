@@ -70,3 +70,4 @@ void UDS_InventoryWidget::UpdateAllSlots(const TArray<FInventoryItem>& Inventory
 		}
 	}
 }
+

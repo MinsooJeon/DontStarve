@@ -140,6 +140,16 @@ void ADS_Player::BeginPlay()
 		//적용
 		pc->SetInputMode(InputMode);
 	}
+
+	//인벤토리에 초기 도끼, 횃불 아이템 저장 후 UI에 띄우기
+	if (InventoryComp)
+	{
+		InventoryComp->InitializeDefaultItems();
+	}
+	if (InventorySlotWidget)
+	{
+		InventorySlotWidget->UpdateAllSlots(InventoryComp->Items);
+	}
 	
 }
 
