@@ -13,7 +13,8 @@ AGatherableBush::AGatherableBush()
 	//콜라이더 박스크기
 	BoxComp->SetBoxExtent(FVector(50.f));
 	//메시 위치
-	MeshComp->SetRelativeLocation(FVector(40.f, -10, -60.f));
+	MeshComp->SetRelativeLocation(FVector(27.f, -10, -60.f));
+	MeshComp->SetRelativeScale3D(FVector(0.8f));
 	//수풀 메시 가져오기
 	ConstructorHelpers::FObjectFinder<UStaticMesh> tempMesh(TEXT("/Game/DontStarveCopyCat/Models/SM_MyBush.SM_MyBush"));
 	if (tempMesh.Succeeded())

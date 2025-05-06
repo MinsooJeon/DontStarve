@@ -15,7 +15,7 @@ AGatherableTree::AGatherableTree()
 	MeshComp->SetRelativeLocation(FVector(0,0,-49.f));
 	MeshComp->SetRelativeScale3D(FVector(40.f));
 	//트리 위쪽 메시
-	ConstructorHelpers::FObjectFinder<UStaticMesh> treeTemp(TEXT("/Script/Engine.StaticMesh'/Game/MyContent/Models/WorldStuff/Trees/TreeTop.TreeTop'"));
+	ConstructorHelpers::FObjectFinder<UStaticMesh> treeTemp(TEXT("/Game/DontStarveCopyCat/Models/SM_MyTreeTop"));
 	if (treeTemp.Succeeded())
 	{
 		MeshComp->SetStaticMesh(treeTemp.Object);
@@ -28,7 +28,7 @@ AGatherableTree::AGatherableTree()
 	MeshCompBottom->SetRelativeLocation(FVector(0,0,-49.f));
 	MeshCompBottom->SetRelativeScale3D(FVector(40.f));
 	//트리 Trunk 메시
-	ConstructorHelpers::FObjectFinder<UStaticMesh> trunkTemp(TEXT("/Script/Engine.StaticMesh'/Game/DontStarveCopyCat/Models/TreeTrunk.TreeTrunk'"));
+	ConstructorHelpers::FObjectFinder<UStaticMesh> trunkTemp(TEXT("/Game/DontStarveCopyCat/Models/SM_MyTreeTrunk"));
 	if (trunkTemp.Succeeded())
 	{
 		MeshCompBottom->SetStaticMesh(trunkTemp.Object);
