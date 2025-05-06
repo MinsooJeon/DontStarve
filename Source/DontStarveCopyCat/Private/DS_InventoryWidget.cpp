@@ -79,6 +79,7 @@ void UDS_InventoryWidget::NativeConstruct()
 	//Cast 플레이어
 	PlayerRef = Cast<ADS_Player>(UGameplayStatics::GetPlayerCharacter(this, 0));
 	InventoryData = &PlayerRef->InventoryComp->Items;
+	EquipData = &PlayerRef->InventoryComp->EquipItems;
 }
 
 void UDS_InventoryWidget::CacheSlotWidgets()
@@ -252,23 +253,63 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 	//장비 아이템일 경우에만
 	if (ClickedItem.IsEquip)
 	{
-		
+		//이미 장비 교체한 이력이 있으면
+		if (EquipData->IsValidIndex(1))
+		{
+			(*EquipData)[1].EquipItemID = ClickedItem.ItemID;
+			(*EquipData)[1].EquipQuantity = ClickedItem.Quantity;
+			(*EquipData)[1].EquipItemIcon =ClickedItem.ItemIcon;
+			(*EquipData)[1].IsEquip = ClickedItem.IsEquip;
+		}
+		//장비교체 이력이 없으면
+		else
+		{
+			//장비 배열에 저장
+			FInventoryEquip NewEquip;
+			NewEquip.EquipItemID = ClickedItem.ItemID;
+			NewEquip.EquipQuantity = ClickedItem.Quantity;
+			NewEquip.EquipItemIcon = ClickedItem.ItemIcon;
+			NewEquip.IsEquip = ClickedItem.IsEquip;
+			EquipData->Add(NewEquip);
+		}
 		
 		//장비 슬롯에 표시
 		EquipImage1->SetBrushFromTexture(ClickedItem.ItemIcon);
 		EquipImage1->SetVisibility(ESlateVisibility::Visible);
 		EquipText1->SetText(FText::AsPercent(1.f)); //100%
 		EquipText1->SetVisibility(ESlateVisibility::Visible);
-
 		//기존 슬롯 UI 초기화
 		InventoryImages[SlotIndex]->SetBrushFromTexture(nullptr);
 		InventoryImages[SlotIndex]->SetVisibility(ESlateVisibility::Hidden);
 		InventoryTextPercents[SlotIndex]->SetText(FText::GetEmpty());
 		InventoryTextPercents[SlotIndex]->SetVisibility(ESlateVisibility::Hidden);
-
 		//데이터 삭제
 		(*InventoryData)[SlotIndex] = FInventoryItem();
+		
+		//장비슬롯에 이미 장비가 있으면
+		if (EquipData->IsValidIndex(1))
+		{
+			//임시 인벤토리 데이터 저장
+			FInventoryItem NewItem;
+			NewItem.ItemID = (*EquipData)[0].EquipItemID;
+			NewItem.Quantity = (*EquipData)[0].EquipQuantity;
+			NewItem.ItemIcon = (*EquipData)[0].EquipItemIcon;
+			NewItem.IsEquip = (*EquipData)[0].IsEquip;
 
+			//0번자리 장비 데이터에 1번자리 장비 데이터 덮어씌우고 1번자리 초기화
+			(*EquipData)[0].EquipItemID = (*EquipData)[1].EquipItemID;
+			(*EquipData)[0].EquipQuantity = (*EquipData)[1].EquipQuantity;
+			(*EquipData)[0].EquipItemIcon =(*EquipData)[1].EquipItemIcon;
+			(*EquipData)[0].IsEquip = (*EquipData)[1].IsEquip;
+			
+			(*EquipData)[1] = FInventoryEquip();
+			
+			//인벤토리 빈 슬롯에 저장
+			PlayerRef->InventoryComp->AddItemToFirstEmptySlot(NewItem);
+			//다시 인벤토리 갱신
+			UpdateAllSlots(*InventoryData);
+		}
+		
 		//손에 장비 보여주기
 		//도끼
 		if (ClickedItem.ItemID == "Axe")

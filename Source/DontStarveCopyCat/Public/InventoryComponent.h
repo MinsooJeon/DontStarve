@@ -49,4 +49,8 @@ public:
 	//빈 슬롯을 찾아서 넣는 함수
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	bool AddItemToFirstEmptySlot(const FInventoryItem& NewItem);
+
+	//인벤토리 배열
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	TArray<FInventoryEquip> EquipItems;
 };

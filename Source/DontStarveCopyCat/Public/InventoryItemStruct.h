@@ -33,6 +33,33 @@ struct FInventoryItem
 		
 };
 
+//장비 슬롯 구조체
+USTRUCT(BlueprintType)
+struct FInventoryEquip
+{
+	GENERATED_BODY()
+
+	//아이템 아이디
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName EquipItemID;
+
+	//아이템 양
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 EquipQuantity;
+
+	//아이템 아이콘
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UTexture2D* EquipItemIcon;
+
+	//장비인지 여부
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsEquip;
+
+	//생성자 함수
+	FInventoryEquip() : EquipItemID(NAME_None), EquipQuantity(0), EquipItemIcon(nullptr), IsEquip(true) {}
+		
+};
+
 
 class DONTSTARVECOPYCAT_API InventoryItemStruct
 {

@@ -176,6 +176,9 @@ public:
 	//인벤토리 데이터 참조
 	TArray<FInventoryItem>* InventoryData;
 
+	//장비 인벤토리 데이터 참조
+	TArray<FInventoryEquip>* EquipData;
+
 	//슬롯 전체 업데이트
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void UpdateAllSlots(const TArray<FInventoryItem>& InventoryItems);
