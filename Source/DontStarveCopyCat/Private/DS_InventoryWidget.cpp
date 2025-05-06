@@ -8,6 +8,7 @@
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
 #include "DS_Player.h"
+#include "DS_PlayerAnim.h"
 
 void UDS_InventoryWidget::NativeConstruct()
 {
@@ -322,6 +323,12 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 				PlayerRef->TorchLight->SetVisibility(false);
 			}
 			PlayerRef->AxeMeshComp->SetVisibility(true);
+
+			if (false == PlayerRef->PlayerAnim->Montage_IsPlaying(PlayerRef->HoldingToolMontage))
+			{
+				PlayerRef->PlayerAnim->Montage_Play(PlayerRef->HoldingToolMontage);
+				PlayerRef->IsPlayingHoldingToolMontage = true;
+			}
 			
 		}
 		//횃불
@@ -335,6 +342,11 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 			PlayerRef->TorchFlameVFX->SetVisibility(true);
 			PlayerRef->TorchFlameVFX->Activate();
 			PlayerRef->TorchLight->SetVisibility(true);
+			if (false == PlayerRef->PlayerAnim->Montage_IsPlaying(PlayerRef->HoldingToolMontage))
+			{
+				PlayerRef->PlayerAnim->Montage_Play(PlayerRef->HoldingToolMontage);
+				PlayerRef->IsPlayingHoldingToolMontage = true;
+			}
 		}
 	}
 }

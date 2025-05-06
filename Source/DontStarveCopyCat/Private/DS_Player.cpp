@@ -265,20 +265,32 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 		//채집 몽타주 멈추기
 		if (bGatherBush)
 		{
-			PlayerAnim->Montage_Stop(0.1f);
+			PlayerAnim->Montage_Stop(0.1f, GatherMontage);
 			bGatherBush = false;
+			if (IsPlayingHoldingToolMontage)
+			{
+				PlayerAnim->Montage_Play(HoldingToolMontage);
+			}
 		}
 		//도끼질 몽타주 멈추기
 		if (bChopTree)
 		{
-			PlayerAnim->Montage_Stop(0.1f);
+			PlayerAnim->Montage_Stop(0.1f, ChopMontage);
 			bChopTree = false;
+			if (IsPlayingHoldingToolMontage)
+			{
+				PlayerAnim->Montage_Play(HoldingToolMontage);
+			}
 		}
 		//줍기 몽타주 멈추기
 		if (bPickUp)
 		{
-			PlayerAnim->Montage_Stop(0.1f);
+			PlayerAnim->Montage_Stop(0.1f, PickUpMontage);
 			bPickUp = false;
+			if (IsPlayingHoldingToolMontage)
+			{
+				PlayerAnim->Montage_Play(HoldingToolMontage);
+			}
 		}
 	}
 }
@@ -318,6 +330,11 @@ inline void ADS_Player::TryGather()
 				//몽타주를 실행하고 있지 않으면 몽타주 실행하고싶다.
 				if (false == bGatherBush)
 				{
+					if (IsPlayingHoldingToolMontage)
+					{
+						PlayerAnim->Montage_Stop(0.1f, HoldingToolMontage);
+						//IsPlayingHoldingToolMontage = false;
+					}
 					PlayerAnim->Montage_Play(GatherMontage);
 					//채집 애니메이션 시작 - bGatherBush = false는 애니메이션 끝날때 AnimNotify에 추가
 					bGatherBush = true;
@@ -332,7 +349,7 @@ inline void ADS_Player::TryGather()
 	else
 	{
 		//거리안에 아이템 없을시 LineTrace 그려주기
-		DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
+		//DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
 	}
 }
 
@@ -355,6 +372,12 @@ void ADS_Player::GatherEndNotify()
 	
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "GatherEnd");
 	bGatherBush = false;
+
+	//Holding 몽타주 중이였다면
+	if (IsPlayingHoldingToolMontage)
+	{
+		PlayerAnim->Montage_Play(HoldingToolMontage);
+	}
 }
 
 void ADS_Player::TryChopping()
@@ -380,6 +403,12 @@ void ADS_Player::TryChopping()
 			{
 				if (false == bChopTree)
 				{
+					if (IsPlayingHoldingToolMontage)
+					{
+						PlayerAnim->Montage_Stop(0.1f, HoldingToolMontage);
+						//IsPlayingHoldingToolMontage = false;
+					}
+					
 					PlayerAnim->Montage_Play(ChopMontage);
 					//도끼질 애니메이션 시작, bChopTree = false는 몽타주 마지막에 AnimNotify로 추가
 					bChopTree = true;
@@ -394,7 +423,7 @@ void ADS_Player::TryChopping()
 	else
 	{
 		//거리안에 아이템 없을시 LineTrace 그려주기
-		DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
+		//DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
 	}
 }
 
@@ -403,14 +432,20 @@ void ADS_Player::ChopEndNotify()
 	if (!InventoryComp || !Tree)
 		return;
 	
-	//인벤토리에 아이템 추가
-	InventoryComp->AddItem(Tree->ItemID, Tree->ItemIcon, Tree->IsEquip, Tree->Quantity);
+	//인벤토리에 아이템 추가(목재를 땅에서 줍는 기능 구현하고나서 하기)
+	//InventoryComp->AddItem(Tree->ItemID, Tree->ItemIcon, Tree->IsEquip, Tree->Quantity);
 	
 	//나무 도끼질 몽타주 완료일 때
 	Tree->OnChopping();
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "ChopEnd");
 	bChopTree = false;
+
+	//Holding 몽타주 중이였다면
+	if (IsPlayingHoldingToolMontage)
+	{
+		PlayerAnim->Montage_Play(HoldingToolMontage);
+	}
 }
 
 void ADS_Player::TryPickUp()
@@ -436,6 +471,12 @@ void ADS_Player::TryPickUp()
 			{
 				if (false == bPickUp)
 				{
+					if (IsPlayingHoldingToolMontage)
+					{
+						PlayerAnim->Montage_Stop(0.1f, HoldingToolMontage);
+						//IsPlayingHoldingToolMontage = false;
+					}
+					
 					PlayerAnim->Montage_Play(PickUpMontage);
 					bPickUp = true;
 				
@@ -454,6 +495,12 @@ void ADS_Player::TryPickUp()
 			{
 				if (false == bPickUp)
 				{
+					if (IsPlayingHoldingToolMontage)
+					{
+						PlayerAnim->Montage_Stop(0.1f, HoldingToolMontage);
+						//IsPlayingHoldingToolMontage = false;
+					}
+					
 					PlayerAnim->Montage_Play(PickUpMontage);
 					bPickUp = true;
 				
@@ -466,7 +513,7 @@ void ADS_Player::TryPickUp()
 	else
 	{
 		//거리안에 아이템 없을시 LineTrace 그려주기
-		DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
+		//DrawDebugLine(GetWorld(), Start,End, FColor::Red,true);
 	}
 }
 
@@ -505,4 +552,10 @@ void ADS_Player::PickUpEndNotify()
 	
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "PickUpEnd");
 	bPickUp = false;
+	
+	//Holding 몽타주 중이였다면
+	if (IsPlayingHoldingToolMontage)
+	{
+		PlayerAnim->Montage_Play(HoldingToolMontage);
+	}
 }

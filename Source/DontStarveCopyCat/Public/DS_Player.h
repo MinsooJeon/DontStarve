@@ -134,6 +134,13 @@ public:
 	//줍기 몽타주
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerMontage")
 	class UAnimMontage* PickUpMontage;
+
+	//들고있는 몽타주
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerMontage")
+	class UAnimMontage* HoldingToolMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerMontage")
+	bool IsPlayingHoldingToolMontage;
 	
 	//플레이어 움직임 함수
 	void OnActionMove(const FInputActionValue& value);
