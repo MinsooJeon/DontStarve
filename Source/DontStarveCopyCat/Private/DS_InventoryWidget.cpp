@@ -116,7 +116,7 @@ void UDS_InventoryWidget::UpdateAllSlots(const TArray<FInventoryItem>& Inventory
 		if (i < InventoryItems.Num())
 		{
 			const FInventoryItem& Item = InventoryItems[i];
-			if (InventoryImages[i])
+			if (InventoryImages[i] && Item.Quantity != 0)
 			{
 				InventoryImages[i]->SetBrushFromTexture(Item.ItemIcon);
 				InventoryImages[i]->SetVisibility(ESlateVisibility::Visible);
@@ -124,7 +124,7 @@ void UDS_InventoryWidget::UpdateAllSlots(const TArray<FInventoryItem>& Inventory
 			//채집 아이템 일때
 			if (false == Item.IsEquip)
 			{
-				if (InventoryTextCounts[i])
+				if (InventoryTextCounts[i] && Item.Quantity != 0)
 				{
 					InventoryTextCounts[i]->SetText(FText::AsNumber(Item.Quantity));
 					InventoryTextCounts[i]->SetVisibility(ESlateVisibility::Visible);
@@ -133,7 +133,7 @@ void UDS_InventoryWidget::UpdateAllSlots(const TArray<FInventoryItem>& Inventory
 			//도구 아이템 일때
 			else
 			{
-				if (InventoryTextPercents[i])
+				if (InventoryTextPercents[i] && Item.Quantity != 0)
 				{
 					InventoryTextPercents[i]->SetText(FText::AsPercent(1.f)); // 100%
 					InventoryTextPercents[i]->SetVisibility(ESlateVisibility::Visible);
@@ -274,6 +274,7 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 			if (PlayerRef->TorchMeshComp->IsVisible())
 			{
 				PlayerRef->TorchMeshComp->SetVisibility(false);
+				PlayerRef->TorchFlameVFX->SetVisibility(false);
 				PlayerRef->TorchFlameVFX->Deactivate();
 				PlayerRef->TorchLight->SetVisibility(false);
 			}
@@ -288,6 +289,7 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 				PlayerRef->AxeMeshComp->SetVisibility(false);
 			}
 			PlayerRef->TorchMeshComp->SetVisibility(true);
+			PlayerRef->TorchFlameVFX->SetVisibility(true);
 			PlayerRef->TorchFlameVFX->Activate();
 			PlayerRef->TorchLight->SetVisibility(true);
 		}
