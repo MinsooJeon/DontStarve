@@ -38,15 +38,12 @@ public:
 	//아이템 이름
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
 	FName ItemID;
-
 	//아이템 아이콘
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
 	UTexture2D* ItemIcon;
-
 	//아이템 갯수
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
 	int32 Quantity = 1;
-
 	//장비 여부
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Item")
 	bool IsEquip = false;

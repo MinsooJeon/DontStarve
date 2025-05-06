@@ -36,7 +36,7 @@ ADS_Player::ADS_Player()
 	SpringArmComp->TargetArmLength = 1400.f;
 	//카메라 클리핑 해제
 	SpringArmComp->bDoCollisionTest = false;
-	//카메라 Lag 활성화(지연을 통한 자연스러운 이동) 속도 3
+	//카메라 Lag 활성화(지연을 통한 자연스러운 이동) 속도 7
 	SpringArmComp->bEnableCameraLag = true;
 	SpringArmComp->CameraLagSpeed = 7.f;
 
@@ -202,7 +202,7 @@ void ADS_Player::NotifyControllerChanged()
 		//UEnhancedInputLocalPlayerSubSystem를 가져와서
 		auto* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(pc->GetLocalPlayer());
 
-		//AddMappingContext를 하고싶다.
+		//AddMappingContext를 한다.
 		subsystem->RemoveMappingContext(IMC_DontStarve);
 		subsystem->AddMappingContext(IMC_DontStarve, 0);
 	}
@@ -214,7 +214,7 @@ void ADS_Player::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	//ControlRotation값으로 Transform을 만들고 그것을 기준으로 방향을 변경하고
-	//AddMovementInput 하고싶다.
+	//AddMovementInput 한다.
 	FTransform tf = FTransform(GetControlRotation());
 	Direction = tf.TransformVector(Direction);
 	AddMovementInput(Direction);
@@ -306,7 +306,7 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 // 	GetController()->SetControlRotation(newRotation);
 // }
 
-inline void ADS_Player::TryGather()
+void ADS_Player::TryGather()
 {
 	//플레이어 위치 시작 -> 플레이어 앞방향 거리 끝
 	FVector Start = this->GetActorLocation();
@@ -340,7 +340,7 @@ inline void ADS_Player::TryGather()
 					bGatherBush = true;
 
 					//채집 충돌완료 디버그메세지
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
+					//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Gathering...");
 				}
 			}
 			
@@ -367,10 +367,10 @@ void ADS_Player::GatherEndNotify()
 		InventorySlotWidget->UpdateAllSlots(InventoryComp->Items);
 	}
 	
-	//수풀 채집 완료일 때, 수풀을 없애고 싶다.(Destroy)
+	//수풀 채집 완료일 때, 수풀을 없애기.(Destroy)
 	Bush->OnGather();
 	
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "GatherEnd");
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "GatherEnd");
 	bGatherBush = false;
 
 	//Holding 몽타주 중이였다면
@@ -414,7 +414,7 @@ void ADS_Player::TryChopping()
 					bChopTree = true;
 
 					//도끼질 충돌완료 디버그메세지
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Chopping...");
+					//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Chopping...");
 				}
 			}
 			
@@ -438,7 +438,7 @@ void ADS_Player::ChopEndNotify()
 	//나무 도끼질 몽타주 완료일 때
 	Tree->OnChopping();
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "ChopEnd");
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "ChopEnd");
 	bChopTree = false;
 
 	//Holding 몽타주 중이였다면
@@ -481,7 +481,7 @@ void ADS_Player::TryPickUp()
 					bPickUp = true;
 				
 					//부싯돌 충돌완료 디버그메세지
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Flint Picking Up...");
+					//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Flint Picking Up...");
 				}
 			}
 		}
@@ -505,7 +505,7 @@ void ADS_Player::TryPickUp()
 					bPickUp = true;
 				
 					//나뭇가지 충돌완료 디버그메세지
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Twigs Picking Up...");
+					//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Twigs Picking Up...");
 				}
 			}
 		}
@@ -550,7 +550,7 @@ void ADS_Player::PickUpEndNotify()
 		Twigs->OnPickUp();
 	}
 	
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "PickUpEnd");
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "PickUpEnd");
 	bPickUp = false;
 	
 	//Holding 몽타주 중이였다면
