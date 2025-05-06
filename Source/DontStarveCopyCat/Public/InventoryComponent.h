@@ -41,4 +41,12 @@ public:
 
 	//초기 아이템 설정
 	void InitializeDefaultItems();
+
+	//인벤토리 아이템 제거 함수
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void RemoveItem(int32 Index);
+
+	//빈 슬롯을 찾아서 넣는 함수
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool AddItemToFirstEmptySlot(const FInventoryItem& NewItem);
 };

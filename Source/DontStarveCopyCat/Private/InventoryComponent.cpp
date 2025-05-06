@@ -51,7 +51,8 @@ void UInventoryComponent::AddItem(FName ItemID, UTexture2D* ItemIcon, bool IsEqu
 		NewItem.ItemIcon = ItemIcon;
 		NewItem.IsEquip = IsEquip;
 
-		Items.Add(NewItem);
+		//빈공간 찾아서 채워서 아이템 추가
+		AddItemToFirstEmptySlot(NewItem);
 	}
 }
 
@@ -86,5 +87,29 @@ void UInventoryComponent::InitializeDefaultItems()
 	Torch.IsEquip = true;
 	
 	AddItem(Torch.ItemID, Torch.ItemIcon, Torch.IsEquip, Torch.Quantity);
+}
+
+void UInventoryComponent::RemoveItem(int32 Index)
+{
+	if (Items.IsValidIndex(Index))
+	{
+		Items[Index] = FInventoryItem();
+	}
+}
+
+bool UInventoryComponent::AddItemToFirstEmptySlot(const FInventoryItem& NewItem)
+{
+	for (int32 i = 0; i< Items.Num(); i++)
+	{
+		if (Items[i].Quantity == 0)
+		{
+			Items[i] = NewItem;
+			return true;
+		}
+	}
+
+	//빈자리 없으면 확장
+	Items.Add(NewItem);
+	return true;
 }
 

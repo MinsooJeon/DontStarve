@@ -252,6 +252,8 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 	//장비 아이템일 경우에만
 	if (ClickedItem.IsEquip)
 	{
+		
+		
 		//장비 슬롯에 표시
 		EquipImage1->SetBrushFromTexture(ClickedItem.ItemIcon);
 		EquipImage1->SetVisibility(ESlateVisibility::Visible);
