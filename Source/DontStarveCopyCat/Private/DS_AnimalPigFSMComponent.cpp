@@ -4,6 +4,8 @@
 #include "DS_AnimalPigFSMComponent.h"
 
 #include "DS_AnimalPig.h"
+#include "DS_Player.h"
+#include "MaterialHLSLTree.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values for this component's properties
@@ -27,6 +29,10 @@ void UDS_AnimalPigFSMComponent::BeginPlay()
 
 	//움직이는 방향으로 회전 가능하도록
 	AnimalPig->GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	//플레이어 찾기
+	auto* c = Cast<ADS_Player>(GetWorld()->GetFirstPlayerController()->GetCharacter());
+	Player = c;
 }
 
 
@@ -63,12 +69,24 @@ void UDS_AnimalPigFSMComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 
 void UDS_AnimalPigFSMComponent::TickIdle()
 {
-	
+	if (Player)
+		SetState(EAnimalPigState::Move);
 }
 
 void UDS_AnimalPigFSMComponent::TickMove()
 {
-	
+	//플레이어쪽으로 방향 찾기
+	FVector Destination = Player->GetActorLocation();
+	FVector Dir = Destination - AnimalPig->GetActorLocation();
+
+	AnimalPig->AddMovementInput(Dir.GetSafeNormal2D(), MoveSpeed * GetWorld()->GetDeltaSeconds());
+
+	//공격 가능한 거리라면 공격 상태로 상태전환
+	float Dist = Dir.Length();
+	if (Dist < AttackRange)
+	{
+		SetState(EAnimalPigState::Attack);
+	}
 }
 
 void UDS_AnimalPigFSMComponent::TickAttack()

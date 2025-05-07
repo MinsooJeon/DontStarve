@@ -46,12 +46,15 @@ public:
 
 	//공격가능거리
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float AttackRange = 200.f;
+	float AttackRange = 100.f;
 	//공격대기시간
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float AttackDelayTime = 1.f;
+	float AttackDelayTime = 300.f;
 	//시간 계산
 	float CurrentTime;
+
+	//이동 속도
+	float MoveSpeed = 50.f;
 
 	//체력
 	float curHp = 2.f;
