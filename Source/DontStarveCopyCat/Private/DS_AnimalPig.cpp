@@ -4,6 +4,7 @@
 #include "DS_AnimalPig.h"
 
 #include "DS_AnimalPigFSMComponent.h"
+#include "Components/DecalComponent.h"
 
 // Sets default values
 ADS_AnimalPig::ADS_AnimalPig()
@@ -18,10 +19,25 @@ ADS_AnimalPig::ADS_AnimalPig()
 		GetMesh()->SetSkeletalMesh(PigMeshTemp.Object);
 		GetMesh()->SetRelativeScale3D(FVector(0.5f));
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0,0,-90.f), FRotator(0,-90.f,0));
+		GetMesh()->CastShadow = false;
 	}
 
 	AnimalPigFSM = CreateDefaultSubobject<UDS_AnimalPigFSMComponent>(TEXT("AnimalPigFSM"));
 
+	//Shadow Decal
+	ShadowDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("ShadowDecal"));
+	ShadowDecal->SetupAttachment(RootComponent);
+
+	ConstructorHelpers::FObjectFinder<UMaterialInstance> ShadowMat(TEXT("/Game/DontStarveCopyCat/Materials/M_ShadowDecal"));
+	if (ShadowMat.Succeeded())
+	{
+		ShadowDecal->SetDecalMaterial(ShadowMat.Object);
+	}
+	
+	ShadowDecal->DecalSize = FVector(64.f, 150.f, 64.f);
+	ShadowDecal->SetRelativeLocation(FVector(0.f, 0.f, -90.f));
+	ShadowDecal->SetRelativeRotation(FRotator(90.f, 0.f, 90.f));
+	
 }
 
 // Called when the game starts or when spawned

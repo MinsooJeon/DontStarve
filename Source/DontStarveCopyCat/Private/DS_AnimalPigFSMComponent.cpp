@@ -91,7 +91,24 @@ void UDS_AnimalPigFSMComponent::TickMove()
 
 void UDS_AnimalPigFSMComponent::TickAttack()
 {
-	
+	//시간 계산
+	CurrentTime += GetWorld()->GetDeltaSeconds();
+	//공격 딜레이 계산
+	if (CurrentTime > AttackDelayTime)
+	{
+		CurrentTime = 0.0f;
+		FVector Dir = Player->GetActorLocation() - AnimalPig->GetActorLocation();
+		//공격 가능한 거리 계산
+		if (Dir.Length() < AttackRange)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Attack");
+		}
+		//거리가 안되면 플레이어 따라가기
+		else
+		{
+			SetState(EAnimalPigState::Move);
+		}
+	}
 }
 
 void UDS_AnimalPigFSMComponent::TickDamage()

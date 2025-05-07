@@ -11,6 +11,17 @@ UInventoryComponent::UInventoryComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
+
+	ConstructorHelpers::FObjectFinder<UTexture2D> AxeIconTemp(TEXT("/Game/DontStarveCopyCat/UI/Images/Axe"));
+	if (AxeIconTemp.Succeeded())
+	{
+		AxeIcon = AxeIconTemp.Object;
+	}
+	ConstructorHelpers::FObjectFinder<UTexture2D> TorchIconTemp(TEXT("/Game/DontStarveCopyCat/UI/Images/Torch"));
+	if (TorchIconTemp.Succeeded())
+	{
+		TorchIcon = TorchIconTemp.Object;
+	}
 }
 
 
@@ -75,7 +86,7 @@ void UInventoryComponent::InitializeDefaultItems()
 	FInventoryItem Axe;
 	Axe.ItemID = FName(TEXT("Axe"));
 	Axe.Quantity = 1;
-	Axe.ItemIcon = LoadObject<UTexture2D>(nullptr, TEXT("/Game/DontStarveCopyCat/UI/Images/Axe"));
+	Axe.ItemIcon = AxeIcon;
 	Axe.IsEquip = true;
 	
 	AddItem(Axe.ItemID, Axe.ItemIcon, Axe.IsEquip, Axe.Quantity);
@@ -83,7 +94,7 @@ void UInventoryComponent::InitializeDefaultItems()
 	FInventoryItem Torch;
 	Torch.ItemID = FName(TEXT("Torch"));
 	Torch.Quantity = 1;
-	Torch.ItemIcon = LoadObject<UTexture2D>(nullptr, TEXT("/Game/DontStarveCopyCat/UI/Images/Torch"));
+	Torch.ItemIcon = TorchIcon;
 	Torch.IsEquip = true;
 	
 	AddItem(Torch.ItemID, Torch.ItemIcon, Torch.IsEquip, Torch.Quantity);

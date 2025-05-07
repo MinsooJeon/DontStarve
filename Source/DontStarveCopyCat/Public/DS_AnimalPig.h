@@ -26,7 +26,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
+	//Shadow Decal
+	UPROPERTY(EditAnywhere, Category = "Shadow")
+	class UDecalComponent* ShadowDecal;
+	
 	//FSM Component
 	UPROPERTY(EditAnywhere)
 	class UDS_AnimalPigFSMComponent* AnimalPigFSM;

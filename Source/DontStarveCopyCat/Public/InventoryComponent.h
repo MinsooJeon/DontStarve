@@ -37,8 +37,13 @@ public:
 	//아이템 찾기 함수
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	int32 FindItemIndex(FName ItemID) const;
-
-
+	
+	//초기 아이템 아이콘 담는 변수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	UTexture2D* AxeIcon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	UTexture2D* TorchIcon;
+	
 	//초기 아이템 설정
 	void InitializeDefaultItems();
 

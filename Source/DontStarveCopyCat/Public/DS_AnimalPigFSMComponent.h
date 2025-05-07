@@ -49,7 +49,7 @@ public:
 	float AttackRange = 100.f;
 	//공격대기시간
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float AttackDelayTime = 300.f;
+	float AttackDelayTime = 1.f;
 	//시간 계산
 	float CurrentTime;
 
