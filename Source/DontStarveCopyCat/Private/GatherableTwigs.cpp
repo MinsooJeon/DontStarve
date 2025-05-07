@@ -48,5 +48,5 @@ void AGatherableTwigs::OnPickUp()
 	Super::OnPickUp();
 
 	//줍기 충돌완료 디버그메세지
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "GatherableTwigs");
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "GatherableTwigs");
 }

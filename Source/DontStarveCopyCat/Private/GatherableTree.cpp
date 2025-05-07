@@ -59,7 +59,7 @@ void AGatherableTree::OnChopping()
 	Super::OnChopping();
 
 	//도끼질 충돌완료 디버그메세지
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "GatherableTree");
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "GatherableTree");
 }
 
 

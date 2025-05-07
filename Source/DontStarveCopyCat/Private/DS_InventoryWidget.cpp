@@ -16,6 +16,7 @@ void UDS_InventoryWidget::NativeConstruct()
 
 	CacheSlotWidgets();
 
+	//인벤토리 슬롯 버튼 클릭
 	if (InventoryButtons[0])
 	{
 		InventoryButtons[0]->OnClicked.AddDynamic(this, &UDS_InventoryWidget::OnInventory0SlotClicked);
@@ -75,6 +76,12 @@ void UDS_InventoryWidget::NativeConstruct()
 	if (InventoryButtons[14])
 	{
 		InventoryButtons[14]->OnClicked.AddDynamic(this, &UDS_InventoryWidget::OnInventory14SlotClicked);
+	}
+
+	//장비 슬롯 버튼 클릭
+	if (EquipButton1)
+	{
+		EquipButton1->OnClicked.AddDynamic(this, &UDS_InventoryWidget::OnEquipInventorySlotClicked);
 	}
 
 	//Cast 플레이어
@@ -239,9 +246,68 @@ void UDS_InventoryWidget::OnInventory14SlotClicked()
 	OnInventorySlotClicked(14);
 }
 
+void UDS_InventoryWidget::OnEquipInventorySlotClicked()
+{
+	if (!EquipData || false == EquipData->IsValidIndex(0))
+		return;
+
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Equip Delete");
+	//장비 슬롯에 있는 아이템 정보 인벤토리 구조체에 임시저장
+	FInventoryItem NewItem;
+	NewItem.ItemID = (*EquipData)[0].EquipItemID;
+	NewItem.Quantity = (*EquipData)[0].EquipQuantity;
+	NewItem.ItemIcon = (*EquipData)[0].EquipItemIcon;
+	NewItem.IsEquip = (*EquipData)[0].IsEquip;
+
+	//장비 슬롯에 있는 이미지, 내구도 % 지우기
+	EquipImage1->SetBrushFromTexture(nullptr);
+	EquipImage1->SetVisibility(ESlateVisibility::Hidden);
+	EquipText1->SetText(FText::AsPercent(0.f)); //0%
+	EquipText1->SetVisibility(ESlateVisibility::Hidden);
+
+	//장비 슬롯 구조체에서 값 초기화
+	(*EquipData)[0] = FInventoryEquip();
+
+	//인벤토리 데이터에 빈 슬롯에 저장하기
+	PlayerRef->InventoryComp->AddItemToFirstEmptySlot(NewItem);
+
+	//인벤토리 업데이트하기
+	UpdateAllSlots((*InventoryData));
+
+	//플레이어 장비 아이템 장착 끄기
+	if (NewItem.ItemID == "Axe")
+	{
+		if (PlayerRef->AxeMeshComp->IsVisible())
+		{
+			PlayerRef->AxeMeshComp->SetVisibility(false);
+		}
+		if (PlayerRef->PlayerAnim->Montage_IsPlaying(PlayerRef->HoldingToolMontage))
+		{
+			PlayerRef->PlayerAnim->Montage_Stop(0.1f, PlayerRef->HoldingToolMontage);
+			PlayerRef->IsPlayingHoldingToolMontage = false;
+		}
+	}
+	if (NewItem.ItemID == "Torch")
+	{
+		if (PlayerRef->TorchMeshComp->IsVisible())
+		{
+			PlayerRef->TorchMeshComp->SetVisibility(false);
+			PlayerRef->TorchFlameVFX->SetVisibility(false);
+			PlayerRef->TorchFlameVFX->Deactivate();
+			PlayerRef->TorchLight->SetVisibility(false);
+		}
+		if (PlayerRef->PlayerAnim->Montage_IsPlaying(PlayerRef->HoldingToolMontage))
+		{
+			PlayerRef->PlayerAnim->Montage_Stop(0.1f, PlayerRef->HoldingToolMontage);
+			PlayerRef->IsPlayingHoldingToolMontage = false;
+		}
+	}
+	
+}
+
 void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 {
-	if (!InventoryData || !InventoryData->IsValidIndex(SlotIndex))
+	if (!InventoryData || false == InventoryData->IsValidIndex(SlotIndex))
 		return;
 
 	//선택한 아이템

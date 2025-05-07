@@ -165,6 +165,9 @@ public:
 
 	//장비 인벤토리 슬롯
 	UPROPERTY(meta = (BindWidget))
+	class UButton* EquipButton1;
+	
+	UPROPERTY(meta = (BindWidget))
 	class UImage* EquipImage1;
 
 	UPROPERTY(meta = (BindWidget))
@@ -214,6 +217,9 @@ public:
 	void OnInventory13SlotClicked();
 	UFUNCTION()
 	void OnInventory14SlotClicked();
+	//장비 슬롯
+	UFUNCTION()
+	void OnEquipInventorySlotClicked();
 	
 	UFUNCTION()
 	void OnInventorySlotClicked(int32 SlotIndex);
