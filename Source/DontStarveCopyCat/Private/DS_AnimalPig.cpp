@@ -13,7 +13,7 @@ ADS_AnimalPig::ADS_AnimalPig()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//Pig 모델 생성
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> PigMeshTemp(TEXT("/Game/DontStarveCopyCat/Models/pig_walkCycle_Sketchfab"));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> PigMeshTemp(TEXT("/Game/DontStarveCopyCat/Models/pig"));
 	if (PigMeshTemp.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(PigMeshTemp.Object);

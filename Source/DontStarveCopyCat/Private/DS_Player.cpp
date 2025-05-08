@@ -57,7 +57,7 @@ ADS_Player::ADS_Player()
 	ShadowDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("ShadowDecal"));
 	ShadowDecal->SetupAttachment(RootComponent);
 
-	ConstructorHelpers::FObjectFinder<UMaterialInstance> ShadowMat(TEXT("/Game/DontStarveCopyCat/Materials/M_ShadowDecal.M_ShadowDecal"));
+	ConstructorHelpers::FObjectFinder<UMaterialInstance> ShadowMat(TEXT("/Script/Engine.Material'/Game/DontStarveCopyCat/Materials/M_ShadowDecal'"));
 	if (ShadowMat.Succeeded())
 	{
 		ShadowDecal->SetDecalMaterial(ShadowMat.Object);
