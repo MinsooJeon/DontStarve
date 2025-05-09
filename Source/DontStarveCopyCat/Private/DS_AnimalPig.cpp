@@ -5,6 +5,7 @@
 
 #include "DS_AnimalPigFSMComponent.h"
 #include "Components/DecalComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ADS_AnimalPig::ADS_AnimalPig()
@@ -20,6 +21,7 @@ ADS_AnimalPig::ADS_AnimalPig()
 		GetMesh()->SetRelativeScale3D(FVector(0.5f));
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0,0,-90.f), FRotator(0,-90.f,0));
 		GetMesh()->CastShadow = false;
+		GetCharacterMovement()->MaxWalkSpeed =  200.f;
 	}
 
 	AnimalPigFSM = CreateDefaultSubobject<UDS_AnimalPigFSMComponent>(TEXT("AnimalPigFSM"));

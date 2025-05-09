@@ -44,6 +44,12 @@ public:
 	UPROPERTY()
 	class ADS_AnimalPig* AnimalPig;
 
+	UPROPERTY()
+	class UDS_PigAnim* PigAnim;
+
+	UPROPERTY()
+	class AAIController* AIController;
+	
 	//공격가능거리
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float AttackRange = 100.f;
@@ -59,6 +65,12 @@ public:
 	//체력
 	float curHp = 2.f;
 	float MaxHp = 2.f;
+
+	//순찰을 위한 랜덤위치를 기억하기
+	FVector PatrolLocation;
+
+	//랜덤위치를 정하는 기능 만들기
+	bool UpdatePatrolLocation(FVector origin, float radius, FVector& outLocation);
 	
 	//상태 함수
 	void TickIdle();
