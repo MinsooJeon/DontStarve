@@ -47,6 +47,9 @@ public:
 	UPROPERTY()
 	class UDS_PigAnim* PigAnim;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "AnimSequence")
+	class UAnimSequence* PigMoveAnimation;
+
 	UPROPERTY()
 	class AAIController* AIController;
 	

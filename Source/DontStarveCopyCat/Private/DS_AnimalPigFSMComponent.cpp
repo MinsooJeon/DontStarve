@@ -127,12 +127,20 @@ void UDS_AnimalPigFSMComponent::TickMove()
 	//플레이어가 길 위에 있는지
 	if (findPathResult.IsSuccessful())
 	{
+		//플레이어 찾으면 정상 속도로 추적
+		AnimalPig->GetCharacterMovement()->MaxWalkSpeed = 200.f;
+		PigMoveAnimation->RateScale = 1.f; //애니메이션 속도 1
+		
 		//플레이어 위치를 향해 이동
 		AIController->MoveToLocation(Destination, 50.f);
 	}
 	//길 위가 아니라면
 	else
 	{
+		//순찰 중엔 속도 느리게
+		AnimalPig->GetCharacterMovement()->MaxWalkSpeed = 50.f;
+		PigMoveAnimation->RateScale = 0.7f; // 애니메이션 속도 0.7
+		
 		//랜덤 위치로 이동
 		EPathFollowingRequestResult::Type requestResult = AIController->MoveToLocation(PatrolLocation, 50.f);
 		//만약 랜덤 위치에 도착하면
