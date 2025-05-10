@@ -43,7 +43,7 @@ ADS_Player::ADS_Player()
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(SpringArmComp);
 	//카메라 FOV 55 설정
-	CameraComp->SetFieldOfView(100.f);
+	CameraComp->SetFieldOfView(55.f);
 
 	//플레이어 최대속도
 	GetCharacterMovement()->MaxWalkSpeed =  300.f;
