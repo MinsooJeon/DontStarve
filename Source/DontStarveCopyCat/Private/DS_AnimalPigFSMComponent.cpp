@@ -97,7 +97,11 @@ bool UDS_AnimalPigFSMComponent::UpdatePatrolLocation(FVector origin, float radiu
 void UDS_AnimalPigFSMComponent::TickIdle()
 {
 	if (Player)
+	{
+		PigAnim->bMove = true;
 		SetState(EAnimalPigState::Move);
+	}
+
 }
 
 void UDS_AnimalPigFSMComponent::TickMove()
@@ -144,8 +148,9 @@ void UDS_AnimalPigFSMComponent::TickMove()
 	float Dist = Dir.Length();
 	if (Dist < AttackRange)
 	{
-		SetState(EAnimalPigState::Attack);
 		PigAnim->bAttack = true;
+		PigAnim->bMove = false;
+		SetState(EAnimalPigState::Attack);
 	}
 }
 
@@ -166,6 +171,8 @@ void UDS_AnimalPigFSMComponent::TickAttack()
 		//거리가 안되면 플레이어 따라가기
 		else
 		{
+			PigAnim->bAttack = false;
+			PigAnim->bMove = true;
 			SetState(EAnimalPigState::Move);
 		}
 	}

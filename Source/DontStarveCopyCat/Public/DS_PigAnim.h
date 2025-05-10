@@ -16,7 +16,13 @@ class DONTSTARVECOPYCAT_API UDS_PigAnim : public UAnimInstance
 
 public:
 
+	//돼지 이동 여부
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Animation)
+	bool bMove;
+	
 	//돼지->플레이어 공격 여부
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Animation)
 	bool bAttack;
+
+	
 };
