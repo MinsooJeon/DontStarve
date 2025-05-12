@@ -175,6 +175,8 @@ void UDS_AnimalPigFSMComponent::TickAttack()
 		if (Dir.Length() < AttackRange)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Attack");
+			PigAttackMontage->BlendIn.SetBlendTime(0.1f);
+			PigAnim->Montage_Play(PigAttackMontage);
 		}
 		//거리가 안되면 플레이어 따라가기
 		else
