@@ -8,6 +8,6 @@ public class DontStarveCopyCat : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "Niagara", "RHI", "RenderCore", "AIModule", "NavigationSystem" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "Niagara", "RHI", "RenderCore", "AIModule", "NavigationSystem", "Slate", "SlateCore" });
 	}
 }
