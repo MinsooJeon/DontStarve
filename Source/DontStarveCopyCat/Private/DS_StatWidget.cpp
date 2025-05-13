@@ -2,6 +2,9 @@
 
 
 #include "DS_StatWidget.h"
+
+#include "DS_Player.h"
+#include "Components/Button.h"
 #include "Components/Image.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
@@ -20,9 +23,26 @@ void UDS_StatWidget::NativeConstruct()
 	HungryImageFillBar->SetBarFillType(EProgressBarFillType::BottomToTop);
 	HealthImageFillBar->SetBarFillType(EProgressBarFillType::BottomToTop);
 	SanityImageFillBar->SetBarFillType(EProgressBarFillType::BottomToTop);
-	
-	//초기 꽉찬 Bar
-	//UpdateStatBar(1.f,1.f,1.f);
+
+	//마우스 바인딩
+	if (HungryButton)
+	{
+		HungryButton->OnHovered.AddDynamic(this, &UDS_StatWidget::OnHungerHovered);
+		HungryButton->OnUnhovered.AddDynamic(this, &UDS_StatWidget::OnHungerUnhovered);
+	}
+	if (HealthButton)
+	{
+		HealthButton->OnHovered.AddDynamic(this, &UDS_StatWidget::OnHealthHovered);
+		HealthButton->OnUnhovered.AddDynamic(this, &UDS_StatWidget::OnHealthUnhovered);
+	}
+	if (SanityButton)
+	{
+		SanityButton->OnHovered.AddDynamic(this, &UDS_StatWidget::OnSanityHovered);
+		SanityButton->OnUnhovered.AddDynamic(this, &UDS_StatWidget::OnSanityUnhovered);
+	}
+
+	//플레이어
+	Player = Cast<ADS_Player>(GetWorld()->GetFirstPlayerController()->GetCharacter());
 }
 
 void UDS_StatWidget::UpdateStatBar(float HungerRatio, float HealthRatio, float SanityRatio)
@@ -39,6 +59,39 @@ void UDS_StatWidget::UpdateStatBar(float HungerRatio, float HealthRatio, float S
 	{
 		SanityImageFillBar->SetPercent(SanityRatio);
 	}
+}
+
+void UDS_StatWidget::OnHungerHovered()
+{
+	HungryText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(Player->CurrentHungerValue))));
+	HungryText->SetVisibility((ESlateVisibility::Visible));
+}
+
+void UDS_StatWidget::OnHungerUnhovered()
+{
+	HungryText->SetVisibility((ESlateVisibility::Hidden));
+}
+
+void UDS_StatWidget::OnHealthHovered()
+{
+	HealthText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(Player->CurrentHealthValue))));
+	HealthText->SetVisibility((ESlateVisibility::Visible));
+}
+
+void UDS_StatWidget::OnHealthUnhovered()
+{
+	HealthText->SetVisibility((ESlateVisibility::Hidden));
+}
+
+void UDS_StatWidget::OnSanityHovered()
+{
+	SanityText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(Player->CurrentSanityValue))));
+	SanityText->SetVisibility((ESlateVisibility::Visible));
+}
+
+void UDS_StatWidget::OnSanityUnhovered()
+{
+	SanityText->SetVisibility((ESlateVisibility::Hidden));
 }
 
 // void UDS_StatWidget::UpdateStatBar(float Ratio)
