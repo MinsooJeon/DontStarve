@@ -3,6 +3,7 @@
 
 #include "DS_StatWidget.h"
 #include "Components/Image.h"
+#include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "Slate/SlateBrushAsset.h"
 
@@ -15,14 +16,35 @@ void UDS_StatWidget::NativeConstruct()
 	HealthText->SetVisibility(ESlateVisibility::Hidden);
 	SanityText->SetVisibility(ESlateVisibility::Hidden);
 
-	StatHungryTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Script/Engine.Texture2D'/Game/DontStarveCopyCat/UI/Images/hunger_level-0.hunger_level-0'"));
+	//ProgressBar Type
+	HungryImageFillBar->SetBarFillType(EProgressBarFillType::BottomToTop);
+	HealthImageFillBar->SetBarFillType(EProgressBarFillType::BottomToTop);
+	SanityImageFillBar->SetBarFillType(EProgressBarFillType::BottomToTop);
 	
+	//초기 꽉찬 Bar
+	//UpdateStatBar(1.f,1.f,1.f);
 }
 
-void UDS_StatWidget::UpdateStatBar(float Ratio)
+void UDS_StatWidget::UpdateStatBar(float HungerRatio, float HealthRatio, float SanityRatio)
 {
-	if (!HungryImageFill || Ratio < 0.f || Ratio > 1.f)
-		return;
+	if (HungryImageFillBar)
+	{
+		HungryImageFillBar->SetPercent(HungerRatio);
+	}
+	if (HealthImageFillBar)
+	{
+		HealthImageFillBar->SetPercent(HealthRatio);
+	}
+	if (SanityImageFillBar)
+	{
+		SanityImageFillBar->SetPercent(SanityRatio);
+	}
+}
+
+// void UDS_StatWidget::UpdateStatBar(float Ratio)
+// {
+// 	if (!HungryImageFillBar || Ratio < 0.f || Ratio > 1.f)
+// 		return;
 
 	// //UVRegion 세팅
 	// FBox2D UVRegion;
@@ -41,5 +63,5 @@ void UDS_StatWidget::UpdateStatBar(float Ratio)
 	//
 	// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Hungry image");
 	
-}
+//}
 

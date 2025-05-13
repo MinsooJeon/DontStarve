@@ -214,6 +214,14 @@ public:
 	float CurrentSanityValue;
 	UPROPERTY(EditAnywhere)
 	float MaxSanityValue;
+
+	//Progress Bar Ratio
+	UPROPERTY(editAnywhere, BlueprintReadWrite)
+	float HungryRatio;
+	UPROPERTY(editAnywhere, BlueprintReadWrite)
+	float HealthRatio;
+	UPROPERTY(editAnywhere, BlueprintReadWrite)
+	float SanityRatio;
 };
 
 

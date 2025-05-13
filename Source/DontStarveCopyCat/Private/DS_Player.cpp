@@ -203,8 +203,15 @@ void ADS_Player::BeginPlay()
 
 	//stat Widget C++ 캐스팅
 	StatsWidget = Cast<UDS_StatWidget>(StatWidget);
-
-	StatsWidget->UpdateStatBar(0.5f);
+	//초기 꽉찬 Bar
+	if (StatsWidget)
+	{
+		HungryRatio = CurrentHungerValue / MaxHungerValue;
+		HealthRatio = CurrentHealthValue / MaxHealthValue;
+		SanityRatio = CurrentSanityValue / MaxSanityValue;
+	}
+	//Bar Update
+	StatsWidget->UpdateStatBar(HungryRatio,HealthRatio,SanityRatio);
 }
 
 void ADS_Player::NotifyControllerChanged()

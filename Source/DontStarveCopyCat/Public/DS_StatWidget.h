@@ -21,7 +21,7 @@ public:
 	//생성자 함수
 	virtual void NativeConstruct() override;
 
-	//이미지, 텍스트 바인딩
+	//이미지, 프로그래스바, 텍스트 바인딩
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UImage* HungryImage;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
@@ -30,11 +30,11 @@ public:
 	class UImage* SanityImage;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UImage* HungryImageFill;
+	class UProgressBar* HungryImageFillBar;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UImage* HealthImageFill;
+	class UProgressBar* HealthImageFillBar;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UImage* SanityImageFill;
+	class UProgressBar* SanityImageFillBar;
 	
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* HungryText;
@@ -42,11 +42,9 @@ public:
 	class UTextBlock* HealthText;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* SanityText;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat)
-	class UTexture2D* StatHungryTexture;
+	
 	
 	//수치 업데이트 함수
-	void UpdateStatBar(float Ratio);
+	void UpdateStatBar(float HungerRatio, float HealthRatio, float SanityRatio);
 	
 };
