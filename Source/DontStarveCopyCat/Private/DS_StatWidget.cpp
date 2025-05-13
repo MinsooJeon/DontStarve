@@ -5,10 +5,8 @@
 
 #include "DS_Player.h"
 #include "Components/Button.h"
-#include "Components/Image.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
-#include "Slate/SlateBrushAsset.h"
 
 void UDS_StatWidget::NativeConstruct()
 {

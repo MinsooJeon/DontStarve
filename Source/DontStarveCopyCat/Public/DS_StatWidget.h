@@ -6,7 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
-#include "slate/SlateBrushAsset.h"
 #include "DS_StatWidget.generated.h"
 
 /**
