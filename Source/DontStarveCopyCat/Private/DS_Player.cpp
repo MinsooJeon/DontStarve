@@ -18,6 +18,7 @@
 #include "Components/DecalComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "DS_InventoryWidget.h"
+#include "DS_StatWidget.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -191,15 +192,19 @@ void ADS_Player::BeginPlay()
 	}
 
 	//플레이어 스탯 초기화
-	MaxHungerValue = 150;
-	CurrentHungerValue = 150;
+	MaxHungerValue = 150.f;
+	CurrentHungerValue = 150.f;
 	
-	MaxHealthValue = 150;
-	CurrentHealthValue = 150;
+	MaxHealthValue = 150.f;
+	CurrentHealthValue = 150.f;
 	
-	MaxSanityValue = 200;
-	CurrentSanityValue = 200;
-	
+	MaxSanityValue = 200.f;
+	CurrentSanityValue = 200.f;
+
+	//stat Widget C++ 캐스팅
+	StatsWidget = Cast<UDS_StatWidget>(StatWidget);
+
+	StatsWidget->UpdateStatBar(0.5f);
 }
 
 void ADS_Player::NotifyControllerChanged()

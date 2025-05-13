@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "slate/SlateBrushAsset.h"
 #include "DS_StatWidget.generated.h"
 
 /**
@@ -29,10 +30,23 @@ public:
 	class UImage* SanityImage;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UImage* HungryImageFill;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UImage* HealthImageFill;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UImage* SanityImageFill;
+	
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* HungryText;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* HealthText;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* SanityText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat)
+	class UTexture2D* StatHungryTexture;
+	
+	//수치 업데이트 함수
+	void UpdateStatBar(float Ratio);
 	
 };
