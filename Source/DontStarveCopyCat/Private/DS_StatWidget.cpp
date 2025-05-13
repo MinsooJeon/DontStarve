@@ -17,10 +17,3 @@ void UDS_StatWidget::NativeConstruct()
 	
 }
 
-void UDS_StatWidget::SetStats(int32 HungerValue, int32 HealthValue, int32 SanityValue)
-{
-	CurrentHungerValue = HungerValue;
-	CurrentHealthValue = HealthValue;
-	CurrentSanityValue = SanityValue;
-}
-

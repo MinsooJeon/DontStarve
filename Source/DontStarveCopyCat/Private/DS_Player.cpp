@@ -189,6 +189,16 @@ void ADS_Player::BeginPlay()
 	{
 		InventorySlotWidget->UpdateAllSlots(InventoryComp->Items);
 	}
+
+	//플레이어 스탯 초기화
+	MaxHungerValue = 150;
+	CurrentHungerValue = 150;
+	
+	MaxHealthValue = 150;
+	CurrentHealthValue = 150;
+	
+	MaxSanityValue = 200;
+	CurrentSanityValue = 200;
 	
 }
 

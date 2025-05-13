@@ -34,25 +34,5 @@ public:
 	class UTextBlock* HealthText;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* SanityText;
-
-	//현재 수치, 최대 수치
-	UPROPERTY(EditAnywhere)
-	int32 CurrentHungerValue;
-	UPROPERTY(editAnywhere)
-	int32 MaxHungerValue;
-
-	UPROPERTY(EditAnywhere)
-	int32 CurrentHealthValue;
-	UPROPERTY(EditAnywhere)
-	int32 MaxHealthValue;
-	
-	UPROPERTY(EditAnywhere)
-	int32 CurrentSanityValue;
-	UPROPERTY(EditAnywhere)
-	int32 MaxSanityValue;
-	
-	
-	//수치값 설정 함수
-	void SetStats(int32 HungerValue, int32 HealthValue, int32 SanityValue);
 	
 };

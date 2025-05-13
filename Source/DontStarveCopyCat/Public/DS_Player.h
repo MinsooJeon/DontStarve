@@ -194,7 +194,23 @@ public:
 	//인벤토리 컴포넌트 붙이기
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	TObjectPtr<class UInventoryComponent> InventoryComp;
+
+	//플레이어 스탯
+	//현재 수치, 최대 수치
+	UPROPERTY(EditAnywhere)
+	int32 CurrentHungerValue;
+	UPROPERTY(editAnywhere)
+	int32 MaxHungerValue;
+
+	UPROPERTY(EditAnywhere)
+	int32 CurrentHealthValue;
+	UPROPERTY(EditAnywhere)
+	int32 MaxHealthValue;
 	
+	UPROPERTY(EditAnywhere)
+	int32 CurrentSanityValue;
+	UPROPERTY(EditAnywhere)
+	int32 MaxSanityValue;
 };
 
 
