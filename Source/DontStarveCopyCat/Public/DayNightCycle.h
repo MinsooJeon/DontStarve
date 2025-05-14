@@ -72,4 +72,10 @@ public:
 	//PostProcess Color
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Curve")
 	UCurveFloat* ColorGradingCurve;
+
+
+	//플레이어
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	class ADS_Player* MyPlayer;
+	
 };

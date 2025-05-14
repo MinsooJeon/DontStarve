@@ -221,6 +221,20 @@ public:
 	float HealthRatio;
 	UPROPERTY(editAnywhere, BlueprintReadWrite)
 	float SanityRatio;
+
+	//Timer Handle
+	UPROPERTY()
+	FTimerHandle HungerTimerHandle;
+	//배고픔 감소값
+	UPROPERTY()
+	float HungerDecreaseValue = 0.5f;
+	//배고픔 감소 시간 간격
+	UPROPERTY()
+	float HungerDecreaseDelayTime = 1.f;
+
+	//배고픔 감소 함수
+	UFUNCTION()
+	void DecreaseHunger();
 };
 
 

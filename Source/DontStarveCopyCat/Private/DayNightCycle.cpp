@@ -3,6 +3,7 @@
 
 #include "DayNightCycle.h"
 
+#include "DS_Player.h"
 #include "Components/DirectionalLightComponent.h"
 #include "Components/ExponentialHeightFogComponent.h"
 #include "Components/SkyLightComponent.h"
@@ -31,6 +32,9 @@ void ADayNightCycle::BeginPlay()
 	{
 		SunInitialRotation = SunLight->GetActorRotation(); //Directional Light 시작 회전값
 	}
+
+	//플레이어
+	MyPlayer = Cast<ADS_Player>(GetWorld()->GetFirstPlayerController()->GetCharacter());
 	
 }
 
@@ -47,9 +51,10 @@ void ADayNightCycle::Tick(float DeltaTime)
 	{
 		CurrentTime = 0.f;
 	}
-
+	
 	//조명 업데이트
 	UpdateLighting(CurrentTime);
+	
 }
 
 void ADayNightCycle::UpdateLighting(float CurTime)
@@ -111,4 +116,5 @@ void ADayNightCycle::UpdateLighting(float CurTime)
 		Settings.ColorSaturation = FVector4(Saturation, Saturation, Saturation, 1.f);
 	}
 }
+
 

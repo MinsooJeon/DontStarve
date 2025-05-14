@@ -214,6 +214,9 @@ void ADS_Player::BeginPlay()
 	}
 	//Bar Update
 	StatsWidget->UpdateStatBar(HungryRatio,HealthRatio,SanityRatio);
+
+	//배고픔 감소 타이머 시작
+	GetWorldTimerManager().SetTimer(HungerTimerHandle, this, &ADS_Player::DecreaseHunger, HungerDecreaseDelayTime, true);
 }
 
 void ADS_Player::NotifyControllerChanged()
@@ -582,4 +585,27 @@ void ADS_Player::PickUpEndNotify()
 	{
 		PlayerAnim->Montage_Play(HoldingToolMontage);
 	}
+}
+
+void ADS_Player::DecreaseHunger()
+{
+	//1초마다 0.5씩 감소
+	CurrentHungerValue -= HungerDecreaseValue;
+	CurrentHungerValue = FMath::Clamp(CurrentHungerValue, 0.f, MaxHungerValue);
+
+	if (StatsWidget)
+	{
+		//UI Progress Bar 업데이트
+		HungryRatio = CurrentHungerValue / MaxHungerValue;
+		HealthRatio = CurrentHealthValue / MaxHealthValue;
+		SanityRatio = CurrentSanityValue / MaxSanityValue;
+		
+		StatsWidget->UpdateStatBar(HungryRatio, HealthRatio, SanityRatio);
+		//TEXT 업데이트
+		StatsWidget->HungryText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(CurrentHungerValue))));
+
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f"), CurrentHungerValue));
+	}
+
+	// 추가: 배고픔 0이면 데미지 같은 페널티도 여기에 추가 가능
 }
