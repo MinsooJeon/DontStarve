@@ -661,12 +661,25 @@ void ADS_Player::StartSanityTimer()
 {
 	//밤이 되고 타이머가 작동중이 아니면 정신력 감소 타이머 작동
 	//정신력 타이머 2초에 한번씩 실행
-	if (false == bIsSanityTimerActive)
-	{
-		GetWorldTimerManager().SetTimer(SanityTimerHandle, this, &ADS_Player::DecreaseSanity, SanityDecreaseDelayTime, true);
-		bIsSanityTimerActive = true;
 
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::Printf(TEXT("밤: 정신력 감소 시작")));
+	//횃불을 들고 있지 않으면 작동
+	if (false == bIsHoldingTorch)
+	{
+		if (false == bIsSanityTimerActive)
+		{
+			GetWorldTimerManager().SetTimer(SanityTimerHandle, this, &ADS_Player::DecreaseSanity, SanityDecreaseDelayTime, true);
+			bIsSanityTimerActive = true;
+
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::Printf(TEXT("밤: 정신력 감소 시작")));
+		}
+	}
+	//횃불을 들고 있으면 정신력 감소 x
+	else
+	{
+		GetWorldTimerManager().ClearTimer(SanityTimerHandle);
+		bIsSanityTimerActive = false;
+
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::Printf(TEXT("밤: 횃불로 인해 정신력 유지")));
 	}
 }
 

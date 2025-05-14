@@ -295,6 +295,7 @@ void UDS_InventoryWidget::OnEquipInventorySlotClicked()
 			PlayerRef->TorchFlameVFX->SetVisibility(false);
 			PlayerRef->TorchFlameVFX->Deactivate();
 			PlayerRef->TorchLight->SetVisibility(false);
+			PlayerRef->bIsHoldingTorch = false;
 		}
 		if (PlayerRef->PlayerAnim->Montage_IsPlaying(PlayerRef->HoldingToolMontage))
 		{
@@ -389,7 +390,7 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 				PlayerRef->TorchLight->SetVisibility(false);
 			}
 			PlayerRef->AxeMeshComp->SetVisibility(true);
-
+			PlayerRef->bIsHoldingTorch = false;
 			if (false == PlayerRef->PlayerAnim->Montage_IsPlaying(PlayerRef->HoldingToolMontage))
 			{
 				PlayerRef->PlayerAnim->Montage_Play(PlayerRef->HoldingToolMontage);
@@ -408,6 +409,7 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 			PlayerRef->TorchFlameVFX->SetVisibility(true);
 			PlayerRef->TorchFlameVFX->Activate();
 			PlayerRef->TorchLight->SetVisibility(true);
+			PlayerRef->bIsHoldingTorch = true;
 			if (false == PlayerRef->PlayerAnim->Montage_IsPlaying(PlayerRef->HoldingToolMontage))
 			{
 				PlayerRef->PlayerAnim->Montage_Play(PlayerRef->HoldingToolMontage);

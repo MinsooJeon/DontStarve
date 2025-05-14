@@ -247,6 +247,8 @@ public:
 	float SanityDecreaseDelayTime = 2.f;
 	//정신력 감소 타이머 실행여부
 	bool bIsSanityTimerActive = false;
+	//횃불 손에 들고 있는지 여부
+	bool bIsHoldingTorch = false;
 
 	//월드 시간 클래스
 	UPROPERTY()
