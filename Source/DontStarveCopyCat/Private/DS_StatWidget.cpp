@@ -92,6 +92,44 @@ void UDS_StatWidget::OnSanityUnhovered()
 	SanityText->SetVisibility((ESlateVisibility::Hidden));
 }
 
+void UDS_StatWidget::UpdateStatIcon(UImage* TargetImage, float CurrentValue, UTexture2D* TargetHigh, UTexture2D* TargetMid,
+	UTexture2D* TargetLow)
+{
+	if (!TargetImage)
+		return;
+	
+	UTexture2D* SelectedTexture = nullptr;
+
+	if (CurrentValue <= 90 && CurrentValue > 60)
+	{
+		SelectedTexture = TargetHigh;
+	}
+	else if (CurrentValue <= 60 && CurrentValue > 30)
+	{
+		SelectedTexture = TargetMid;
+	}
+	else if (CurrentValue <= 30 && CurrentValue >= 0)
+	{
+		SelectedTexture = TargetLow;
+	}
+
+	if (SelectedTexture)
+	{
+		FSlateBrush NewBrush;
+		NewBrush.SetResourceObject(SelectedTexture);
+		if (TargetImage != HealthImage)
+		{
+			NewBrush.ImageSize = FVector2D(104.f, 128.f);
+		}
+		else
+		{
+			NewBrush.ImageSize = FVector2D(104.f, 104.f);
+		}
+		TargetImage->SetBrush(NewBrush);
+
+	}
+}
+
 // void UDS_StatWidget::UpdateStatBar(float Ratio)
 // {
 // 	if (!HungryImageFillBar || Ratio < 0.f || Ratio > 1.f)

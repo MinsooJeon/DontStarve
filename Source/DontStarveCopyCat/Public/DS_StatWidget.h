@@ -51,6 +51,30 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class ADS_Player* Player;
+
+	//배고픔 아이콘
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* HungryIconHigh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* HungryIconMid;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* HungryIconLow;
+
+	//체력 아이콘
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* HealthIconHigh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* HealthIconMid;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* HealthIconLow;
+
+	//정신력 아이콘
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* SanityIconHigh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* SanityIconMid;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatIcons)
+	UTexture2D* SanityIconLow;
 	
 	//수치 업데이트 함수
 	void UpdateStatBar(float HungerRatio, float HealthRatio, float SanityRatio);
@@ -70,5 +94,9 @@ public:
 	void OnSanityHovered();
 	UFUNCTION()
 	void OnSanityUnhovered();
+
+	//UI이미지 아이콘 교체 업데이트
+	UFUNCTION()
+	void UpdateStatIcon(UImage* TargetImage, float CurrentValue, UTexture2D* TargetHigh, UTexture2D* TargetMid, UTexture2D* TargetLow);
 	
 };

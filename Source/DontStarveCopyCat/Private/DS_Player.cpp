@@ -642,6 +642,10 @@ void ADS_Player::DecreaseHunger()
 		//TEXT 업데이트
 		StatsWidget->HungryText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(CurrentHungerValue))));
 		StatsWidget->HealthText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(CurrentHealthValue))));
+
+		//아이콘이미지 업데이트
+		StatsWidget->UpdateStatIcon(StatsWidget->HungryImage, CurrentHungerValue, StatsWidget->HungryIconHigh, StatsWidget->HungryIconMid, StatsWidget->HungryIconLow);
+		StatsWidget->UpdateStatIcon(StatsWidget->HealthImage, CurrentHealthValue, StatsWidget->HealthIconHigh, StatsWidget->HealthIconMid, StatsWidget->HealthIconLow);
 		
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f"), CurrentHungerValue));
 	}
@@ -712,6 +716,9 @@ void ADS_Player::DecreaseSanity()
 
 		//TEXT 업데이트
 		StatsWidget->SanityText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(CurrentSanityValue))));
+
+		//아이콘 이미지 업데이트
+		StatsWidget->UpdateStatIcon(StatsWidget->SanityImage, CurrentSanityValue, StatsWidget->SanityIconHigh, StatsWidget->SanityIconMid, StatsWidget->SanityIconLow);
 	}
 
 	//정신력이 0이 되면
