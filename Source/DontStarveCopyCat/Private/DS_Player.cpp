@@ -18,7 +18,9 @@
 #include "Components/DecalComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "DS_InventoryWidget.h"
+#include "DS_MenuWidget.h"
 #include "DS_StatWidget.h"
+#include "NiagaraSystem.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -58,7 +60,7 @@ ADS_Player::ADS_Player()
 	ShadowDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("ShadowDecal"));
 	ShadowDecal->SetupAttachment(RootComponent);
 
-	ConstructorHelpers::FObjectFinder<UMaterialInstance> ShadowMat(TEXT("/Game/DontStarveCopyCat/Materials/M_ShadowDecal.M_ShadowDecal"));
+	ConstructorHelpers::FObjectFinder<UMaterial> ShadowMat(TEXT("/Game/DontStarveCopyCat/Materials/M_ShadowDecal.M_ShadowDecal"));
 	if (ShadowMat.Succeeded())
 	{
 		ShadowDecal->SetDecalMaterial(ShadowMat.Object);
@@ -69,19 +71,19 @@ ADS_Player::ADS_Player()
 	ShadowDecal->SetRelativeRotation(FRotator(90.f, 0.f, 90.f));
 
 	//player Widgets
-	static ConstructorHelpers::FClassFinder<UUserWidget> Menutemp(TEXT("/Game/DontStarveCopyCat/UI/WBP_DS_MenuWidget.WBP_DS_MenuWidget"));
+	static ConstructorHelpers::FClassFinder<UDS_MenuWidget> Menutemp(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/DontStarveCopyCat/UI/WBP_DS_MenuWidget.WBP_DS_MenuWidget_C'"));
 	if (Menutemp.Succeeded())
 	{
 		MenuWidgetClass = Menutemp.Class;
 	}
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> Inventorytemp(TEXT("/Game/DontStarveCopyCat/UI/WBP_DS_InventoryWidget.WBP_DS_InventoryWidget"));
+	static ConstructorHelpers::FClassFinder<UDS_InventoryWidget> Inventorytemp(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/DontStarveCopyCat/UI/WBP_DS_InventoryWidget.WBP_DS_InventoryWidget_C'"));
 	if (Inventorytemp.Succeeded())
 	{
 		InventoryWidgetClass = Inventorytemp.Class;
 	}
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> Stattemp(TEXT("/Game/DontStarveCopyCat/UI/WBP_DS_StatWidget.WBP_DS_StatWidget"));
+	static ConstructorHelpers::FClassFinder<UDS_StatWidget> Stattemp(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/DontStarveCopyCat/UI/WBP_DS_StatWidget.WBP_DS_StatWidget_C'"));
 	if (Stattemp.Succeeded())
 	{
 		StatWidgetClass = Stattemp.Class;
@@ -155,11 +157,11 @@ void ADS_Player::BeginPlay()
 	SetActorRotation(newRotation);
 
 	//Widgets 화면에 보이기
-	MenuWidget = CreateWidget(GetWorld()->GetFirstPlayerController(), MenuWidgetClass);
+	MenuWidget = CreateWidget<UDS_MenuWidget>(GetWorld(), MenuWidgetClass);
 	MenuWidget->AddToViewport();
-	InventoryWidget = CreateWidget(GetWorld()->GetFirstPlayerController(), InventoryWidgetClass);
+	InventoryWidget = CreateWidget<UDS_InventoryWidget>(GetWorld(), InventoryWidgetClass);
 	InventoryWidget->AddToViewport();
-	StatWidget = CreateWidget(GetWorld()->GetFirstPlayerController(), StatWidgetClass);
+	StatWidget = CreateWidget<UDS_StatWidget>(GetWorld(), StatWidgetClass);
 	StatWidget->AddToViewport();
 	//인벤토리 슬롯 C++로 캐스팅
 	InventorySlotWidget = Cast<UDS_InventoryWidget>(InventoryWidget);

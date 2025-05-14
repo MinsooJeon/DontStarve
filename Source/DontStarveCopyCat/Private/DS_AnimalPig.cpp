@@ -30,7 +30,7 @@ ADS_AnimalPig::ADS_AnimalPig()
 	ShadowDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("ShadowDecal"));
 	ShadowDecal->SetupAttachment(RootComponent);
 
-	ConstructorHelpers::FObjectFinder<UMaterialInstance> ShadowMat(TEXT("/Game/DontStarveCopyCat/Materials/M_ShadowDecal"));
+	ConstructorHelpers::FObjectFinder<UMaterial> ShadowMat(TEXT("/Game/DontStarveCopyCat/Materials/M_ShadowDecal"));
 	if (ShadowMat.Succeeded())
 	{
 		ShadowDecal->SetDecalMaterial(ShadowMat.Object);

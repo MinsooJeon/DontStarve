@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "NiagaraComponent.h"
-#include "NiagaraSystem.h"
 #include "Components/PointLightComponent.h"
 #include "DS_Player.generated.h"
 
@@ -175,18 +174,18 @@ public:
 
 	//인게임 UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
-	TSubclassOf<class UUserWidget> MenuWidgetClass;
+	TSubclassOf<class UDS_MenuWidget> MenuWidgetClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
-	TSubclassOf<class UUserWidget> InventoryWidgetClass;
+	TSubclassOf<class UDS_InventoryWidget> InventoryWidgetClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
-	TSubclassOf<class UUserWidget> StatWidgetClass;
+	TSubclassOf<class UDS_StatWidget> StatWidgetClass;
 	
 	UPROPERTY()
-	UUserWidget* MenuWidget;
+	UDS_MenuWidget* MenuWidget;
 	UPROPERTY()
-	UUserWidget* InventoryWidget;
+	UDS_InventoryWidget* InventoryWidget;
 	UPROPERTY()
-	UUserWidget* StatWidget;
+	UDS_StatWidget* StatWidget;
 
 	UPROPERTY()
 	class UDS_InventoryWidget* InventorySlotWidget;
