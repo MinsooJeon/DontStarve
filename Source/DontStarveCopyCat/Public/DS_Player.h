@@ -222,19 +222,37 @@ public:
 	UPROPERTY(editAnywhere, BlueprintReadWrite)
 	float SanityRatio;
 
-	//Timer Handle
+	//Hunger Timer Handle
 	UPROPERTY()
 	FTimerHandle HungerTimerHandle;
 	//배고픔 감소값
 	UPROPERTY()
-	float HungerDecreaseValue = 0.5f;
+	float HungerDecreaseValue = 1.f;
 	//배고픔 감소 시간 간격
 	UPROPERTY()
 	float HungerDecreaseDelayTime = 1.f;
 
 	//허기 체력 데미지 값(체력 감소)
 	UPROPERTY()
-	float StarvationDamageHPValue = 2.f;
+	float StarvationDamageHPValue = 4.f;
+
+	//Sanity Timer Handle
+	UPROPERTY()
+	FTimerHandle SanityTimerHandle;
+	//정신력 감소값
+	UPROPERTY()
+	float SanityDecreaseValue = 1.f;
+	//정신력 감소 시간 간격
+	UPROPERTY()
+	float SanityDecreaseDelayTime = 2.f;
+	//정신력 감소 타이머 실행여부
+	bool bIsSanityTimerActive = false;
+
+	//월드 시간 클래스
+	UPROPERTY()
+	TSubclassOf<class ADayNightCycle> DayNightCycle;
+	UPROPERTY()
+	class ADayNightCycle* DayNight;
 	
 	//배고픔 감소 함수
 	UFUNCTION()
@@ -243,6 +261,17 @@ public:
 	//플레이어 죽음 함수
 	UFUNCTION()
 	void PlayerDie();
+
+	//플레이어 정신력 타이머 시작 함수
+	UFUNCTION()
+	void StartSanityTimer();
+	//플레이어 정신력 타이머 정지 함수
+	UFUNCTION()
+	void StopSanityTimer();
+
+	//정신력 감소 함수
+	UFUNCTION()
+	void DecreaseSanity();
 };
 
 

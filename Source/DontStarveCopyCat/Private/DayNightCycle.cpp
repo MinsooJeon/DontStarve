@@ -25,7 +25,7 @@ void ADayNightCycle::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	DayLength = 300.f; //하루 300초
+	DayLength = 180.f; //하루 180초
 	CurrentTime = 0.f;
 
 	if (SunLight)

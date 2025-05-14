@@ -3,6 +3,7 @@
 
 #include "DontStarveCopyCat/Public/DS_Player.h"
 
+#include "DayNightCycle.h"
 #include "DS_PlayerAnim.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -21,6 +22,8 @@
 #include "DS_MenuWidget.h"
 #include "DS_StatWidget.h"
 #include "NiagaraSystem.h"
+#include "Engine/DirectionalLight.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ADS_Player::ADS_Player()
@@ -194,14 +197,14 @@ void ADS_Player::BeginPlay()
 	}
 
 	//플레이어 스탯 초기화
-	MaxHungerValue = 150.f;
-	CurrentHungerValue = 150.f;
+	MaxHungerValue = 100.f;
+	CurrentHungerValue = 100.f;
 	
-	MaxHealthValue = 150.f;
-	CurrentHealthValue = 150.f;
+	MaxHealthValue = 100.f;
+	CurrentHealthValue = 100.f;
 	
-	MaxSanityValue = 200.f;
-	CurrentSanityValue = 200.f;
+	MaxSanityValue = 100.f;
+	CurrentSanityValue = 100.f;
 
 	//stat Widget C++ 캐스팅
 	StatsWidget = Cast<UDS_StatWidget>(StatWidget);
@@ -215,8 +218,12 @@ void ADS_Player::BeginPlay()
 	//Bar Update
 	StatsWidget->UpdateStatBar(HungryRatio,HealthRatio,SanityRatio);
 
-	//배고픔 감소 타이머 시작
+	//배고픔 감소 타이머 시작. 1초에 한번씩 반복
 	GetWorldTimerManager().SetTimer(HungerTimerHandle, this, &ADS_Player::DecreaseHunger, HungerDecreaseDelayTime, true);
+
+	//월드 시간 액터 찾아 가져오기
+	DayNight = Cast<ADayNightCycle>(UGameplayStatics::GetActorOfClass(GetWorld(), ADayNightCycle::StaticClass()));
+	
 }
 
 void ADS_Player::NotifyControllerChanged()
@@ -249,6 +256,22 @@ void ADS_Player::Tick(float DeltaTime)
 	//입력받았을때 한번 움직이고 안움직이게처리.
 	Direction = FVector::ZeroVector;
 
+	
+	//월드 시간 각도에 따른 낮과 밤 분류, 정신력 감소 적용
+	FVector SunDirection = DayNight->SunLight->GetActorForwardVector();
+	float VerticalValue = FVector::DotProduct(SunDirection, FVector::DownVector); //지면방향 비교
+	//VerticalValue가 양수일수록 낮, 음수면 밤
+	if (VerticalValue > 0.3f)
+	{
+		//낮
+		StopSanityTimer();
+	}
+	else
+	{
+		//밤
+		StartSanityTimer();
+	}
+	
 }
 
 // Called to bind functionality to input
@@ -632,4 +655,56 @@ void ADS_Player::PlayerDie()
 	// 애니메이션 정지, 입력 막기, 리스폰 처리 등
 	//DisableInput(nullptr);
 	// 죽음 애니메이션, 게임오버 UI 등 필요시 추가
+}
+
+void ADS_Player::StartSanityTimer()
+{
+	//밤이 되고 타이머가 작동중이 아니면 정신력 감소 타이머 작동
+	//정신력 타이머 2초에 한번씩 실행
+	if (false == bIsSanityTimerActive)
+	{
+		GetWorldTimerManager().SetTimer(SanityTimerHandle, this, &ADS_Player::DecreaseSanity, SanityDecreaseDelayTime, true);
+		bIsSanityTimerActive = true;
+
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::Printf(TEXT("밤: 정신력 감소 시작")));
+	}
+}
+
+void ADS_Player::StopSanityTimer()
+{
+	//낮이 되고 타이머가 작동중이라면 정신력 감소 멈춤 타이머 작동
+	//정신력 타이머 정지
+	if (bIsSanityTimerActive)
+	{
+		GetWorldTimerManager().ClearTimer(SanityTimerHandle);
+		bIsSanityTimerActive = false;
+
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString::Printf(TEXT("낮: 정신력 감소 중단")));
+	}
+}
+
+void ADS_Player::DecreaseSanity()
+{
+	CurrentSanityValue -= SanityDecreaseValue; //정신력 초당 0.25 감소
+	CurrentSanityValue = FMath::Clamp(CurrentSanityValue, 0.f, MaxSanityValue);
+
+	if (StatsWidget)
+	{
+		//UI Progress Bar 업데이트
+		HungryRatio = CurrentHungerValue / MaxHungerValue;
+		HealthRatio = CurrentHealthValue / MaxHealthValue;
+		SanityRatio = CurrentSanityValue / MaxSanityValue;
+		
+		StatsWidget->UpdateStatBar(HungryRatio, HealthRatio, SanityRatio);
+
+		//TEXT 업데이트
+		StatsWidget->SanityText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(CurrentSanityValue))));
+	}
+
+	//정신력이 0이 되면
+	if (CurrentSanityValue <= 0.f)
+	{
+		// 정신력이 0일 때 효과 적용 (공황 상태, 환각)
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, FString::Printf(TEXT("Sanity Depleted!")));
+	}
 }
