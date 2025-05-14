@@ -593,6 +593,20 @@ void ADS_Player::DecreaseHunger()
 	CurrentHungerValue -= HungerDecreaseValue;
 	CurrentHungerValue = FMath::Clamp(CurrentHungerValue, 0.f, MaxHungerValue);
 
+	//배고픔이 0이면 체력 감소
+	if (CurrentHungerValue <= 0.f)
+	{
+		CurrentHealthValue -= StarvationDamageHPValue; // 초당 2씩 체력 감소
+		CurrentHealthValue = FMath::Clamp(CurrentHealthValue, 0.f, MaxHealthValue);
+
+		//체력이 0이 되면
+		if (CurrentHealthValue <= 0.f)
+		{
+			//플레이어 사망 함수
+			PlayerDie();
+		}
+	}
+	
 	if (StatsWidget)
 	{
 		//UI Progress Bar 업데이트
@@ -601,11 +615,21 @@ void ADS_Player::DecreaseHunger()
 		SanityRatio = CurrentSanityValue / MaxSanityValue;
 		
 		StatsWidget->UpdateStatBar(HungryRatio, HealthRatio, SanityRatio);
+
 		//TEXT 업데이트
 		StatsWidget->HungryText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(CurrentHungerValue))));
-
+		StatsWidget->HealthText->SetText(FText::FromString(FString::Printf(TEXT("%d"), FMath::FloorToInt(CurrentHealthValue))));
+		
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f"), CurrentHungerValue));
 	}
 
 	// 추가: 배고픔 0이면 데미지 같은 페널티도 여기에 추가 가능
+}
+
+void ADS_Player::PlayerDie()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("PlayerDie")));
+	// 애니메이션 정지, 입력 막기, 리스폰 처리 등
+	//DisableInput(nullptr);
+	// 죽음 애니메이션, 게임오버 UI 등 필요시 추가
 }

@@ -232,9 +232,17 @@ public:
 	UPROPERTY()
 	float HungerDecreaseDelayTime = 1.f;
 
+	//허기 체력 데미지 값(체력 감소)
+	UPROPERTY()
+	float StarvationDamageHPValue = 2.f;
+	
 	//배고픔 감소 함수
 	UFUNCTION()
 	void DecreaseHunger();
+
+	//플레이어 죽음 함수
+	UFUNCTION()
+	void PlayerDie();
 };
 
 
