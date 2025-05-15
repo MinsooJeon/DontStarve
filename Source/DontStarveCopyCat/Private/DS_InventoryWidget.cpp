@@ -417,6 +417,11 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 			}
 		}
 	}
+	//돼지고기인 경우
+	if (ClickedItem.ItemID == "GatherableMeat")
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Eating Meat");
+	}
 }
 
 
