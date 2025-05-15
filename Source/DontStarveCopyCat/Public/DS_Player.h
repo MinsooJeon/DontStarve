@@ -255,6 +255,11 @@ public:
 	TSubclassOf<class ADayNightCycle> DayNightCycle;
 	UPROPERTY()
 	class ADayNightCycle* DayNight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class ADS_AnimalPig* Pig;
+
+	bool bIsChoppingPig = false;
 	
 	//배고픔 감소 함수
 	UFUNCTION()

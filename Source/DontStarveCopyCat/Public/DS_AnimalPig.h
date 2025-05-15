@@ -33,4 +33,7 @@ public:
 	//FSM Component
 	UPROPERTY(EditAnywhere)
 	class UDS_AnimalPigFSMComponent* AnimalPigFSM;
+
+	int32 CurHP = 2.f;
+	int32 MaxHP = 2.f;
 };

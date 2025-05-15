@@ -4,6 +4,8 @@
 #include "DontStarveCopyCat/Public/DS_Player.h"
 
 #include "DayNightCycle.h"
+#include "DS_AnimalPig.h"
+#include "DS_AnimalPigFSMComponent.h"
 #include "DS_PlayerAnim.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -468,6 +470,30 @@ void ADS_Player::TryChopping()
 				}
 			}
 			
+		}
+
+		//돼지 도끼질
+		Pig = Cast<ADS_AnimalPig>(Hit.GetActor());
+		if (Pig)
+		{
+			//Chop 애니메이션 몽타주 실행
+			if (PlayerAnim)
+			{
+				if (false == bIsChoppingPig)
+				{
+					if (IsPlayingHoldingToolMontage)
+					{
+						PlayerAnim->Montage_Stop(0.1f, HoldingToolMontage);
+					}
+
+					//도끼질 애니메이션 시작, bIsChoppingPig = false는 몽타주 마지막에 AnimNotify로 추가
+					PlayerAnim->Montage_Play(ChopMontage);
+					bIsChoppingPig = true;
+					//돼지 데미지 입히기
+					Pig->AnimalPigFSM->OnMyTakeDamage(1);
+				}
+				
+			}
 		}
 	}
 	else

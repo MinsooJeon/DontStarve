@@ -8,6 +8,7 @@
 #include "AIController.h"
 #include "DS_PigAnim.h"
 #include "NavigationSystem.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Navigation/PathFollowingComponent.h"
 
@@ -68,7 +69,7 @@ void UDS_AnimalPigFSMComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 		TickDamage();
 		break;
 	case EAnimalPigState::Die:
-		TickIdle();
+		TickDie();
 		break;;
 	}
 
@@ -76,7 +77,7 @@ void UDS_AnimalPigFSMComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	{
 		//Pig에 Log 실시간 로그 찍어서 보여주기
 		//FString log = UEnum::GetValueAsString(PigState);
-		FString log = FString::Printf(TEXT("State : %s\nbAttack : %d"), *UEnum::GetValueAsString(PigState), PigAnim->bAttack);
+		FString log = FString::Printf(TEXT("State : %s\nbAttack : %d\nCurHP : %d"), *UEnum::GetValueAsString(PigState), PigAnim->bAttack, AnimalPig->CurHP);
 		DrawDebugString(GetWorld(), AnimalPig->GetActorLocation(), log, nullptr, FColor::Yellow, 0, true, 1);
 	}
 }
@@ -106,59 +107,69 @@ void UDS_AnimalPigFSMComponent::TickIdle()
 
 void UDS_AnimalPigFSMComponent::TickMove()
 {
-	//플레이어쪽으로 방향 찾기
-	FVector Destination = Player->GetActorLocation();
-	FVector Dir = Destination - AnimalPig->GetActorLocation();
-
-	//AnimalPig->AddMovementInput(Dir.GetSafeNormal2D(), MoveSpeed * GetWorld()->GetDeltaSeconds());
-	//AI를 이용해서 길찾기
-	//플레이어가 길 위에 있는지
-	UNavigationSystemV1* ns = UNavigationSystemV1::GetNavigationSystem(GetWorld());
-
-	FPathFindingQuery query;
-	FAIMoveRequest request;
-	request.SetAcceptanceRadius(50.f);
-	request.SetGoalLocation(Destination); //플레이어 위치
-
-	AIController->BuildPathfindingQuery(request,query);
-
-	FPathFindingResult findPathResult = ns->FindPathSync(query);
-
-	//플레이어가 길 위에 있는지
-	if (findPathResult.IsSuccessful())
+	if (curHp > 0)
 	{
-		//플레이어 찾으면 정상 속도로 추적
-		AnimalPig->GetCharacterMovement()->MaxWalkSpeed = 200.f;
-		PigMoveAnimation->RateScale = 1.f; //애니메이션 속도 1
-		
-		//플레이어 위치를 향해 이동
-		AIController->MoveToLocation(Destination, 50.f);
-	}
-	//길 위가 아니라면
-	else
-	{
-		//순찰 중엔 속도 느리게
-		AnimalPig->GetCharacterMovement()->MaxWalkSpeed = 50.f;
-		PigMoveAnimation->RateScale = 0.7f; // 애니메이션 속도 0.7
-		
-		//랜덤 위치로 이동
-		EPathFollowingRequestResult::Type requestResult = AIController->MoveToLocation(PatrolLocation, 50.f);
-		//만약 랜덤 위치에 도착하면
-		if (requestResult == EPathFollowingRequestResult::Type::AlreadyAtGoal || requestResult == EPathFollowingRequestResult::Type::Failed)
+		//플레이어쪽으로 방향 찾기
+		FVector Destination = Player->GetActorLocation();
+		FVector Dir = Destination - AnimalPig->GetActorLocation();
+
+		//AnimalPig->AddMovementInput(Dir.GetSafeNormal2D(), MoveSpeed * GetWorld()->GetDeltaSeconds());
+		//AI를 이용해서 길찾기
+		//플레이어가 길 위에 있는지
+		UNavigationSystemV1* ns = UNavigationSystemV1::GetNavigationSystem(GetWorld());
+
+		FPathFindingQuery query;
+		FAIMoveRequest request;
+		request.SetAcceptanceRadius(50.f);
+		request.SetGoalLocation(Destination); //플레이어 위치
+
+		AIController->BuildPathfindingQuery(request,query);
+
+		FPathFindingResult findPathResult = ns->FindPathSync(query);
+
+		PigAnim->bMove = true;
+	
+		//플레이어가 길 위에 있는지
+		if (findPathResult.IsSuccessful())
 		{
-			//성공한 경우는 알아서 가기에 무시
-			//랜덤한 위치를 재설정
-			UpdatePatrolLocation(AnimalPig->GetActorLocation(), 300.f, PatrolLocation);
+			//플레이어 찾으면 정상 속도로 추적
+			AnimalPig->GetCharacterMovement()->MaxWalkSpeed = 200.f;
+			PigMoveAnimation->RateScale = 1.f; //애니메이션 속도 1
+		
+			//플레이어 위치를 향해 이동
+			AIController->MoveToLocation(Destination, 50.f);
+		
+		}
+		//길 위가 아니라면
+		else
+		{
+			//순찰 중엔 속도 느리게
+			AnimalPig->GetCharacterMovement()->MaxWalkSpeed = 50.f;
+			PigMoveAnimation->RateScale = 0.7f; // 애니메이션 속도 0.7
+		
+			//랜덤 위치로 이동
+			EPathFollowingRequestResult::Type requestResult = AIController->MoveToLocation(PatrolLocation, 50.f);
+			//만약 랜덤 위치에 도착하면
+			if (requestResult == EPathFollowingRequestResult::Type::AlreadyAtGoal || requestResult == EPathFollowingRequestResult::Type::Failed)
+			{
+				//성공한 경우는 알아서 가기에 무시
+				//랜덤한 위치를 재설정
+				UpdatePatrolLocation(AnimalPig->GetActorLocation(), 300.f, PatrolLocation);
+			}
+		}
+	
+		//공격 가능한 거리라면 공격 상태로 상태전환
+		float Dist = Dir.Length();
+		if (Dist < AttackRange)
+		{
+			PigAnim->bAttack = true;
+			PigAnim->bMove = false;
+			SetState(EAnimalPigState::Attack);
 		}
 	}
-	
-	//공격 가능한 거리라면 공격 상태로 상태전환
-	float Dist = Dir.Length();
-	if (Dist < AttackRange)
+	else
 	{
-		PigAnim->bAttack = true;
-		PigAnim->bMove = false;
-		SetState(EAnimalPigState::Attack);
+		SetState(EAnimalPigState::Die);
 	}
 }
 
@@ -174,7 +185,7 @@ void UDS_AnimalPigFSMComponent::TickAttack()
 		//공격 가능한 거리 계산
 		if (Dir.Length() < AttackRange)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Attack");
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Attack");
 			PigAttackMontage->BlendIn.SetBlendTime(0.1f);
 			PigAnim->Montage_Play(PigAttackMontage);
 		}
@@ -190,17 +201,43 @@ void UDS_AnimalPigFSMComponent::TickAttack()
 
 void UDS_AnimalPigFSMComponent::TickDamage()
 {
-	
+	//1초동안 멈췄다가 이동상태로 전이
+	CurrentTime += GetWorld()->GetDeltaSeconds();
+	if (CurrentTime > 2)
+	{
+		SetState(EAnimalPigState::Move);
+	}
 }
 
 void UDS_AnimalPigFSMComponent::TickDie()
 {
-	
+	CurrentTime += GetWorld()->GetDeltaSeconds();
+	if (CurrentTime > 1)
+	{
+		PigAnim->bAttack = false;
+		PigAnim->bMove = false;
+		//1초 지난 후 사라짐
+		AnimalPig->Destroy();
+	}
 }
 
 void UDS_AnimalPigFSMComponent::OnMyTakeDamage(int32 damage)
 {
-	
+	//체력을 damage만큼 감소
+	AnimalPig->CurHP = FMath::Clamp(AnimalPig->CurHP - damage, 0, AnimalPig->MaxHP);
+
+	//체력이 남아있으면 데미지 받고 잠시 멈춤
+	if (AnimalPig->CurHP > 0)
+	{
+		SetState(EAnimalPigState::Damage);
+	}
+	//체력이 없으면 죽음
+	else
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Die");
+		SetState(EAnimalPigState::Die);
+		//AnimalPig->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 }
 
 void UDS_AnimalPigFSMComponent::SetState(EAnimalPigState state)
@@ -210,6 +247,7 @@ void UDS_AnimalPigFSMComponent::SetState(EAnimalPigState state)
 	//Move 상태 아닐 때 플레이어에게 맞거나 하면 AI는 움직이고 있어서 움직임 방지
 	if (state != EAnimalPigState::Move) 
 	{
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "stopMovement");
 		AIController->StopMovement();
 	}
 }
