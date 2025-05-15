@@ -214,3 +214,14 @@ void UDS_AnimalPigFSMComponent::SetState(EAnimalPigState state)
 	}
 }
 
+void UDS_AnimalPigFSMComponent::AttackPlayer()
+{
+	FVector dir = Player->GetActorLocation() - AnimalPig->GetActorLocation();
+	float dist = dir.Length();
+
+	if (dist < AttackRange)
+	{
+		Player->DoDamageFromPig(10);
+	}
+}
+

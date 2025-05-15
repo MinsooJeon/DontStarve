@@ -728,3 +728,17 @@ void ADS_Player::DecreaseSanity()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, FString::Printf(TEXT("Sanity Depleted!")));
 	}
 }
+
+void ADS_Player::DoDamageFromPig(int32 damage)
+{
+	//만약 체력이 0이하면
+	if (CurrentHealthValue <= 0.f)
+		return;
+
+	CurrentHealthValue -= damage;
+	
+	if (CurrentHealthValue <= 0.f)
+	{
+		
+	}
+}

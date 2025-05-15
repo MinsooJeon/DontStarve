@@ -15,7 +15,12 @@ class DONTSTARVECOPYCAT_API UDS_PigAnim : public UAnimInstance
 	GENERATED_BODY()
 
 public:
-
+	// 태어날 때 Pig를 가져와서 기억하기
+	virtual void NativeBeginPlay() override;
+	
+	UPROPERTY()
+	class ADS_AnimalPig* Me;
+	
 	//돼지 이동 여부
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Animation)
 	bool bMove;
@@ -24,5 +29,8 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Animation)
 	bool bAttack;
 
+	//돼지 공격 몽타주 Notify
+	UFUNCTION()
+	void AnimNotify_PigAttack();
 	
 };

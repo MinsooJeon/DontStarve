@@ -91,4 +91,7 @@ public:
 
 	//상태 변화 함수
 	void SetState(EAnimalPigState state);
+
+	//돼지 공격 함수
+	void AttackPlayer();
 };

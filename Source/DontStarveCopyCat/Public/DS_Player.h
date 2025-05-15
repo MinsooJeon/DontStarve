@@ -274,6 +274,10 @@ public:
 	//정신력 감소 함수
 	UFUNCTION()
 	void DecreaseSanity();
+
+	//돼지 공격 받는 함수
+	UFUNCTION()
+	void DoDamageFromPig(int32 damage);
 };
 
 
