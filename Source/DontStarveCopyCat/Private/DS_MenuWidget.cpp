@@ -41,7 +41,7 @@ void UDS_MenuWidget::NativeConstruct()
 		MenuExtentionTop, MenuExtentionBottom, Board0, Board1, Board2, Board3, Board4, Board5, Board6,
 		RopeL0, RopeL1, RopeL2, RopeL3, RopeL4, RopeL5, RopeR0, RopeR1, RopeR2, RopeR3, RopeR4, RopeR5
 	};
-
+	//메뉴 별 Open 여부 배열
 	bIsOpenMenus = {
 		bIsOpenMenu1, bIsOpenMenu2, bIsOpenMenu3, bIsOpenMenu4,bIsOpenMenu5,bIsOpenMenu6
 	};
