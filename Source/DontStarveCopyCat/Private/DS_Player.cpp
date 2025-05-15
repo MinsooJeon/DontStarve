@@ -23,6 +23,7 @@
 #include "DS_InventoryWidget.h"
 #include "DS_MenuWidget.h"
 #include "DS_StatWidget.h"
+#include "GatherableMeat.h"
 #include "NiagaraSystem.h"
 #include "Engine/DirectionalLight.h"
 #include "Kismet/GameplayStatics.h"
@@ -585,6 +586,29 @@ void ADS_Player::TryPickUp()
 				}
 			}
 		}
+
+		//고기 Meat 줍기
+		Meat = Cast<AGatherableMeat>(Hit.GetActor());
+		if (Meat)
+		{
+			//줍기 애니메이션 몽타주 실행
+			if (PlayerAnim)
+			{
+				if (false == bPickUp)
+				{
+					if (IsPlayingHoldingToolMontage)
+					{
+						PlayerAnim->Montage_Stop(0.1f, HoldingToolMontage);
+					}
+
+					PlayerAnim->Montage_Play(PickUpMontage);
+					bPickUp = true;
+					
+					//고기 충돌완료 디버그메세지
+					//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Meat Picking Up...");
+				}
+			}
+		}
 	}
 	else
 	{
@@ -624,6 +648,19 @@ void ADS_Player::PickUpEndNotify()
 		}
 		
 		Twigs->OnPickUp();
+	}
+	if (Meat)
+	{
+		//인벤토리에 아이템 추가
+		InventoryComp->AddItem(Meat->ItemID, Meat->ItemIcon, Meat->IsEquip, Meat->Quantity);
+
+		//UI 갱신
+		if (InventorySlotWidget)
+		{
+			InventorySlotWidget->UpdateAllSlots(InventoryComp->Items);
+		}
+		
+		Meat->OnPickUp();
 	}
 	
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, "PickUpEnd");
@@ -765,6 +802,7 @@ void ADS_Player::DoDamageFromPig(int32 damage)
 	
 	if (CurrentHealthValue <= 0.f)
 	{
-		
+		//플레이어 사망 함수
+		PlayerDie();
 	}
 }

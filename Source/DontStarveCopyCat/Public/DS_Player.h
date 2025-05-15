@@ -82,6 +82,10 @@ public:
 	//줍기 중인 Twigs 액터 변수
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
 	class AGatherableTwigs* Twigs;
+
+	//줍기 중인 Meat 액터 변수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
+	class AGatherableMeat* Meat;
 	
 	//도끼 메시 장착
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
