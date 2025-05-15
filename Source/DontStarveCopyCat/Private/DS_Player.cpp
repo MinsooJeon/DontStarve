@@ -490,8 +490,8 @@ void ADS_Player::TryChopping()
 					//도끼질 애니메이션 시작, bIsChoppingPig = false는 몽타주 마지막에 AnimNotify로 추가
 					PlayerAnim->Montage_Play(ChopMontage);
 					bIsChoppingPig = true;
-					//돼지 데미지 입히기
-					Pig->AnimalPigFSM->OnMyTakeDamage(1);
+					// //돼지 데미지 입히기 ->Player Anim notify로 변경 AnimNotify_Hit()
+					// Pig->AnimalPigFSM->OnMyTakeDamage(1);
 				}
 				
 			}

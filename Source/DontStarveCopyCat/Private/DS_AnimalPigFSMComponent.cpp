@@ -169,6 +169,7 @@ void UDS_AnimalPigFSMComponent::TickMove()
 	}
 	else
 	{
+		bIsDie = true;
 		SetState(EAnimalPigState::Die);
 	}
 }
@@ -211,13 +212,26 @@ void UDS_AnimalPigFSMComponent::TickDamage()
 
 void UDS_AnimalPigFSMComponent::TickDie()
 {
-	CurrentTime += GetWorld()->GetDeltaSeconds();
-	if (CurrentTime > 1)
+	if (bIsDie)
 	{
+		bIsDie = false;
+		
 		PigAnim->bAttack = false;
 		PigAnim->bMove = false;
-		//1초 지난 후 사라짐
-		AnimalPig->Destroy();
+
+		//Dissolve 머터리얼 동적 생성
+		DynamicDissolveMaterial = UMaterialInstanceDynamic::Create(DissolveMaterial, this);
+		AnimalPig->GetMesh()->SetMaterial(0, DynamicDissolveMaterial);
+
+		//타이머 시작
+		GetWorld()->GetTimerManager().SetTimer(DissolveTimerHandle, this, &UDS_AnimalPigFSMComponent::UpdateDissolve, 0.01f,true);
+	
+		// CurrentTime += GetWorld()->GetDeltaSeconds();
+		// if (CurrentTime > 1)
+		// {
+		// 	//1초 지난 후 사라짐
+		// 	AnimalPig->Destroy();
+		// }
 	}
 }
 
@@ -235,6 +249,7 @@ void UDS_AnimalPigFSMComponent::OnMyTakeDamage(int32 damage)
 	else
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Die");
+		bIsDie = true;
 		SetState(EAnimalPigState::Die);
 		//AnimalPig->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
@@ -263,3 +278,35 @@ void UDS_AnimalPigFSMComponent::AttackPlayer()
 	}
 }
 
+void UDS_AnimalPigFSMComponent::UpdateDissolve()
+{
+	if (!DynamicDissolveMaterial)
+		return;
+
+	//Dissove 값 수치를 점점 크게 줘서 사라지게 만듦
+	DissolveValue += GetWorld()->GetDeltaSeconds() * DissolveSpeed;
+	DynamicDissolveMaterial->SetScalarParameterValue("Dissolve", DissolveValue);
+
+	//완전히 사라지면
+	if (DissolveValue >= 0.7)
+	{
+		GetWorld()->GetTimerManager().ClearTimer(DissolveTimerHandle);
+
+		SpawnDropItem();
+
+		AnimalPig->Destroy();
+	}
+}
+
+void UDS_AnimalPigFSMComponent::SpawnDropItem()
+{
+	if (MeatItemClass)
+	{
+		FActorSpawnParameters SpawnParams;
+		FVector SpawnLocation = AnimalPig->GetActorLocation();
+		SpawnLocation.Z = 50.f;
+		FRotator SpawnRotation = FRotator::ZeroRotator;
+
+		GetWorld()->SpawnActor<AActor>(MeatItemClass, SpawnLocation, SpawnRotation, SpawnParams);
+	}
+}

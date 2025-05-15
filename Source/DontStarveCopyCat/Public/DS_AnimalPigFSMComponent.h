@@ -76,6 +76,29 @@ public:
 	//순찰을 위한 랜덤위치를 기억하기
 	FVector PatrolLocation;
 
+	//죽음 여부
+	bool bIsDie = false;
+
+	//Dissolve
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Dissolve)
+	class UMaterialInstance* DissolveMaterial;
+	UPROPERTY()
+	class UMaterialInstanceDynamic* DynamicDissolveMaterial;
+
+	FTimerHandle DissolveTimerHandle;
+
+	float DissolveValue = 0.f;
+	float DissolveSpeed = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
+	TSubclassOf<AActor> MeatItemClass;
+
+	
+	//Dissolve 업데이트
+	void UpdateDissolve();
+	//돼지 고기 아이템
+	void SpawnDropItem();
+	
 	//랜덤위치를 정하는 기능 만들기
 	bool UpdatePatrolLocation(FVector origin, float radius, FVector& outLocation);
 	

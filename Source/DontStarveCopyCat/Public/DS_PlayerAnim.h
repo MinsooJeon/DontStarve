@@ -32,4 +32,8 @@ public:
 	//돼지 도끼질 End Notify
 	UFUNCTION()
 	void AnimNotify_PigChoppingEnd();
+
+	//돼지 도끼질 Hit Notify
+	UFUNCTION()
+	void AnimNotify_Hit();
 };

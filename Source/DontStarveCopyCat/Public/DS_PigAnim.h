@@ -32,5 +32,4 @@ public:
 	//돼지 공격 몽타주 Notify
 	UFUNCTION()
 	void AnimNotify_PigAttack();
-	
 };
