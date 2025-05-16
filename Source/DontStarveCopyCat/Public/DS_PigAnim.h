@@ -36,6 +36,8 @@ public:
 	float AlphaValue = 0.f;
 
 	FTimerHandle BlurTimerHandle;
+
+	bool bIsAttacking = false;
 	
 	//돼지 공격 몽타주 Notify
 	UFUNCTION()

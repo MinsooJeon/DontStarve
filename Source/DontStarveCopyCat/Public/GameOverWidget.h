@@ -13,5 +13,22 @@ UCLASS()
 class DONTSTARVECOPYCAT_API UGameOverWidget : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+
+	virtual void NativeConstruct() override;
+	
+	UPROPERTY(meta = (BindWidget))
+	class UButton* RetryButton;
+	UPROPERTY(meta = (BindWidget))
+	class UButton* QuitButton;
+
+	UFUNCTION()
+	void OnClickRestart();
+	UFUNCTION()
+	void OnClickQuit();
+
+	UFUNCTION()
+	void SetActiveGameOver(bool bActive);
 	
 };

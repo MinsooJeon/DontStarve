@@ -23,7 +23,9 @@
 #include "Blueprint/UserWidget.h"
 #include "DS_InventoryWidget.h"
 #include "DS_MenuWidget.h"
+#include "DS_PigAnim.h"
 #include "DS_StatWidget.h"
+#include "GameOverWidget.h"
 #include "GatherableMeat.h"
 #include "NiagaraSystem.h"
 #include "Engine/DirectionalLight.h"
@@ -96,10 +98,16 @@ ADS_Player::ADS_Player()
 		StatWidgetClass = Stattemp.Class;
 	}
 	
-	static ConstructorHelpers::FClassFinder<UDS_StatWidget> DamageBlurtemp(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/DontStarveCopyCat/UI/WBP_DamageBlurWidget.WBP_DamageBlurWidget_C'"));
+	static ConstructorHelpers::FClassFinder<UDamageBlurWidget> DamageBlurtemp(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/DontStarveCopyCat/UI/WBP_DamageBlurWidget.WBP_DamageBlurWidget_C'"));
 	if (DamageBlurtemp.Succeeded())
 	{
 		DamageBlurWidgetClass = DamageBlurtemp.Class;
+	}
+
+	static ConstructorHelpers::FClassFinder<UGameOverWidget> GameOvertemp(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/DontStarveCopyCat/UI/WBP_GameOverWidget.WBP_GameOverWidget_C'"));
+	if (GameOvertemp.Succeeded())
+	{
+		GameOverWidgetClass = GameOvertemp.Class;
 	}
 	
 
@@ -177,9 +185,13 @@ void ADS_Player::BeginPlay()
 	InventoryWidget->AddToViewport();
 	StatWidget = CreateWidget<UDS_StatWidget>(GetWorld(), StatWidgetClass);
 	StatWidget->AddToViewport();
+	
 	DamageBlurWidget = CreateWidget<UDamageBlurWidget>(GetWorld(), DamageBlurWidgetClass);
 	DamageBlurWidget->AddToViewport(-1);
 	DamageBlurWidget->SetVisibility(ESlateVisibility::Hidden); // 꺼두기
+	GameOverWidget = CreateWidget<UGameOverWidget>(GetWorld(), GameOverWidgetClass);
+	GameOverWidget->AddToViewport();
+	GameOverWidget->SetVisibility(ESlateVisibility::Hidden);
 	//인벤토리 슬롯 C++로 캐스팅
 	InventorySlotWidget = Cast<UDS_InventoryWidget>(InventoryWidget);
 
@@ -237,7 +249,10 @@ void ADS_Player::BeginPlay()
 
 	//월드 시간 액터 찾아 가져오기
 	DayNight = Cast<ADayNightCycle>(UGameplayStatics::GetActorOfClass(GetWorld(), ADayNightCycle::StaticClass()));
-	
+
+	//게임종료 위젯 초기화
+	GameOverWidget->SetActiveGameOver(false);
+
 }
 
 void ADS_Player::NotifyControllerChanged()
@@ -699,13 +714,20 @@ void ADS_Player::DecreaseHunger()
 	//1초마다 0.5씩 감소
 	CurrentHungerValue -= HungerDecreaseValue;
 	CurrentHungerValue = FMath::Clamp(CurrentHungerValue, 0.f, MaxHungerValue);
-
+	
+	//DamageBlurWidget->SetVisibility(ESlateVisibility::Visible);
+	
 	//배고픔이 0이면 체력 감소
 	if (CurrentHungerValue <= 0.f)
 	{
 		CurrentHealthValue -= StarvationDamageHPValue; // 초당 2씩 체력 감소
 		CurrentHealthValue = FMath::Clamp(CurrentHealthValue, 0.f, MaxHealthValue);
 
+		DamageBlurWidget->SetVisibility(ESlateVisibility::Visible);
+		FLinearColor CurrentColor = DamageBlurWidget->BloodScreen->GetColorAndOpacity();
+		CurrentColor.A = 0.1f;
+		DamageBlurWidget->BloodScreen->SetColorAndOpacity(CurrentColor);
+		
 		//체력이 0이 되면
 		if (CurrentHealthValue <= 0.f)
 		{
@@ -733,13 +755,31 @@ void ADS_Player::DecreaseHunger()
 		
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f"), CurrentHungerValue));
 	}
-
-	// 추가: 배고픔 0이면 데미지 같은 페널티도 여기에 추가 가능
 }
 
 void ADS_Player::PlayerDie()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("PlayerDie")));
+	FTimerHandle handle;
+	GetWorldTimerManager().SetTimer(handle, [&]()
+	{
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+		//위젯들 끄기
+		StatWidget->SetVisibility(ESlateVisibility::Hidden);
+		MenuWidget->SetVisibility(ESlateVisibility::Hidden);
+		InventoryWidget->SetVisibility(ESlateVisibility::Hidden);
+		
+		//게임오버 UI를 보이게 하고
+		GameOverWidget->SetActiveGameOver(true);
+		//입력모드를 UI로하고 마우스를 보이게하고싶다.
+		auto* pc = Cast<APlayerController>(Controller);
+		pc->SetInputMode(FInputModeUIOnly());
+		pc->SetShowMouseCursor(true);
+			
+		// 할일 : 게임오버 화면을 출력하고싶다.
+	}, 0.2f, false);
+	
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("PlayerDie")));
 	// 애니메이션 정지, 입력 막기, 리스폰 처리 등
 	//DisableInput(nullptr);
 	// 죽음 애니메이션, 게임오버 UI 등 필요시 추가

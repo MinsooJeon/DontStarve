@@ -21,12 +21,19 @@ void UDS_PigAnim::AnimNotify_PigAttack()
 {
 	//애니메이션 몽타주의 공격 시점에 플레이어 데미지 주기
 	Me->AnimalPigFSM->AttackPlayer();
+	bIsAttacking = true;
 }
 
 void UDS_PigAnim::AnimNotify_PigAttackEnd()
 {
-	//blur 투명도 처리 타이머 시작
-	GetWorld()->GetTimerManager().SetTimer(BlurTimerHandle, this, &UDS_PigAnim::UpdateBlurAlpha, 0.1f, true);
+	if (bIsAttacking)
+	{
+		//blur 투명도 처리 타이머 시작
+		FLinearColor CurrentColor = Player->DamageBlurWidget->BloodScreen->GetColorAndOpacity();
+		CurrentColor.A = 1.f;
+		Player->DamageBlurWidget->BloodScreen->SetColorAndOpacity(CurrentColor);
+		GetWorld()->GetTimerManager().SetTimer(BlurTimerHandle, this, &UDS_PigAnim::UpdateBlurAlpha, 0.1f, true);
+	}
 }
 
 void UDS_PigAnim::UpdateBlurAlpha()
@@ -43,5 +50,6 @@ void UDS_PigAnim::UpdateBlurAlpha()
 		Player->DamageBlurWidget->BloodScreen->SetColorAndOpacity(CurrentColor);
 		Player->DamageBlurWidget->SetVisibility(ESlateVisibility::Hidden); //Damage Blur 끄기
 		GetWorld()->GetTimerManager().ClearTimer(BlurTimerHandle);
+		bIsAttacking = false;
 	}
 }

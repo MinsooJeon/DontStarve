@@ -302,6 +302,12 @@ public:
 	//돼지 공격 받는 함수
 	UFUNCTION()
 	void DoDamageFromPig(int32 damage);
+
+	//GameOver Widget
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
+	TSubclassOf<class UGameOverWidget> GameOverWidgetClass;
+	UPROPERTY()
+	class UGameOverWidget* GameOverWidget;
 };
 
 
