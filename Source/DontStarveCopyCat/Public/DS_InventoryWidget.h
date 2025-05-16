@@ -174,6 +174,7 @@ public:
 	class UTextBlock* EquipText1;
 
 	//플레이어 포인터 저장
+	UPROPERTY()
 	class ADS_Player* PlayerRef;
 
 	//인벤토리 데이터 참조
@@ -223,7 +224,9 @@ public:
 	
 	UFUNCTION()
 	void OnInventorySlotClicked(int32 SlotIndex);
-	
+
+	UFUNCTION()
+	void DeleteInventoryItem(FName ItemID);
 };
 
 

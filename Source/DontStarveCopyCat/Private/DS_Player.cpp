@@ -345,6 +345,16 @@ void ADS_Player::OnActionMove(const FInputActionValue& value)
 				PlayerAnim->Montage_Play(HoldingToolMontage);
 			}
 		}
+		//먹기 몽타주 멈추기
+		if (bIsEating)
+		{
+			PlayerAnim->Montage_Stop(0.1f, EatMontage);
+			bIsEating = false;
+			if (IsPlayingHoldingToolMontage)
+			{
+				PlayerAnim->Montage_Play(HoldingToolMontage);
+			}
+		}
 	}
 }
 
@@ -799,6 +809,7 @@ void ADS_Player::DoDamageFromPig(int32 damage)
 		return;
 
 	CurrentHealthValue -= damage;
+	CurrentHungerValue = FMath::Clamp(CurrentHealthValue, 0.f, MaxHealthValue);
 	
 	if (CurrentHealthValue <= 0.f)
 	{

@@ -36,4 +36,8 @@ public:
 	//돼지 도끼질 Hit Notify
 	UFUNCTION()
 	void AnimNotify_Hit();
+
+	//고기 먹기 완료 Notify
+	UFUNCTION()
+	void AnimNotify_EatingEnd();
 };

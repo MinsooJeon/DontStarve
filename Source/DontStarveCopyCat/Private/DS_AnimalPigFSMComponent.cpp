@@ -148,9 +148,11 @@ void UDS_AnimalPigFSMComponent::TickMove()
 			PigMoveAnimation->RateScale = 0.7f; // 애니메이션 속도 0.7
 		
 			//랜덤 위치로 이동
-			EPathFollowingRequestResult::Type requestResult = AIController->MoveToLocation(PatrolLocation, 50.f);
+			EPathFollowingRequestResult::Type requestResult = AIController
+			->MoveToLocation(PatrolLocation, 50.f);
 			//만약 랜덤 위치에 도착하면
-			if (requestResult == EPathFollowingRequestResult::Type::AlreadyAtGoal || requestResult == EPathFollowingRequestResult::Type::Failed)
+			if (requestResult == EPathFollowingRequestResult::Type::AlreadyAtGoal
+				|| requestResult == EPathFollowingRequestResult::Type::Failed)
 			{
 				//성공한 경우는 알아서 가기에 무시
 				//랜덤한 위치를 재설정
@@ -181,7 +183,7 @@ void UDS_AnimalPigFSMComponent::TickAttack()
 	//공격 딜레이 계산
 	if (CurrentTime > AttackDelayTime)
 	{
-		CurrentTime = 0.0f;
+		CurrentTime = 0.f;
 		FVector Dir = Player->GetActorLocation() - AnimalPig->GetActorLocation();
 		//공격 가능한 거리 계산
 		if (Dir.Length() < AttackRange)
@@ -224,7 +226,7 @@ void UDS_AnimalPigFSMComponent::TickDie()
 		AnimalPig->GetMesh()->SetMaterial(0, DynamicDissolveMaterial);
 
 		//타이머 시작
-		GetWorld()->GetTimerManager().SetTimer(DissolveTimerHandle, this, &UDS_AnimalPigFSMComponent::UpdateDissolve, 0.01f,true);
+		GetWorld()->GetTimerManager().SetTimer(DissolveTimerHandle,this, &UDS_AnimalPigFSMComponent::UpdateDissolve, 0.01f,true);
 	
 		// CurrentTime += GetWorld()->GetDeltaSeconds();
 		// if (CurrentTime > 1)

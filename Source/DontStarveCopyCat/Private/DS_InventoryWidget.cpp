@@ -420,7 +420,42 @@ void UDS_InventoryWidget::OnInventorySlotClicked(int32 SlotIndex)
 	//돼지고기인 경우
 	if (ClickedItem.ItemID == "GatherableMeat")
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Eating Meat");
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Eating Meat");
+		if (PlayerRef->PlayerAnim->Montage_IsPlaying(PlayerRef->HoldingToolMontage))
+		{
+			PlayerRef->PlayerAnim->Montage_Stop(0.1f, PlayerRef->HoldingToolMontage);
+			//PlayerRef->IsPlayingHoldingToolMontage = false;
+		}
+		if (false == PlayerRef->bIsEating)
+		{
+			PlayerRef->PlayerAnim->Montage_Play(PlayerRef->EatMontage);
+			PlayerRef->bIsEating = true;
+		}
+	}
+}
+
+void UDS_InventoryWidget::DeleteInventoryItem(FName ItemID)
+{
+	if (ItemID == "GatherableMeat")
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, "Delete MeatItem");
+		int32 Index = PlayerRef->InventoryComp->FindItemIndex(ItemID); // 해당 아이템 index 찾기
+		PlayerRef->InventoryComp->Items[Index].Quantity -= 1; // 갯수 한개 줄이기
+
+		//다 소모했으면 인벤토리에서 제거하기
+		if (PlayerRef->InventoryComp->Items[Index].Quantity == 0)
+		{
+			//기존 슬롯 UI 초기화
+			InventoryImages[Index]->SetBrushFromTexture(nullptr);
+			InventoryImages[Index]->SetVisibility(ESlateVisibility::Hidden);
+			InventoryTextCounts[Index]->SetText(FText::GetEmpty());
+			InventoryTextCounts[Index]->SetVisibility(ESlateVisibility::Hidden);
+			//데이터 삭제
+			(*InventoryData)[Index] = FInventoryItem();
+		}
+
+		//인벤토리 업데이트하기
+		UpdateAllSlots((*InventoryData));
 	}
 }
 

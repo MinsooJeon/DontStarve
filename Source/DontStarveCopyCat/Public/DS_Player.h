@@ -144,6 +144,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerMontage")
 	bool IsPlayingHoldingToolMontage;
+
+	//먹는 몽타주
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerMontage")
+	class UAnimMontage* EatMontage;
+
+	//먹기 여부
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
+	bool bIsEating = false;
 	
 	//플레이어 움직임 함수
 	void OnActionMove(const FInputActionValue& value);
