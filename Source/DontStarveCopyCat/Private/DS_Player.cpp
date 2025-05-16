@@ -3,6 +3,7 @@
 
 #include "DontStarveCopyCat/Public/DS_Player.h"
 
+#include "DamageBlurWidget.h"
 #include "DayNightCycle.h"
 #include "DS_AnimalPig.h"
 #include "DS_AnimalPigFSMComponent.h"
@@ -94,6 +95,13 @@ ADS_Player::ADS_Player()
 	{
 		StatWidgetClass = Stattemp.Class;
 	}
+	
+	static ConstructorHelpers::FClassFinder<UDS_StatWidget> DamageBlurtemp(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/DontStarveCopyCat/UI/WBP_DamageBlurWidget.WBP_DamageBlurWidget_C'"));
+	if (DamageBlurtemp.Succeeded())
+	{
+		DamageBlurWidgetClass = DamageBlurtemp.Class;
+	}
+	
 
 	//인벤토리
 	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
@@ -169,6 +177,9 @@ void ADS_Player::BeginPlay()
 	InventoryWidget->AddToViewport();
 	StatWidget = CreateWidget<UDS_StatWidget>(GetWorld(), StatWidgetClass);
 	StatWidget->AddToViewport();
+	DamageBlurWidget = CreateWidget<UDamageBlurWidget>(GetWorld(), DamageBlurWidgetClass);
+	DamageBlurWidget->AddToViewport(-1);
+	DamageBlurWidget->SetVisibility(ESlateVisibility::Hidden); // 꺼두기
 	//인벤토리 슬롯 C++로 캐스팅
 	InventorySlotWidget = Cast<UDS_InventoryWidget>(InventoryWidget);
 
@@ -809,7 +820,7 @@ void ADS_Player::DoDamageFromPig(int32 damage)
 		return;
 
 	CurrentHealthValue -= damage;
-	CurrentHungerValue = FMath::Clamp(CurrentHealthValue, 0.f, MaxHealthValue);
+	CurrentHealthValue = FMath::Clamp(CurrentHealthValue, 0.f, MaxHealthValue);
 	
 	if (CurrentHealthValue <= 0.f)
 	{

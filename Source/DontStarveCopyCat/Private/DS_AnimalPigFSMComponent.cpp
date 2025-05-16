@@ -6,6 +6,7 @@
 #include "DS_AnimalPig.h"
 #include "DS_Player.h"
 #include "AIController.h"
+#include "DamageBlurWidget.h"
 #include "DS_PigAnim.h"
 #include "NavigationSystem.h"
 #include "Components/CapsuleComponent.h"
@@ -225,9 +226,12 @@ void UDS_AnimalPigFSMComponent::TickDie()
 		DynamicDissolveMaterial = UMaterialInstanceDynamic::Create(DissolveMaterial, this);
 		AnimalPig->GetMesh()->SetMaterial(0, DynamicDissolveMaterial);
 
+		//충돌 끄기
+		AnimalPig->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		
 		//타이머 시작
 		GetWorld()->GetTimerManager().SetTimer(DissolveTimerHandle,this, &UDS_AnimalPigFSMComponent::UpdateDissolve, 0.01f,true);
-	
+		
 		// CurrentTime += GetWorld()->GetDeltaSeconds();
 		// if (CurrentTime > 1)
 		// {
@@ -277,6 +281,7 @@ void UDS_AnimalPigFSMComponent::AttackPlayer()
 	if (dist < AttackRange)
 	{
 		Player->DoDamageFromPig(10);
+		Player->DamageBlurWidget->SetVisibility(ESlateVisibility::Visible); //Damage Blur 켜기
 	}
 }
 

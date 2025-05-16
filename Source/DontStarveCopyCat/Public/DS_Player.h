@@ -187,17 +187,24 @@ public:
 	//인게임 UI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
 	TSubclassOf<class UDS_MenuWidget> MenuWidgetClass;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
-	TSubclassOf<class UDS_InventoryWidget> InventoryWidgetClass;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
-	TSubclassOf<class UDS_StatWidget> StatWidgetClass;
-	
 	UPROPERTY()
 	UDS_MenuWidget* MenuWidget;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
+	TSubclassOf<class UDS_InventoryWidget> InventoryWidgetClass;
 	UPROPERTY()
 	UDS_InventoryWidget* InventoryWidget;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
+	TSubclassOf<class UDS_StatWidget> StatWidgetClass;
 	UPROPERTY()
 	UDS_StatWidget* StatWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DS_Widget")
+	TSubclassOf<class UDamageBlurWidget> DamageBlurWidgetClass;
+	UPROPERTY()
+	UDamageBlurWidget* DamageBlurWidget;
+	
 
 	UPROPERTY()
 	class UDS_InventoryWidget* InventorySlotWidget;

@@ -20,6 +20,9 @@ public:
 	
 	UPROPERTY()
 	class ADS_AnimalPig* Me;
+
+	UPROPERTY()
+	class ADS_Player* Player;
 	
 	//돼지 이동 여부
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Animation)
@@ -29,7 +32,20 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Animation)
 	bool bAttack;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	float AlphaValue = 0.f;
+
+	FTimerHandle BlurTimerHandle;
+	
 	//돼지 공격 몽타주 Notify
 	UFUNCTION()
 	void AnimNotify_PigAttack();
+
+	//돼지 공격 몽타주 End Notify
+	UFUNCTION()
+	void AnimNotify_PigAttackEnd();
+
+	//Blur 위젯 업데이트 함수
+	UFUNCTION()
+	void UpdateBlurAlpha();
 };
